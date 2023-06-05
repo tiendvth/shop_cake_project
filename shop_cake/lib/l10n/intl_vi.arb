@@ -1,0 +1,28 @@
+{
+  "language": "Tiếng Việt",
+  "msg_error_network_time_out": "Đường truyền kém. Vui lòng thử lại.",
+  "msg_error_network_other": "Vui lòng kiểm tra lại mạng.",
+  "app_title": "Flutter food",
+  "username": "Tên tài khoản",
+  "password": "Mật khẩu",
+  "login": "Đăng nhập",
+  "home": "Trang chủ",
+  "account": "Tài khoản",
+  "settings": "Cài đặt",
+  "welcome_back": "Welcome Back",
+  "sign_in_to_continue":"Sign in to continue",
+  "sign_in":"Sign in",
+  "dont_have_an_account":"Done have an account?",
+  "sign_up":"Sign up",
+  "email":"Email",
+  "oders":"Oders",
+  "close":"Close",
+  "subtotal":"Subtotal",
+  "tax_fees":"Tax & Fees",
+  "delivery":"Delivery",
+  "total":"Total",
+  "food_list":"Food list",
+  "amount":"Amount",
+  "log_out":"Log out"
+  
+}
