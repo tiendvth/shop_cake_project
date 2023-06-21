@@ -48,6 +48,7 @@ mixin MaterialAppMixin<T extends StatefulWidget> on State<T> implements AppConfi
         }
       },
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         navigatorKey: navigationKey,
         onGenerateTitle: (context) => title,
         locale: locale,

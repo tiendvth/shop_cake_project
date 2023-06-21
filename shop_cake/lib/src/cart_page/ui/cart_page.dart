@@ -1,5 +1,6 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/font_size/font_size.dart';
 import 'package:shop_cake/network/network_manager.dart';
@@ -364,8 +365,14 @@ class _CartPageState extends State<CartPage> {
                   height: 200,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(50),
-                      bottomRight: Radius.circular(50),
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    ),
+                    image: const DecorationImage(
+                      image: AssetImage(
+                          Assets.bgCart,
+                    ),
+                      fit: BoxFit.cover,
                     ),
                     color: FontColor.colorFF3366,
                   ),

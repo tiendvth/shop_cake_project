@@ -21,9 +21,9 @@ class BuildConfig with ConfigMixin implements Config {
     return _singleton!;
   }
 
-  BuildConfig._dev() : this._(baseUrl: "http://13.213.7.133");
+  BuildConfig._dev() : this._(baseUrl: "http://103.187.5.254:8090");
 
-  BuildConfig._release() : this._(baseUrl: "http://13.213.7.133");
+  BuildConfig._release() : this._(baseUrl: "http://103.187.5.254:8090");
 
   @override
   int? connectTimeout;

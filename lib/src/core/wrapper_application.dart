@@ -1,9 +1,6 @@
 import 'package:common/src/auth/auth.dart';
 import 'package:flutter/material.dart';
 
-// File WrapperApplication
-// @project food
-// @author phanmanhha198 on 10-07-2021
 class WrapperApplication extends StatelessWidget {
   final Widget child;
   final AuthService authService;

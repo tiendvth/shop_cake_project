@@ -60,22 +60,22 @@ class _AppHomeState extends State<AppHome> with SingleTickerProviderStateMixin {
           unselectedItemColor: FontColor.colorDADADAFF,
           type: BottomNavigationBarType.fixed,
           backgroundColor: FontColor.colorFF3366,
-          selectedFontSize: 12,
-          unselectedFontSize: 11,
+          selectedFontSize: 14,
+          unselectedFontSize: 14,
           currentIndex: currentIndex,
           onTap: (index) {
             contextNavigation.read<TabBarController>().tabIndex = index;
           },
-          items: [
+          items: const [
             BottomNavigationBarItem(
-                icon: const Icon(Icons.home_outlined), label: "Trang chủ"),
+                icon: Icon(Icons.home_outlined), label: "Trang chủ"),
             BottomNavigationBarItem(
-                icon: const Icon(Icons.shopping_cart_outlined),
+                icon: Icon(Icons.shopping_cart_outlined),
                 label: "Đơn hàng"),
             BottomNavigationBarItem(
-                icon: const Icon(Icons.history), label: "Danh sách"),
+                icon: Icon(Icons.history), label: "Danh sách"),
             BottomNavigationBarItem(
-                icon: const Icon(Icons.person_pin), label: "Tài khoản"),
+                icon: Icon(Icons.person_pin), label: "Tài khoản"),
           ],
         );
       },

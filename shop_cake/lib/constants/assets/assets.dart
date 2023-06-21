@@ -5,6 +5,7 @@ class Assets {
   ///Images
   static const String imBgLogin = 'assets/images/im_bg_login.jpg';
   static const String imDemoFood = 'assets/images/im_demo_food.png';
+  static const String bgCart = 'assets/images/bgCart.jpeg';
 
   ///Icons
   static const String icFb = 'assets/icon/facebook.png';

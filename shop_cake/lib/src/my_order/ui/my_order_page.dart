@@ -192,6 +192,12 @@ class _MyOrderPageState extends State<MyOrderPage> {
                   style: TextStyle(fontSize: 16, color: FontColor.color212121),
                 ),
               );
+              // return Center(
+              //   child: Text(
+              //     state.message,
+              //     style: TextStyle(fontSize: 16, color: FontColor.color212121),
+              //   ),
+              // );
             }
             return const Center(child: CircularProgressIndicator());
           },

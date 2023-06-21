@@ -4,13 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:shop_cake/constants/color/colors.dart';
-import 'package:shop_cake/constants/font_size/font_size.dart';
 import 'package:shop_cake/firebase/setup_firebase.dart';
 import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/detail_food/ui/detail_food_page.dart';
 import 'package:shop_cake/src/detail_my_order/ui/detail_my_order_page.dart';
 import 'package:shop_cake/src/home_page/repository/home_repository.dart';
 import 'package:shop_cake/src/list_food/bloc/list_food_cubit.dart';
+import 'package:shop_cake/src/list_food/components/category_item.dart';
 import 'package:shop_cake/src/list_food/components/input_search.dart';
 import 'package:shop_cake/validation/validation.dart';
 
@@ -93,6 +93,33 @@ class _ListFoodPageState extends State<ListFoodPage> {
               ),
               listFoodCubit: listFoodCubit,
             ),
+            SizedBox(height: 20,),
+            BlocBuilder<ListFoodCubit, ListFoodState>(
+    builder: (context, state) {
+    if (state is ListFoodSuccess) {
+      return SizedBox(
+        height: 100,
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: state.data.length,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: CategoryItem(
+                imageUrl: state.data[index]['image'],
+                title: state.data[index]['title'],
+              ),
+            );
+          },
+        ),
+      );
+    }
+    else {
+      return SizedBox.shrink()
+    }
+  },
+),
             Expanded(
               child: MultiBlocProvider(
                 providers: [
@@ -101,8 +128,8 @@ class _ListFoodPageState extends State<ListFoodPage> {
                   ),
                 ],
                 child: BlocBuilder<ListFoodCubit, ListFoodState>(
-                  builder: (context, state) {
-                    if (state is ListFoodSuccess) {
+                  builder: (context, stateListCake) {
+                    if (stateListCake is ListFoodSuccess) {
                       return Padding(
                         padding: const EdgeInsets.only(
                             left: 15, right: 15, top: 20, bottom: 20),
@@ -136,7 +163,7 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                         NavigatorManager.pushFullScreen(
                                             context,
                                             DetailFood(
-                                              id: state.data[index]['id'] ?? '',
+                                              id: stateListCake.data[index]['id'] ?? '',
                                             ));
                                       },
                                       child: Column(
@@ -157,7 +184,7 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                                           BorderRadius.circular(
                                                               4),
                                                       child: Image.network(
-                                                        '${state.data[index]['images'] ?? 'https://d1sag4ddilekf6.azureedge.net/compressed_webp/items/VNITE2020101203010039593/detail/menueditor_item_447a258fe0a24f81aec3d414ebe2fa5f_1602471618388584107.webp'}',
+                                                        stateListCake.data['image'],
                                                         width: double.infinity,
                                                         fit: BoxFit.cover,
                                                       ),
@@ -176,8 +203,9 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
+                                                        Text(stateListCake.data),
                                                         Text(
-                                                          '${state.data[index]['name'] ?? ''}',
+                                                          '${stateListCake.data[index]['name'] ?? ''}',
                                                           maxLines: 1,
                                                           overflow: TextOverflow
                                                               .ellipsis,
@@ -194,7 +222,7 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                                           height: 2,
                                                         ),
                                                         Text(
-                                                          '${Validation.oCcy.format(state.data[index]['price'] ?? 0)} đ',
+                                                          '${Validation.oCcy.format(stateListCake.data[index]['price'] ?? 0)} đ',
                                                           maxLines: 1,
                                                           overflow: TextOverflow
                                                               .ellipsis,
@@ -319,6 +347,14 @@ class _ListFoodPageState extends State<ListFoodPage> {
                               color: FontColor.color212121),
                         ),
                       );
+                      // return Center(
+                      //   child: Text(
+                      //     state.message,
+                      //     style: TextStyle(
+                      //         fontSize: FontSize.fontSize_16,
+                      //         color: FontColor.color212121),
+                      //   ),
+                      // );
                     }
                     return const Center(child: CircularProgressIndicator());
                   },
