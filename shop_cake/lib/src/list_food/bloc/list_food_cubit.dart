@@ -13,14 +13,12 @@ class ListFoodCubit extends Cubit<ListFoodState> {
       ListFoodRepositoryImpl(apiProvider);
   TextEditingController searchController = TextEditingController();
 
-  ListFoodCubit() : super(ListFoodInitial()) {
-    getListFood(searchController.text);
-  }
+  ListFoodCubit() : super(ListFoodInitial());
 
-  Future<Map<String, dynamic>?> getListFood(seach) async{
+  Future<void> getListFood(search) async{
     try {
       emit(ListFoodLoading());
-      var data = await _foodRepository.listFood(seach);
+      var data = await _foodRepository.listFood(search);
       if (data != null){
         emit(ListFoodSuccess(data['data']['content']));
       } else {

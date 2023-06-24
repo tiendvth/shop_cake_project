@@ -4,24 +4,30 @@
 import 'package:network/network.dart';
 
 abstract class UserRepository {
-  Future login(phone);
+  Future login(String? username,String? password);
 
-  Future register(phone);
+  Future register(String? username, String? email, String?  password);
 
   Future verify_login(phone, otp);
 }
 
 class UserRepositoryImpl implements UserRepository {
   @override
-  Future login(phone) async {
-    final result = await Dio()
-        .post("https://accounts.metawayholdings.vn/api/account/login", data: {
-      "email": "string",
-      "password": "string",
-      "phone": "$phone",
-      "type": "phone"
-    });
-    return result;
+  Future login(String? username,String? password) async {
+    try {
+      final result = await Dio()
+          .post("http://103.187.5.254:8090/api/auth/signin", data: {
+        "username": username,
+        "password": password,
+      });
+     if (result.statusCode == 200) {
+        return result;
+      } else {
+        throw Exception('Failed to load data!');
+      }
+    } catch (e) {
+      throw Exception('Failed to load data!');
+    }
   }
 
   @override
@@ -38,16 +44,25 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future register(phone) async {
-    final result = await Dio().post(
-        "https://accounts.metawayholdings.vn/api/account/register",
-        data: {
-          "email": "string",
-          "password": "string",
-          "phone": "$phone",
-          "type": "phone"
-        });
-    return result;
+  Future register(String? username, String? email, String?  password) async {
+    try {
+      final result = await Dio().post(
+          "http://103.187.5.254:8090/api/auth/signup",
+          data: {
+            "email": email,
+            "password": password,
+            "username": username,
+            "role": ["admin"]
+          });
+      if (result.statusCode == 200) {
+        return result;
+      } else {
+        throw Exception('Failed to load data!');
+      }
+    } catch (e) {
+      print('Exception: $e');
+      throw Exception('Có lỗi xảy ra!');
+    }
   }
 
   @override

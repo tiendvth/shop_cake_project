@@ -16,7 +16,6 @@ import 'package:shop_cake/src/list_food/components/input_search.dart';
 import 'package:shop_cake/validation/validation.dart';
 
 import '../../../constants/font_size/font_size.dart';
-import '../../cart_page/bloc/list_card_bloc/list_card_cubit.dart';
 
 class ListFoodPage extends StatefulWidget {
   const ListFoodPage({Key? key}) : super(key: key);
@@ -45,9 +44,8 @@ class _ListFoodPageState extends State<ListFoodPage> {
   @override
   void initState() {
     super.initState();
-    saveDeviceToken();
+    // saveDeviceToken();
     // tabController = TabController(length: 4, vsync: this, initialIndex: 0);
-    context.read<CategoryCubit>().getCategory();
 
     FirebaseMessaging.onMessage.listen(firebaseMessagingBackgroundHandler);
 
@@ -71,10 +69,12 @@ class _ListFoodPageState extends State<ListFoodPage> {
             ));
       });
     });
+    _refresh();
   }
 
   Future<void> _refresh() async {
-    await listFoodCubit.getListFood(listFoodCubit.searchController.text);
+     listCategoryCubit.getCategory();
+     listFoodCubit.getListFood(listFoodCubit.searchController.text);
   }
   // Future<void> _refresh() async {
   //   await listFoodCubit.getListFood(listFoodCubit.searchController.text);
@@ -85,10 +85,10 @@ class _ListFoodPageState extends State<ListFoodPage> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => listFoodCubit,
+          create: (_) => listFoodCubit,
         ),
         BlocProvider(
-          create: (context) => listCategoryCubit,
+          create: (_) => listCategoryCubit,
         ),
       ],
       child: Scaffold(

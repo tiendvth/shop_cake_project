@@ -22,9 +22,7 @@ void main() async {
   shared = await SharedPreferences.getInstance();
   Translate.delegate.setShared(shared);
   Log.init();
-  await Firebase.initializeApp(
-    name: DefaultFirebaseConfig.platformOptions.projectId,
-      options: DefaultFirebaseConfig.platformOptions);
+  await Firebase.initializeApp(name: DefaultFirebaseConfig.platformOptions.projectId, options: DefaultFirebaseConfig.platformOptions);
   // Set the background messaging handler early on, as a named top-level function
   // FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
@@ -32,19 +30,21 @@ void main() async {
     await setupFlutterNotifications();
   }
   runApp(
-      WrapperApplication(
-        authService: AuthServiceImpl(shared), child: const MyApp(
-  )));
+    WrapperApplication(
+      authService: AuthServiceImpl(shared),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp>
-    with MaterialAppMixin, LocalizationMixin, ThemeMixin {
+class _MyAppState extends State<MyApp> with MaterialAppMixin, LocalizationMixin, ThemeMixin {
   @override
   String get title => Translate.current.app_title;
 
