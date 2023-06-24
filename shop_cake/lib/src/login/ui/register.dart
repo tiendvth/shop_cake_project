@@ -58,183 +58,185 @@ class _RegisterState extends State<Register> {
             //   create: (context) => loginCubit,
             //   child:
             Stack(
-          children: [
-            const CImage(
-              assetsPath: Assets.imBgLogin,
-              height: double.infinity,
-              width: double.infinity,
-            ),
-            CContainer(
-              height: double.infinity,
-              width: double.infinity,
-              backgroundColor: FontColor.colorText231F20.withOpacity(0.8),
-              borderColor: FontColor.colorText231F20.withOpacity(0.8),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  (AppBar().preferredSize.height + 100).spaceHeight,
-                  CText(
-                    text: "Đăng ký",
-                    textColor: FontColor.colorFFFFFF,
-                    fontWeight: FontWeight.w600,
-                    fontSize: FontSize.fontSize_24,
-                  ),
-                  20.spaceHeight,
-                  CText(
-                    text: "Đăng ký để tiếp tục",
-                    textColor: FontColor.colorFFFFFF,
-                    fontSize: FontSize.fontSize_16,
-                  ),
-                  50.spaceHeight,
-                  CTextFormField(
-                    backgroundColor: FontColor.colorText231F20.withOpacity(0.8),
-                    height: 60,
-                    hintText: 'Số điện thoại',
-                    controller: phoneController,
-                    textInputType: const TextInputType.numberWithOptions(),
-                    onComplete: () {
-                      //FocusManager.instance.primaryFocus?.dispose();
-                    },
-                    contentPadding:
-                        const EdgeInsets.only(top: 21, bottom: 21, left: 24),
-                  ),
-                  40.spaceHeight,
-                  BlocConsumer(
-                      bloc: _authenticationCubit,
-                      listener: (BuildContext context, state) {
-                        if (state is LoadingState) {
-                          effectLoading = false;
-                        }
-                        if (state is LoginSuccess) {
-                          effectLoading = true;
-                        }
-                        if (state is LoginFailure) {
-                          effectLoading = true;
-                        }
+            children: [
+              const CImage(
+                assetsPath: Assets.imBgLogin,
+                height: double.infinity,
+                width: double.infinity,
+              ),
+              CContainer(
+                height: double.infinity,
+                width: double.infinity,
+                backgroundColor: FontColor.colorText231F20.withOpacity(0.8),
+                borderColor: FontColor.colorText231F20.withOpacity(0.8),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    (AppBar().preferredSize.height + 100).spaceHeight,
+                    CText(
+                      text: "Đăng ký",
+                      textColor: FontColor.colorFFFFFF,
+                      fontWeight: FontWeight.w600,
+                      fontSize: FontSize.fontSize_24,
+                    ),
+                    20.spaceHeight,
+                    CText(
+                      text: "Đăng ký để tiếp tục",
+                      textColor: FontColor.colorFFFFFF,
+                      fontSize: FontSize.fontSize_16,
+                    ),
+                    50.spaceHeight,
+                    CTextFormField(
+                      backgroundColor: FontColor.colorText231F20.withOpacity(0.8),
+                      height: 60,
+                      hintText: 'Số điện thoại',
+                      controller: phoneController,
+                      textInputType: const TextInputType.numberWithOptions(),
+                      onComplete: () {
+                        //FocusManager.instance.primaryFocus?.dispose();
                       },
-                      builder: (BuildContext context, state) {
-                        return CButton(
-                          width: double.infinity,
-                          height: 44,
-                          bgColor: FontColor.colorFF3366,
-                          title: 'Tiếp tục',
-                          radius: 8,
-                          fontSize: FontSize.fontSize_16,
-                          fontWeight: FontWeight.w600,
-                          fontColor: FontColor.colorFFFFFF,
-                          checkLoading: effectLoading,
-                          onPressed: () async {
-                            // _authenticationCubit.login(emailController.text, pwdController.text, context);
-                            if (phoneController.text.split(' ').isEmpty) {
-                              showDialogMessage(
-                                  context, 'Vui lòng nhập số điện thoại',
-                                  checkBack: false);
-                            } else if (phoneController.text.isEmpty) {
-                              showDialogMessage(
-                                  context, 'Vui lòng nhập số điện thoại',
-                                  checkBack: false);
-                            } else if (phoneController.text.split(' ').length >
-                                    9 &&
-                                phoneController.text.split(' ').length < 11) {
-                              showDialogMessage(context,
-                                  'Vui lòng nhập đúng định dạng số điện thoại',
-                                  checkBack: false);
-                            } else {
-                              final phoneString =
-                                  phoneController.text.replaceFirst("0", "+84");
-                              try {
-                                showLoading(context);
-                                final result =
-                                    await userRepository.register(phoneString);
-
-                                closeLoading(context);
-                                if ((result as Response).statusCode == 200) {
-                                  NavigatorManager.push(
-                                      context,
-                                      OtpPage(
-                                        phone: phoneString,
-                                      ));
-                                }
-                              } catch (error) {
-                                closeLoading(context);
-                                showDialogMessage(context,
-                                    "Đã có sự cố xảy ra vui lòng thử lại",
+                      contentPadding:
+                          const EdgeInsets.only(top: 21, bottom: 21, left: 24),
+                    ),
+                    40.spaceHeight,
+                    BlocConsumer(
+                        bloc: _authenticationCubit,
+                        listener: (BuildContext context, state) {
+                          if (state is LoadingState) {
+                            effectLoading = false;
+                          }
+                          if (state is LoginSuccess) {
+                            effectLoading = true;
+                          }
+                          if (state is LoginFailure) {
+                            effectLoading = true;
+                          }
+                        },
+                        builder: (BuildContext context, state) {
+                          return CButton(
+                            width: double.infinity,
+                            height: 44,
+                            bgColor: FontColor.colorFF3366,
+                            title: 'Tiếp tục',
+                            radius: 8,
+                            fontSize: FontSize.fontSize_16,
+                            fontWeight: FontWeight.w600,
+                            fontColor: FontColor.colorFFFFFF,
+                            checkLoading: effectLoading,
+                            onPressed: () async {
+                              // _authenticationCubit.login(emailController.text, pwdController.text, context);
+                              if (phoneController.text.split(' ').isEmpty) {
+                                showDialogMessage(
+                                    context, 'Vui lòng nhập số điện thoại',
                                     checkBack: false);
+                              } else if (phoneController.text.isEmpty) {
+                                showDialogMessage(
+                                    context, 'Vui lòng nhập số điện thoại',
+                                    checkBack: false);
+                              } else if (phoneController.text.split(' ').length >
+                                      9 &&
+                                  phoneController.text.split(' ').length < 11) {
+                                showDialogMessage(context,
+                                    'Vui lòng nhập đúng định dạng số điện thoại',
+                                    checkBack: false);
+                              } else {
+                                final phoneString =
+                                    phoneController.text.replaceFirst("0", "+84");
+                                try {
+                                  showLoading(context);
+                                  final result =
+                                      await userRepository.register(phoneString);
+
+                                  closeLoading(context);
+                                  if ((result as Response).statusCode == 200) {
+                                    NavigatorManager.push(
+                                        context,
+                                        OtpPage(
+                                          phone: phoneString,
+                                        ));
+                                  }
+                                } catch (error) {
+                                  closeLoading(context);
+                                  showDialogMessage(context,
+                                      "Đã có sự cố xảy ra vui lòng thử lại",
+                                      checkBack: false);
+                                }
                               }
-                            }
-                          },
-                        );
-                      }),
-                  40.spaceHeight,
-                  Center(
-                    child: RichText(
-                      text: TextSpan(
-                        style: TextStyle(
-                          fontSize: FontSize.fontSize_16,
-                          fontWeight: FontWeight.w400,
-                          color: FontColor.colorFFFFFF,
+                            },
+                          );
+                        }),
+                    40.spaceHeight,
+                    Center(
+                      child: RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            fontSize: FontSize.fontSize_16,
+                            fontWeight: FontWeight.w400,
+                            color: FontColor.colorFFFFFF,
+                          ),
+                          children: [
+                            TextSpan(
+                                text: Translate.of(context).dont_have_an_account),
+                            TextSpan(
+                                text:
+                                    '  ${Translate.of(context).sign_in.toUpperCase()}'),
+                          ],
                         ),
-                        children: [
-                          TextSpan(
-                              text: Translate.of(context).dont_have_an_account),
-                          TextSpan(
-                              text:
-                                  '  ${Translate.of(context).sign_in.toUpperCase()}'),
-                        ],
                       ),
                     ),
-                  ),
-                  20.spaceHeight,
-                  SizedBox(
+                    20.spaceHeight,
+                    SizedBox(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          BlocBuilder<LoginGoogleCubit, LoginGoogleState>(
-                            builder: (context, state) {
-                              return InkWell(
-                                onTap: () async {
-                                  await context.read<LoginGoogleCubit>().signInWithGoogle();
-                                  // ignore: use_build_context_synchronously
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => AppHome())
-                                  );
-                                  // ignore: use_build_context_synchronously
-                                },
-                                child:  CImage(
-                                  assetsPath: Assets.icGoogle,
-                                  height: 24,
-                                  width: 24,
-                                  color: FontColor.bgcolorFFFFFF,
-                                ),
-                              );
-                            },
-                          ),
-                          20.spaceWidth,
-                          CImage(
-                            assetsPath: Assets.icFb,
-                            height: 24,
-                            width: 24,
-                            color: FontColor.bgcolorFFFFFF,
-                          ),
-                          20.spaceWidth,
-                          CImage(
-                            assetsPath: Assets.icApple,
-                            height: 24,
-                            width: 24,
-                            color: FontColor.bgcolorFFFFFF,
-                          ),
-                        ],
-                      ))
-                ],
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        BlocBuilder<LoginGoogleCubit, LoginGoogleState>(
+                          builder: (context, state) {
+                            return InkWell(
+                              onTap: () async {
+                                await context
+                                    .read<LoginGoogleCubit>()
+                                    .signInWithGoogle();
+                                // ignore: use_build_context_synchronously
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AppHome()));
+                                // ignore: use_build_context_synchronously
+                              },
+                              child: CImage(
+                                assetsPath: Assets.icGoogle,
+                                height: 24,
+                                width: 24,
+                                color: FontColor.bgcolorFFFFFF,
+                              ),
+                            );
+                          },
+                        ),
+                        20.spaceWidth,
+                        CImage(
+                          assetsPath: Assets.icFb,
+                          height: 24,
+                          width: 24,
+                          color: FontColor.bgcolorFFFFFF,
+                        ),
+                        20.spaceWidth,
+                        CImage(
+                          assetsPath: Assets.icApple,
+                          height: 24,
+                          width: 24,
+                          color: FontColor.bgcolorFFFFFF,
+                        ),
+                      ],
+                      )
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
         ),
       ),
       //),

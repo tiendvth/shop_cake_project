@@ -33,7 +33,7 @@ void main() async {
   }
   runApp(
       WrapperApplication(
-      authService: AuthServiceImpl(shared), child: const MyApp(
+        authService: AuthServiceImpl(shared), child: const MyApp(
   )));
 }
 
