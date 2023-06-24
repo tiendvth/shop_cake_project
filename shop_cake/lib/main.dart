@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> with MaterialAppMixin, LocalizationMixin,
 
   @override
   Widget get home => AuthConsumer(
-        isAuth: false,
+        isAuth: true,
         home: () => const AppHome(),
         login: () => const Login(
           openLogin: AuthenticationStatus.authenticated,

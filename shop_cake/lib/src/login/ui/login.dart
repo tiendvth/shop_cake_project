@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,6 @@ import 'package:shop_cake/src/home_page/ui/home_page.dart';
 import 'package:shop_cake/src/login/bloc/authentication_cubit.dart';
 import 'package:shop_cake/src/login/bloc/login_google_cubit.dart';
 import 'package:shop_cake/src/login/repository/user_repository.dart';
-import 'package:shop_cake/src/login/ui/otp_page.dart';
 import 'package:shop_cake/src/login/ui/register.dart';
 import 'package:shop_cake/utils/utils.dart';
 import 'package:shop_cake/widgets/c_button.dart';
@@ -33,7 +31,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _authenticationCubit = AuthenticationCubit();
   final userRepository = UserRepositoryImpl();
-  final phoneController = TextEditingController();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
   late bool effectLoading;
 
   @override
@@ -44,7 +43,8 @@ class _LoginState extends State<Login> {
 
   @override
   void dispose() {
-    phoneController.dispose();
+    usernameController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -96,9 +96,19 @@ class _LoginState extends State<Login> {
                     50.spaceHeight,
                     CTextFormField(
                       backgroundColor: FontColor.colorText231F20.withOpacity(0.8),
-                      hintText: 'Số điện thoại',
-                      controller: phoneController,
-                      textInputType: const TextInputType.numberWithOptions(),
+                      hintText: 'Tên đăng nhập',
+                      controller: usernameController,
+                      onComplete: () {
+                        //FocusManager.instance.primaryFocus?.dispose();
+                      },
+                      contentPadding: const EdgeInsets.only(top: 12, bottom: 12, left: 24),
+                    ),
+                    20.spaceHeight,
+                    CTextFormField(
+                      obscureText: true,
+                      backgroundColor: FontColor.colorText231F20.withOpacity(0.8),
+                      hintText: 'Mật khẩu',
+                      controller: passwordController,
                       onComplete: () {
                         //FocusManager.instance.primaryFocus?.dispose();
                       },
@@ -131,26 +141,31 @@ class _LoginState extends State<Login> {
                             checkLoading: effectLoading,
                             onPressed: () async {
                               // _authenticationCubit.login(emailController.text, pwdController.text, context);
-                              if (phoneController.text.split(' ').isEmpty) {
+                              if (usernameController.text.split(' ').isEmpty ) {
                                 showDialogMessage(context, 'Vui lòng nhập số điện thoại', checkBack: false);
-                              } else if (phoneController.text.isEmpty) {
+                              } else if (usernameController.text.isEmpty) {
                                 showDialogMessage(context, 'Vui lòng nhập số điện thoại', checkBack: false);
-                              } else if (phoneController.text.split(' ').length > 9 && phoneController.text.split(' ').length < 11) {
-                                showDialogMessage(context, 'Vui lòng nhập đúng định dạng số điện thoại', checkBack: false);
-                              } else {
-                                final phoneString = phoneController.text.replaceFirst("0", "+84");
+                              }
+                              if (passwordController.text.isEmpty) {
+                                showDialogMessage(context, 'Vui lòng nhập mật khẩu', checkBack: false);
+                              }
+                              // else if (usernameController.text.split(' ').length > 9 && usernameController.text.split(' ').length < 11) {
+                              //   showDialogMessage(context, 'Vui lòng nhập đúng định dạng số điện thoại', checkBack: false);
+                              // }
+                              else {
+                                final usernameString = usernameController.text;
+                                final passwordString = passwordController.text;
                                 try {
                                   showLoading(context);
-                                  final result = await userRepository.login(phoneString);
+                                  final result = await userRepository.login(usernameString, passwordString);
 
                                   closeLoading(context);
                                   if ((result as Response).statusCode == 200) {
                                     // ignore: use_build_context_synchronously
                                     NavigatorManager.push(
                                         context,
-                                        OtpPage(
-                                          phone: phoneString,
-                                          loginBoolean: true,
+                                        HomePage(
+                                          openLogin: widget.openLogin,
                                         ));
                                   }
                                 } catch (error) {
@@ -164,7 +179,7 @@ class _LoginState extends State<Login> {
                     40.spaceHeight,
                     GestureDetector(
                       onTap: () {
-                        NavigatorManager.push(context, Register());
+                        NavigatorManager.push(context, const Register());
                       },
                       child: Center(
                         child: Text(
