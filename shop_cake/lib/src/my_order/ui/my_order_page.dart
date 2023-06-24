@@ -40,10 +40,8 @@ class _MyOrderPageState extends State<MyOrderPage> {
                 child: Column(
                   children: [
                     Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                       decoration: BoxDecoration(
                           border: Border.all(width: 0.5),
                           borderRadius: BorderRadius.circular(8)),
@@ -57,18 +55,18 @@ class _MyOrderPageState extends State<MyOrderPage> {
                             ),
                           ),
                           items: context
-                              .read<MyOrderCubit>()
-                              .items
-                              .map((item) => DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Text(
-                                      item,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ))
-                              .toList(),
+                            .read<MyOrderCubit>()
+                            .items
+                            .map((item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ))
+                            .toList(),
                           value: context.read<MyOrderCubit>().selectedValue,
                           onChanged: (value) {
                             context.read<MyOrderCubit>().selectedValue =

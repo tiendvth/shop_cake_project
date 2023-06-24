@@ -17,7 +17,7 @@ class AuthenRepositoryImpl implements AuthenRepository {
   @override
   Future<Map<String, dynamic>> login(String username, String password) async {
     final result = await _dio.post(
-      "/api/v1/accounts/login",
+      "api/auth/signin",
       data: {
         "username": username,
         "password": password,
