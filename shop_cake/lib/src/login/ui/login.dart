@@ -6,7 +6,6 @@ import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/font_size/font_size.dart';
 import 'package:shop_cake/generated/l10n.dart';
 import 'package:shop_cake/src/app_home.dart';
-import 'package:shop_cake/src/home_page/ui/home_page.dart';
 import 'package:shop_cake/src/login/bloc/authentication_cubit.dart';
 import 'package:shop_cake/src/login/bloc/login_google_cubit.dart';
 import 'package:shop_cake/src/login/repository/user_repository.dart';
@@ -21,8 +20,9 @@ import 'package:shop_cake/widgets/space_extention.dart';
 
 class Login extends StatefulWidget {
   final AuthenticationStatus? openLogin;
+  final bool? isLogin;
 
-  const Login({Key? key, this.openLogin}) : super(key: key);
+  const Login({Key? key, this.openLogin, this.isLogin}) : super(key: key);
 
   @override
   _LoginState createState() => _LoginState();
@@ -141,7 +141,7 @@ class _LoginState extends State<Login> {
                             checkLoading: effectLoading,
                             onPressed: () async {
                               // _authenticationCubit.login(emailController.text, pwdController.text, context);
-                              if (usernameController.text.split(' ').isEmpty ) {
+                              if (usernameController.text.split(' ').isEmpty) {
                                 showDialogMessage(context, 'Vui lòng nhập số điện thoại', checkBack: false);
                               } else if (usernameController.text.isEmpty) {
                                 showDialogMessage(context, 'Vui lòng nhập số điện thoại', checkBack: false);
@@ -155,22 +155,37 @@ class _LoginState extends State<Login> {
                               else {
                                 final usernameString = usernameController.text;
                                 final passwordString = passwordController.text;
+                                showLoading(context);
                                 try {
-                                  showLoading(context);
-                                  final result = await userRepository.login(usernameString, passwordString);
+                                  if (widget.isLogin == false) {
+                                    final result = await userRepository.login(usernameString, passwordString);
 
-                                  closeLoading(context);
-                                  if ((result as Response).statusCode == 200) {
-                                    // ignore: use_build_context_synchronously
-                                    NavigatorManager.push(
-                                        context,
-                                        HomePage(
-                                          openLogin: widget.openLogin,
-                                        ));
+                                    closeLoading(context);
+                                    context.read<AuthenticationBloc>().add(
+                                          AppLoginSuccessEvent(
+                                            {"accessToken": result['accessToken'], "refreshToken": result['refreshToken']},
+                                          ),
+                                        );
+                                  } else {
+                                    final result = await userRepository.login(usernameString, passwordString);
+                                    if (result != null) {
+                                      print('AppLoginSuccessEvent: $result');
+                                      closeLoading(context);
+                                      context.read<AuthenticationBloc>().add(
+                                        AppLoginSuccessEvent(
+                                          {"accessToken": result['accessToken'], "refreshToken": result['refreshToken']},
+                                        ),
+                                      );
+                                    }
                                   }
-                                } catch (error) {
+                                } catch (e) {
+                                  print('AppLoginFailureEvent: $e');
                                   closeLoading(context);
-                                  showDialogMessage(context, "Tài khoản của bạn chưa được đăng ký", checkBack: false);
+                                  showDialogMessage(
+                                    context,
+                                    "Đã có lỗi xảy ra bui lòng thử lại",
+                                    checkBack: false,
+                                  );
                                 }
                               }
                             },
@@ -218,13 +233,9 @@ class _LoginState extends State<Login> {
                               onTap: () async {
                                 await context.read<LoginGoogleCubit>().signInWithGoogle();
                                 // ignore: use_build_context_synchronously
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => AppHome())
-                                );
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => AppHome()));
                               },
-                              child:  CImage(
+                              child: CImage(
                                 assetsPath: Assets.icGoogle,
                                 height: 24,
                                 width: 24,
@@ -234,7 +245,7 @@ class _LoginState extends State<Login> {
                           },
                         ),
                         20.spaceWidth,
-                         CImage(
+                        CImage(
                           assetsPath: Assets.icFb,
                           height: 24,
                           width: 24,
