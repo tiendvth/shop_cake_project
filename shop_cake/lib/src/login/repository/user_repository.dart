@@ -21,7 +21,7 @@ class UserRepositoryImpl implements UserRepository {
         "password": password,
       });
      if (result.statusCode == 200) {
-        return result;
+        return result.data as Map<String, dynamic>;
       } else {
         throw Exception('Failed to load data!');
       }

@@ -20,7 +20,7 @@ class ListFoodCubit extends Cubit<ListFoodState> {
       emit(ListFoodLoading());
       var data = await _foodRepository.listFood(search);
       if (data != null){
-        emit(ListFoodSuccess(data['data']['content']));
+        emit(ListFoodSuccess(data['data']));
       } else {
         emit(ListFoodFailure('Backend error 403'));
       }
