@@ -29,7 +29,6 @@ class _ListFoodPageState extends State<ListFoodPage> {
   final listCategoryCubit = CategoryCubit();
   final homeRepository = HomeRepositoryImpl(apiProvider);
 
-
   get state => null;
 
   saveDeviceToken() async {
@@ -76,6 +75,7 @@ class _ListFoodPageState extends State<ListFoodPage> {
      listCategoryCubit.getCategory();
      listFoodCubit.getListFood(listFoodCubit.searchController.text);
   }
+
   // Future<void> _refresh() async {
   //   await listFoodCubit.getListFood(listFoodCubit.searchController.text);
   // }
@@ -116,25 +116,27 @@ class _ListFoodPageState extends State<ListFoodPage> {
             ),
             listFoodCubit: listFoodCubit,
         ),
-          SizedBox(height: 20,
+          SizedBox(
+            height: 10,
           ),
           BlocBuilder<CategoryCubit, CategoryState>(
             builder: (context, state) {
               if (state is CategorySuccess) {
+                // print('state: $state');
                 return SizedBox(
-                  height: 100,
+                  height: 40,
                   child: ListView.builder(
                     shrinkWrap: true,
-                    // itemCount: state.data.length,
-                    itemCount: 10,
+                    itemCount: state.data.length,
+                    // itemCount: 10,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.only(left: 15),
+                        padding: const EdgeInsets.only(left: 15, right: 15),
                         child: CategoryItem(
                           // imageUrl: state.data[index]['image'],
-                          // title: state.data[index]['title'],
-                          title: 'category1',
+                          title: state.data[index]['name'],
+                          // title: 'category',
                         ),
                       );
                     },
@@ -158,23 +160,20 @@ class _ListFoodPageState extends State<ListFoodPage> {
                         CupertinoSliverRefreshControl(
                             onRefresh: _refresh),
                         SliverGrid(
-                          gridDelegate:
-                          SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent:
-                              MediaQuery.of(context).size.height / 3,
+                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: MediaQuery.of(context).size.height / 3,
                               childAspectRatio: 0.83,
-                              crossAxisSpacing: 5,
+                              crossAxisSpacing: 10,
                               mainAxisSpacing: 10),
-                          delegate: SliverChildBuilderDelegate(
-                                (BuildContext context, int index) {
+                              delegate: SliverChildBuilderDelegate(
+                                    (BuildContext context, int index) {
                               return Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(
                                       4),
                                   boxShadow: <BoxShadow>[
                                     BoxShadow(
-                                      color:
-                                      Colors.grey.withOpacity(0.5),
+                                      color: Colors.grey.withOpacity(0.5),
                                       blurRadius: 5,
                                       offset: const Offset(1, 4))
                                   ],
@@ -184,8 +183,9 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                     NavigatorManager.pushFullScreen(
                                       context,
                                       DetailFood(
-                                        id: stateListCake.data[index]['id'] ?? '',
-                                      ));
+                                        id: stateListCake.data['result'][index]['id'] ?? '',
+                                      )
+                                    );
                                   },
                                   child: Column(
                                     crossAxisAlignment:
@@ -198,23 +198,22 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                             CrossAxisAlignment.start,
                                             children: [
                                               SizedBox(
-                                                height: 100,
+                                                height: 95,
                                                 width: double.infinity,
                                                 child: ClipRRect(
                                                   borderRadius:
                                                   BorderRadius.circular(
                                                       4),
                                                   child: Image.network(
-                                                    stateListCake
-                                                        .data['image'],
-                                                    width: double
-                                                        .infinity,
+                                                    // stateListCake.data['result'][index]['image'],
+                                                    'http://103.187.5.254:8090/api/files/files/photo1678701206.jpeg',
+                                                    width: double.infinity,
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),
                                               ),
                                               const SizedBox(
-                                                height: 20,
+                                                height: 10,
                                               ),
                                               Padding(
                                                 padding:
@@ -222,46 +221,36 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                                     left: 10,
                                                     right: 10),
                                                 child: Column(
-                                                  crossAxisAlignment:
-                                                  CrossAxisAlignment
-                                                      .start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(stateListCake
-                                                        .data),
                                                     Text(
-                                                      '${stateListCake
-                                                          .data[index]['name'] ??
-                                                          ''}',
+                                                        stateListCake.data['result'][index]['name'],
+                                                        // stateListCake.data,
+                                                    ),
+                                                    Text(
+                                                      stateListCake.data['result'][index]['name'],
+                                                      // '${stateListCake.data[index]['name'] ?? ''}',
                                                       maxLines: 1,
-                                                      overflow: TextOverflow
-                                                          .ellipsis,
+                                                      overflow: TextOverflow.ellipsis,
                                                       style:
                                                       const TextStyle(
                                                         fontSize: 14,
-                                                        fontWeight:
-                                                        FontWeight.w700,
-                                                        color: Color(
-                                                            0xff231F20),
+                                                        fontWeight: FontWeight.w700,
+                                                        color: Color(0xff231F20),
                                                       ),
                                                     ),
                                                     const SizedBox(
                                                       height: 2,
                                                     ),
                                                     Text(
-                                                      '${Validation.oCcy
-                                                          .format(
-                                                          stateListCake
-                                                              .data[index]['price'] ??
-                                                              0)} đ',
+                                                      '${Validation.oCcy.format(stateListCake.data['result'][index]['price'] ?? 0)} đ',
                                                       maxLines: 1,
-                                                      overflow: TextOverflow
-                                                          .ellipsis,
+                                                      overflow: TextOverflow.ellipsis,
                                                       style: TextStyle(
                                                         fontWeight:
                                                         FontWeight.w400,
                                                         fontSize: 12,
-                                                        color: FontColor
-                                                            .colorEC222D,
+                                                        color: FontColor.colorEC222D,
                                                       ),
                                                     ),
                                                     const SizedBox(
@@ -272,11 +261,10 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                                         RatingBar.builder(
                                                           initialRating: 5,
                                                           minRating: 1,
-                                                          direction: Axis
-                                                              .horizontal,
+                                                          direction: Axis.horizontal,
                                                           ignoreGestures:
                                                           true,
-                                                          itemCount: 5,
+                                                          itemCount: stateListCake.data.length,
                                                           itemSize: 10,
                                                           itemPadding:
                                                           const EdgeInsets
@@ -288,8 +276,7 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                                               _) =>
                                                           const Icon(
                                                             Icons.star,
-                                                            color: Colors
-                                                                .amber,
+                                                            color: Colors.amber,
                                                           ),
                                                           onRatingUpdate:
                                                               (rating) {},
@@ -300,9 +287,7 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                                             'testStatus',
                                                             textAlign: TextAlign.end,
                                                             style: TextStyle(
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .w400,
+                                                              fontWeight: FontWeight.w400,
                                                               fontSize: 10,
                                                               // color: state.data[index]['status'] == "ACTIVE" ? Colors.green : Colors.deepOrange,
                                                             ),
@@ -354,8 +339,9 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                 ),
                               );
                             },
-                            // childCount: state.data.length ?? 0,
-                            childCount: 1,
+                            // childCount: stateListCake.data != null ? stateListCake.data.length : 0,
+                                  childCount: stateListCake.data.length,
+                            // childCount: 10,
                           ),
                         ),
                       ],

@@ -7,24 +7,30 @@ class CategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
-      width: 100,
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      height: 40,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.red,
         border: Border.all(color: Colors.grey),
       ),
-      child:  Column(
+      child:  Row(
         children: [
-          Image.network(
-            imageUrl ?? '',
-            height: 40,
-            width: 40,
-            fit: BoxFit.cover,
-          ),
+          // Image.network(imageUrl ?? '',
+          //   height: 40,
+          //   width: 40,
+          //   fit: BoxFit.cover,
+          // ),
           Text(
             title ?? '',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+
+            style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.normal,
+                color: Colors.white
+
+            ),
           ),
         ],
       ),

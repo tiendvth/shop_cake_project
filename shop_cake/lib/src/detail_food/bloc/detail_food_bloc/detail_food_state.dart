@@ -1,7 +1,9 @@
 part of 'detail_food_cubit.dart';
 
 @immutable
-abstract class DetailFoodState {}
+abstract class DetailFoodState {
+  get data => null;
+}
 
 class DetailFoodInitial extends DetailFoodState {}
 

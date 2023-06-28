@@ -35,7 +35,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
             MyOrderCubit(MyOderRepositoryImpl(apiProvider)),
         child: BlocBuilder<MyOrderCubit, MyOrderState>(
           builder: (context, state) {
-            if (state is MyOrderSuccess) {
+            // if (state is MyOrderSuccess) {
               return SingleChildScrollView(
                 child: Column(
                   children: [
@@ -84,7 +84,8 @@ class _MyOrderPageState extends State<MyOrderPage> {
                       child: ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: state.data['data']['content'].length ?? 0,
+                        // itemCount: state.data['data']['content'].length ?? 0,
+                        itemCount: 5,
                         itemBuilder: (BuildContext context, index) {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,7 +97,8 @@ class _MyOrderPageState extends State<MyOrderPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Mã đơn hàng:${state.data['data']['content'][index]['id'] ?? ''}',
+                                      // 'Mã đơn hàng:${state.data['data']['content'][index]['id'] ?? ''}',
+                                      'Mã đơn hàng: 123',
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 18,
@@ -104,13 +106,15 @@ class _MyOrderPageState extends State<MyOrderPage> {
                                     ),
                                     2.spaceHeight,
                                     Text(
-                                      '${state.data['data']['content'][index]['status'] ?? ""}',
+                                      // '${state.data['data']['content'][index]['status'] ?? ""}',
+                                      'Mã đơn hàng:123',
                                       style: const TextStyle(
                                           fontSize: 14, color: Colors.green),
                                     ),
                                     2.spaceHeight,
                                     Text(
-                                      'Tổng tiền: ${Validation.oCcy.format(state.data['data']['content'][index]['totalPrice'] ?? 0)} đ',
+                                      // 'Tổng tiền: ${Validation.oCcy.format(state.data['data']['content'][index]['totalPrice'] ?? 0)} đ',
+                                      'Tổng tiền: 123 đ',
                                       style: const TextStyle(
                                           fontSize: 14, color: Colors.black),
                                     ),
@@ -127,11 +131,12 @@ class _MyOrderPageState extends State<MyOrderPage> {
                                         2.spaceWidth,
                                         Expanded(
                                           child: Text(
-                                            state.data['data']['content'][index]
-                                                        ['createdAt'] !=
-                                                    null
-                                                ? '${parserTime(state.data['data']['content'][index]['createdAt'] ?? "")}'
-                                                : '',
+                                            // state.data['data']['content'][index]
+                                            //             ['createdAt'] !=
+                                            //         null
+                                            //     ? '${parserTime(state.data['data']['content'][index]['createdAt'] ?? "")}'
+                                            //     : '',
+                                            "content",
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 12,
@@ -155,10 +160,11 @@ class _MyOrderPageState extends State<MyOrderPage> {
                                       onPressed: () {
                                         NavigatorManager.push(
                                             context, DetailMyOrder(
-                                                        id: state.data['data']
-                                                                    ['content']
-                                                                [index]['id'] ??
-                                                            '')).then((value) => context.read<MyOrderCubit>().getListOrder());
+                                                // id: state.data['data']['content'][index]['id'] ?? ''
+                                                id: 1
+                                              )
+                                            ).then((value) => context.read<MyOrderCubit>().getListOrder()
+                                        );
                                       },
                                       child: const Text(
                                         'Xem chi tiết',
@@ -183,20 +189,20 @@ class _MyOrderPageState extends State<MyOrderPage> {
                   ],
                 ),
               );
-            } else if (state is MyOrderFailure) {
-              return Center(
-                child: Text(
-                  state.message,
-                  style: TextStyle(fontSize: 16, color: FontColor.color212121),
-                ),
-              );
-              // return Center(
-              //   child: Text(
-              //     state.message,
-              //     style: TextStyle(fontSize: 16, color: FontColor.color212121),
-              //   ),
-              // );
-            }
+            // } else if (state is MyOrderFailure) {
+            //   return Center(
+            //     child: Text(
+            //       state.message,
+            //       style: TextStyle(fontSize: 16, color: FontColor.color212121),
+            //     ),
+            //   );
+            //   // return Center(
+            //   //   child: Text(
+            //   //     state.message,
+            //   //     style: TextStyle(fontSize: 16, color: FontColor.color212121),
+            //   //   ),
+            //   // );
+            // }
             return const Center(child: CircularProgressIndicator());
           },
         ),

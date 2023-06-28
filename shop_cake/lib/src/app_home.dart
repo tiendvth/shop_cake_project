@@ -10,7 +10,9 @@ import 'my_order/ui/my_order_page.dart';
 
 
 class AppHome extends StatefulWidget {
-  const AppHome({Key? key}) : super(key: key);
+  final AuthenticationStatus? openLogin;
+
+  const AppHome({Key? key, this.openLogin}) : super(key: key);
 
   @override
   State<AppHome> createState() => _AppHomeState();
