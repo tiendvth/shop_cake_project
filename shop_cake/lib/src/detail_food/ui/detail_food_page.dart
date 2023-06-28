@@ -11,10 +11,12 @@ import 'package:shop_cake/widgets/space_extention.dart';
 
 class DetailFood extends StatelessWidget {
   final id;
+  final detail;
 
   DetailFood({
     Key? key,
     required this.id,
+    required this.detail
   }) : super(key: key);
 
   final CountDishCubit _countDishCubit = CountDishCubit();

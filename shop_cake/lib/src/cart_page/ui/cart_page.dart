@@ -102,7 +102,8 @@ class _CartPageState extends State<CartPage> {
                                       ),
                                       CText(
                                         text:
-                                            '${Validation.oCcy.format(state.totalPrice ?? 0)}',
+                                        // '${Validation.oCcy.format(state.totalPrice ?? 0)}',
+                                        '5',
                                         fontSize: FontSize.fontSize_16,
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -160,7 +161,8 @@ class _CartPageState extends State<CartPage> {
                                       ),
                                       CText(
                                         text:
-                                            '${Validation.oCcy.format(state.totalPrice ?? 0)} đ',
+                                            // '${Validation.oCcy.format(state.totalPrice ?? 0)} đ',
+                                        '0 đ',
                                         fontSize: FontSize.fontSize_18,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -175,7 +177,7 @@ class _CartPageState extends State<CartPage> {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(24, 40, 24, 15),
+                          padding: const EdgeInsets.fromLTRB(24, 20, 24, 15),
                           child: CText(
                             text: 'Tổng danh sách món',
                             fontSize: FontSize.fontSize_20,
@@ -186,7 +188,7 @@ class _CartPageState extends State<CartPage> {
                       ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          print(state.data[index]['quantity']);
+                          // print(state.data[index]['quantity']);
                           return Align(
                             alignment: Alignment.topLeft,
                             child: Padding(
@@ -203,7 +205,8 @@ class _CartPageState extends State<CartPage> {
                                         width: 110,
                                         height: 110,
                                         child: Image.network(
-                                          '${state.data[index]['images'] ?? 'https://img.freepik.com/free-vector/thai-cuisine-food-flat-illustration_1284-74042.jpg?w=826&t=st=1662447770~exp=1662448370~hmac=d1eb58a73a830be233671c2c08232da012f7faca37554705b8971f4cb723fffa'}',
+                                          // '${state.data[index]['images'] ?? 'https://img.freepik.com/free-vector/thai-cuisine-food-flat-illustration_1284-74042.jpg?w=826&t=st=1662447770~exp=1662448370~hmac=d1eb58a73a830be233671c2c08232da012f7faca37554705b8971f4cb723fffa'}',
+                                          'https://img.freepik.com/free-vector/thai-cuisine-food-flat-illustration_1284-74042.jpg?w=826&t=st=1662447770~exp=1662448370~hmac=d1eb58a73a830be233671c2c08232da012f7faca37554705b8971f4cb723fffa',
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -214,7 +217,8 @@ class _CartPageState extends State<CartPage> {
                                           children: [
                                             CText(
                                               text:
-                                                  '${state.data[index]['name'] ?? 'vi cá mập'}',
+                                                  // '${state.data[index]['name'] ?? 'vi cá mập'}',
+                                              'vi cá mập',
                                               fontSize: FontSize.fontSize_16,
                                               fontWeight: FontWeight.w500,
                                               maxLine: 1,
@@ -232,7 +236,9 @@ class _CartPageState extends State<CartPage> {
                                                 Padding(
                                                   padding: EdgeInsets.only(left: 5),
                                                   child: CText(
-                                                    text: '${state.data[index]['quantity'] ?? 0}',
+                                                    text:
+                                                    // '${state.data[index]['quantity'] ?? 0}',
+                                                    '0',
                                                     fontSize: FontSize.fontSize_12,
                                                     fontWeight: FontWeight.w400,
                                                   ),
@@ -254,7 +260,9 @@ class _CartPageState extends State<CartPage> {
                                                   padding:
                                                       EdgeInsets.only(left: 5),
                                                   child: CText(
-                                                    text: '${Validation.oCcy.format(state.data[index]['unitPrice'] ?? 0)} đ',
+                                                    text:
+                                                    // '${Validation.oCcy.format(state.data[index]['unitPrice'] ?? 0)} đ',
+                                                    '0 đ',
                                                     fontSize: FontSize.fontSize_14,
                                                     fontWeight: FontWeight.w500,
                                                   ),
@@ -273,9 +281,7 @@ class _CartPageState extends State<CartPage> {
                                                   height: 22,
                                                   width: 100,
                                                   decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              30),
+                                                      borderRadius: BorderRadius.circular(30),
                                                       color: Colors.redAccent),
                                                   child: Row(
                                                     mainAxisAlignment:
@@ -284,22 +290,21 @@ class _CartPageState extends State<CartPage> {
                                                     children: [
                                                       IconButton(
                                                         onPressed: () {
-                                                          final count =
-                                                              state.data[index]
-                                                                  ['quantity'];
+                                                          // final count = state.data[index]['quantity'];
+                                                          final count = 0;
                                                           final quantity =
                                                               count - 1;
                                                           if (quantity == 0) {
                                                             listCardCubit
                                                                 .removeFood(
                                                                     context,
-                                                                    state.data[
-                                                                            index]
-                                                                        ['id']
+                                                                    // state.data[index]['id']
+                                                                    1
                                                             );
                                                           } else {
                                                             listCardCubit.addFood(context,
-                                                                state.data[index]['id'],
+                                                                // state.data[index]['id'],
+                                                                1,
                                                                 quantity
                                                             );
                                                           }
@@ -312,12 +317,13 @@ class _CartPageState extends State<CartPage> {
                                                       ),
                                                       IconButton(
                                                         onPressed: () {
-                                                          final count =
-                                                              state.data[index]['quantity'];
+                                                          // final count = state.data[index]['quantity'];
+                                                          final count = 0;
                                                           final quantity = count + 1;
                                                           listCardCubit.addFood(
                                                               context,
-                                                              state.data[index]['id'],
+                                                              // state.data[index]['id'],
+                                                              1,
                                                               quantity
                                                           );
                                                         },
@@ -387,8 +393,7 @@ class _CartPageState extends State<CartPage> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      24, AppBar().preferredSize.height + 90, 24, 0),
+                  padding: EdgeInsets.fromLTRB(24, AppBar().preferredSize.height + 90, 24, 0),
                   child: Container(
                     height: 130,
                     width: double.infinity,
