@@ -15,7 +15,7 @@ class DetailFoodRepositoryImpl implements DetailFoodRepository {
 
   @override
   Future<Map<String, dynamic>> detailFood(int? id) async {
-    final respone = await _dio.get('/api/v1/foods/${id}');
+    final respone = await _dio.get('/api/cake/findById/${id}');
     print("-----------------------------${respone.statusCode}");
     return respone.data as Map<String, dynamic>;
   }

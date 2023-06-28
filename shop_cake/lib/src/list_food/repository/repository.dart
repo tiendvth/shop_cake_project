@@ -22,7 +22,8 @@ class ListFoodRepositoryImpl implements ListFoodRepository {
         "name": "",
         "size": 10,
         "page": 1,
-        "priceTo": 10,
+        "priceTo": 1000,
+        "priceFrom": 10,
         "token": "${_authService.getAccessToken()}"
       };
       final respone = await _dio.post(

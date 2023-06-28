@@ -17,11 +17,12 @@ class CategoryCubit extends Cubit<CategoryState> {
   get search => null;
 
   Future<void> getCategory() async{
+
     try {
       emit(CategoryLoading());
       var data = await _foodRepository.listCategory(search);
       if (data != null){
-        emit(CategorySuccess(data['data']['content']));
+        emit(CategorySuccess(data['data']['result']));
       } else {
         emit(CategoryError('Backend error 403'));
       }

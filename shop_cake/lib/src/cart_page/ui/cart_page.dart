@@ -210,8 +210,7 @@ class _CartPageState extends State<CartPage> {
                                       8.spaceWidth,
                                       Expanded(
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             CText(
                                               text:
@@ -227,18 +226,14 @@ class _CartPageState extends State<CartPage> {
                                               children: [
                                                 CText(
                                                   text: 'Tổng số:',
-                                                  fontSize:
-                                                      FontSize.fontSize_12,
+                                                  fontSize: FontSize.fontSize_12,
                                                   fontWeight: FontWeight.w400,
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      EdgeInsets.only(left: 5),
+                                                  padding: EdgeInsets.only(left: 5),
                                                   child: CText(
-                                                    text:
-                                                        '${state.data[index]['quantity'] ?? 0}',
-                                                    fontSize:
-                                                        FontSize.fontSize_12,
+                                                    text: '${state.data[index]['quantity'] ?? 0}',
+                                                    fontSize: FontSize.fontSize_12,
                                                     fontWeight: FontWeight.w400,
                                                   ),
                                                 ),
@@ -259,10 +254,8 @@ class _CartPageState extends State<CartPage> {
                                                   padding:
                                                       EdgeInsets.only(left: 5),
                                                   child: CText(
-                                                    text:
-                                                        '${Validation.oCcy.format(state.data[index]['unitPrice'] ?? 0)} đ',
-                                                    fontSize:
-                                                        FontSize.fontSize_14,
+                                                    text: '${Validation.oCcy.format(state.data[index]['unitPrice'] ?? 0)} đ',
+                                                    fontSize: FontSize.fontSize_14,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                                 )
@@ -302,14 +295,13 @@ class _CartPageState extends State<CartPage> {
                                                                     context,
                                                                     state.data[
                                                                             index]
-                                                                        ['id']);
+                                                                        ['id']
+                                                            );
                                                           } else {
-                                                            listCardCubit.addFood(
-                                                                context,
-                                                                state.data[
-                                                                        index]
-                                                                    ['id'],
-                                                                quantity);
+                                                            listCardCubit.addFood(context,
+                                                                state.data[index]['id'],
+                                                                quantity
+                                                            );
                                                           }
                                                         },
                                                         icon: const Icon(
@@ -321,15 +313,13 @@ class _CartPageState extends State<CartPage> {
                                                       IconButton(
                                                         onPressed: () {
                                                           final count =
-                                                              state.data[index]
-                                                                  ['quantity'];
-                                                          final quantity =
-                                                              count + 1;
+                                                              state.data[index]['quantity'];
+                                                          final quantity = count + 1;
                                                           listCardCubit.addFood(
                                                               context,
-                                                              state.data[index]
-                                                                  ['id'],
-                                                              quantity);
+                                                              state.data[index]['id'],
+                                                              quantity
+                                                          );
                                                         },
                                                         icon: const Icon(
                                                           Icons.add,
@@ -352,7 +342,8 @@ class _CartPageState extends State<CartPage> {
                             ),
                           );
                         },
-                        itemCount: state.data.length ?? 0,
+                        // itemCount: state.data.length ?? 0,
+                        itemCount: 5,
                         shrinkWrap: true,
                       )
                     ],

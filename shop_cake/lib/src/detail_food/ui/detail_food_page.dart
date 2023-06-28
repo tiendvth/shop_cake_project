@@ -62,7 +62,8 @@ class DetailFood extends StatelessWidget {
                               children: [
                                 ClipRRect(
                                   child: Image.network(
-                                    '${state.data['data']['images']??'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1600'}',
+                                    // '${state.data['data']['images']??'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1600'}',
+                                    'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1600',
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -77,12 +78,13 @@ class DetailFood extends StatelessWidget {
                               children: [
                                 Text(
                                   '${state.data['data']['name'] ?? ''}',
+                                  // '{state.data.name}',
                                   style: const TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.w700,
                                       color: Colors.black),
                                 ),
-                                15.spaceHeight,
+                                20.spaceHeight,
                                 const Text(
                                   'Mô tả',
                                   style: TextStyle(
@@ -91,7 +93,8 @@ class DetailFood extends StatelessWidget {
                                       color: Colors.black),
                                 ),
                                 Text(
-                                  '${state.data['data']['description'] ?? 'Chưa có'}',
+                                  // '${state.data['data']['description'] ?? 'Chưa có'}',
+                                  'chua co',
                                   style: const TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 14,
@@ -220,6 +223,7 @@ class DetailFood extends StatelessWidget {
                                 color: Colors.redAccent,
                                 onPressed: () {
                                   detailFoodCubit.addFoodToOrder(context, id);
+                                  print(id);
                                 },
                                 child: const Text(
                                   'Thêm vào giỏ hàng',
