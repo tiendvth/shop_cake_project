@@ -1,152 +1,236 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_cake/constants/color/colors.dart';
-import 'package:shop_cake/constants/font_size/font_size.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_cake/constants/assets/assets.dart';
+import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/network/network_manager.dart';
+import 'package:shop_cake/src/Menu/components/label.dart';
 import 'package:shop_cake/src/profile_user/bloc/profile_user_cubit.dart';
-import 'package:shop_cake/src/profile_user/common/label.dart';
 import 'package:shop_cake/src/profile_user/repository/repository.dart';
+import 'package:shop_cake/widgets/c_image.dart';
 
 class ProfileUserPage extends StatelessWidget {
   const ProfileUserPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'Thông tin cá nhân',
-          style: TextStyle(
-              fontSize: 24, fontWeight: FontWeight.w700, color: Colors.white),
-        ),
-        backgroundColor: FontColor.colorFF3366,
-      ),
-      body: BlocProvider(
-        create: (BuildContext context) =>
-            ProfileUserCubit(ProfileUserRepositoryImpl(apiProvider)),
-        child: BlocBuilder<ProfileUserCubit, ProfileUserState>(
-          builder: (context, state) {
-            if (state is ProfileUserSuccess) {
-              return Container(
-                padding: EdgeInsets.only(top: 20, left: 32, right: 32),
+    return BlocProvider(
+      create: (BuildContext context) =>
+          ProfileUserCubit(ProfileUserRepositoryImpl(apiProvider)),
+      child: Scaffold(
+        body: SafeArea(
+          top: false,
+          bottom: true,
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 120,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                  ),
+                  gradient: kBgMenu,
+                ),
                 child: Column(
                   children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 10),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                    height: 84,
-                                    width: 84,
-                                    child: ClipOval(
-                                        child: Image.network(
-                                            'https://img.freepik.com/premium-vector/man-avatar-profile-round-icon_24640-14044.jpg?w=2000'))),
-                                const SizedBox(
-                                  width: 12,
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    '${state.data['firstName'] ?? ''}',
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xff231F20),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 24,
-                          ),
-                          const Text(
-                            'Thông tin cá nhân',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Color(0xff231F20),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 24,
-                          ),
-                          Label(
-                            image: 'assets/icon/ic_phone.png',
-                            title: '${state.data['phone'] ?? '0123456789'}',
-                          ),
-                          const Divider(
-                            height: 1,
-                            color: Color(0xffF1F1F1),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Label(
-                            image: 'assets/icon/ic_message.png',
-                            title: '${state.data['email'] ?? ''}',
-                          ),
-                          const Divider(
-                            height: 1,
-                            color: Color(0xffF1F1F1),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Label(
-                            image: 'assets/icon/ic_location.png',
-                            title:
-                                '${state.data['identityProvider'] ?? 'Metaway Holdings'}',
-                          ),
-                          const Divider(
-                            height: 1,
-                            color: Color(0xffF1F1F1),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        ],
-                      ),
+                    const SizedBox(
+                      height: 56,
                     ),
-                    GestureDetector(
-                      onTap: () async {
-                        await context
-                            .read<ProfileUserCubit>()
-                            .removeDeviceToken();
-                        context
-                            .read<AuthenticationBloc>()
-                            .add(AppLogoutEvent());
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.symmetric(vertical: 8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18),
-                          color: FontColor.colorEC222D,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const SizedBox(
+                          width: 16,
                         ),
-                        margin: EdgeInsets.only(bottom: 40),
-                        child: Center(
-                          child: Text("Logout",
-                              style: TextStyle(
-                                color: FontColor.colorFFFFFF,
-                                fontSize: FontSize.fontSize_18,
-                              )),
+                        Expanded(
+                          child: Text(
+                            "Menu",
+                            style: GoogleFonts.roboto(
+                              textStyle: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 22,
+                                  color: kMainDarkColor),
+                            ),
+                          ),
                         ),
-                      ),
-                    )
+                        const CImage(
+                          assetsPath: Assets.icNotification,
+                          height: 24,
+                          width: 24,
+                        ),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
                   ],
                 ),
-              );
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              BlocBuilder<ProfileUserCubit, ProfileUserState>(
+                builder: (context, state) {
+                  if (state is ProfileUserFailure) {
+                    return Container(
+                      padding:
+                          const EdgeInsets.only(top: 20, left: 16, right: 16),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Stack(
+                                    children: [
+                                      SizedBox(
+                                        height: 84,
+                                        width: 84,
+                                        child: ClipOval(
+                                          child: Image.network(
+                                              'https://img.freepik.com/premium-vector/man-avatar-profile-round-icon_24640-14044.jpg?w=2000'),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        bottom: 0,
+                                        right: 0,
+                                        child: SizedBox(
+                                          height: 24,
+                                          width: 24,
+                                          child: ClipOval(
+                                            child: Container(
+                                              color: Colors.white,
+                                              child: const Icon(
+                                                Icons.camera_alt,
+                                                size: 16,
+                                                color: kF2F4B4E,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 24,
+                            ),
+                            Text(
+                              'Thông tin cá nhân',
+                              style: GoogleFonts.roboto(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: kF2F4B4E,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 24,
+                            ),
+                            const CLabel(
+                              image: Assets.icName,
+                              // title: '${state.data['phone'] ?? '0123456789'}',
+                              title: '0123456789',
+                              color: true,
+                              colorText: false,
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            const Divider(
+                              thickness: 0.1,
+                              color: kF2F4B4E,
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            const CLabel(
+                              image: Assets.icCall,
+                              // title: '${state.data['phone'] ?? '0123456789'}',
+                              title: '0123456789',
+                              color: true,
+                              colorText: false,
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            const Divider(
+                              thickness: 0.1,
+                              color: kF2F4B4E,
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            const CLabel(
+                              image: Assets.icEmail,
+                              // title: '${state.data['email'] ?? ''}',
+                              title: 'tiendv@gmail.com',
+                              color: true,
+                              colorText: false,
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            const Divider(
+                              thickness: 0.1,
+                              color: kF2F4B4E,
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            const CLabel(
+                              image: Assets.icAddress,
+                              // title: '${state.data['address'] ?? ''}',
+                              title: 'Phố Đông Tác, Phường Kim Liên, Quận Đống Đa, Hà Nội',
+                              color: true,
+                              colorText: false,
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            const Divider(
+                              thickness: 0.1,
+                              color: kF2F4B4E,
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            CLabel(
+                              title: 'Xóa tài khoản',
+                              onTab: () async {
+                                await context
+                                    .read<ProfileUserCubit>()
+                                    .removeDeviceToken();
+                                // ignore: use_build_context_synchronously
+                                context
+                                    .read<AuthenticationBloc>()
+                                    .add(AppLogoutEvent());
+                              },
+                              image: Assets.icDelete,
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

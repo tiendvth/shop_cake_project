@@ -16,10 +16,10 @@ class DefaultFirebaseConfig {
     } else if (Platform.isIOS || Platform.isMacOS) {
       // iOS and MacOS
       return const FirebaseOptions(
-        appId: '1:701692033587:android:5e555280ee8dd991404146',
-        apiKey: 'AIzaSyAgUhHU8wSJgO5MVNy95tMT07NEjzMOfz0',
-        projectId: 'fir-mtw',
-        messagingSenderId: '448618578101',
+        appId: '1:241169639690:ios:64d48a367c2af1a36eb2f3',
+        apiKey: 'AIzaSyAyBByLHHwQejr59VHLaf1WWlf5nBwhYig',
+        projectId: 'shop-cake-f95a9',
+        messagingSenderId: '241169639690',
         iosBundleId: 'io.flutter.plugins.firebasecoreexample',
       );
     } else {

@@ -22,7 +22,8 @@ void main() async {
   shared = await SharedPreferences.getInstance();
   Translate.delegate.setShared(shared);
   Log.init();
-  await Firebase.initializeApp(name: DefaultFirebaseConfig.platformOptions.projectId, options: DefaultFirebaseConfig.platformOptions);
+  // await Firebase.initializeApp(name: DefaultFirebaseConfig.platformOptions.projectId, options: DefaultFirebaseConfig.platformOptions);
+  await Firebase.initializeApp(options: DefaultFirebaseConfig.platformOptions);
   // Set the background messaging handler early on, as a named top-level function
   // FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 

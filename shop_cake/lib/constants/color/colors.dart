@@ -51,4 +51,10 @@ class FontColor {
   static Color bgcolor231F2066 = const Color(0xff231F2066);
 
   static Color colorShadow18274b = const Color(0xff18274b);
+  static const kMainColor = Color(0xFFFFB9C4);
+  static const kTextColor = Color(0xFF535353);
+  static const kTextLightColor = Color(0xFFACACAC);
+
+  static const kDefaultPaddin = 16.0;
+  static const kMainDarkColor = Color(0xFFC7051A);
 }

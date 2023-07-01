@@ -1,48 +1,20 @@
-
-import 'package:common/common.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_cake/constants/color/colors.dart';
-import 'package:shop_cake/generated/l10n.dart';
-import 'package:shop_cake/widgets/c_text.dart';
+import 'package:shop_cake/constants/constants.dart';
+import 'package:shop_cake/src/home_page/components/body.dart';
+import 'package:shop_cake/src/home_page/components/upper_body.dart';
 
-class HomePage extends StatefulWidget {
-  final AuthenticationStatus? openLogin;
-
-  const HomePage({Key? key, this.openLogin}) : super(key: key);
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final emailController = TextEditingController();
-  final pwdController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    pwdController.dispose();
-    super.dispose();
-  }
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        top: false,
-        bottom: true,
-        child: Center(
-          child: CText(
-            text: Translate.of(context).home,
-            textColor: FontColor.colorText231F20,
-          ),
-        ),
+      backgroundColor: kBackground,
+      body: Stack(
+        children:  const [
+          UpperBody(),
+          Body(),
+        ],
       ),
     );
   }

@@ -11,6 +11,26 @@ class Assets {
   static const String icFb = 'assets/icon/facebook.png';
   static const String icGoogle = 'assets/icon/google.png';
   static const String icApple = 'assets/icon/apple.png';
+  static const String icCreateOder = 'assets/icon/icons_create_order.png';
+  static const String icHome = 'assets/icon/home.png';
+  static const String icUser = 'assets/icon/user.png';
+  static const String icHistory = 'assets/icon/history.png';
+  static const String icCart = 'assets/icon/cart.png';
+  static const String icCake = 'assets/icon/cake.png';
+  static const String icSearch = 'assets/icon/search.png';
+  static const String icNotification = 'assets/icon/notification.png';
+  static const String icMenu = 'assets/icon/menu.png';
+  static const String icArrowRight = 'assets/icon/arrow_right.png';
+  static const String icOrderMenu = 'assets/icon/order_menu.png';
+  static const String icPaymentCard = 'assets/icon/payment_card.png';
+  static const String icLike = 'assets/icon/icon_like.png';
+  static const String icCall = 'assets/icon/icon_phone.png';
+  static const String icSetting = 'assets/icon/icon_setting.png';
+  static const String icLogout = 'assets/icon/icon_logout.png';
+  static const String icEmail = 'assets/icon/icons_email.png';
+  static const String icAddress = 'assets/icon/icon_address.png';
+  static const String icName = 'assets/icon/icon_name.png';
+  static const String icDelete = 'assets/icon/icon_delete.png';
   ///Font
   static const String fontPlusJakartaSans = 'PlusJakartaSans';
 }
