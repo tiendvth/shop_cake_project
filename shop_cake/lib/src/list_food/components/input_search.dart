@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_cake/constants/color/colors.dart';
+import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/src/list_food/bloc/list_food_cubit.dart';
 
 class InputSearch extends StatefulWidget {
@@ -45,7 +46,7 @@ class _InputSearchState extends State<InputSearch> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 10, right: 15, left: 15),
+      margin: const EdgeInsets.only(top: 10, right: 16, left: 16),
       constraints: BoxConstraints(maxWidth: widget.maxWidth),
       child: TextField(
         controller: widget.controller,
@@ -56,13 +57,13 @@ class _InputSearchState extends State<InputSearch> {
             labelStyle: const TextStyle(color: Colors.black, fontSize: 15),
             floatingLabelBehavior: FloatingLabelBehavior.always,
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             border: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black),
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: FontColor.colorEC222D),
-                borderRadius: BorderRadius.all(Radius.circular(10))),
+                borderRadius: BorderRadius.all(Radius.circular(16))),
+            focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: kMainDarkColor),
+                borderRadius: BorderRadius.all(Radius.circular(16))),
             filled: true,
             prefixIcon: widget.prefixIcon,
             fillColor: Colors.white,
@@ -94,7 +95,7 @@ class _InputSearchState extends State<InputSearch> {
                       )
                 : Icon(
                     Icons.filter_list_outlined,
-                    color: Colors.black,
+                    color: Colors.grey,
                     size: _sizeIcon,
                   )),
         onChanged: (value) {

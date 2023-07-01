@@ -1,13 +1,16 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/color/colors.dart';
+import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/constants/font_size/font_size.dart';
 import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/cart_page/bloc/list_card_bloc/list_card_cubit.dart';
 import 'package:shop_cake/src/cart_page/repository/cart_repository.dart';
 import 'package:shop_cake/src/payment/ui/payment_page.dart';
 import 'package:shop_cake/validation/validation.dart';
+import 'package:shop_cake/widgets/c_image.dart';
 import 'package:shop_cake/widgets/c_text.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
 
@@ -186,7 +189,7 @@ class _CartPageState extends State<CartPage> {
                         ),
                       ),
                       ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           // print(state.data[index]['quantity']);
                           return Align(
@@ -360,18 +363,12 @@ class _CartPageState extends State<CartPage> {
                 Container(
                   width: double.infinity,
                   height: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
                     ),
-                    image: const DecorationImage(
-                      image: AssetImage(
-                          Assets.bgCart,
-                    ),
-                      fit: BoxFit.cover,
-                    ),
-                    color: FontColor.colorFF3366,
+                    gradient: kBgMenu,
                   ),
                   child: Align(
                     alignment: Alignment.topLeft,
@@ -379,13 +376,24 @@ class _CartPageState extends State<CartPage> {
                       padding: EdgeInsets.fromLTRB(
                           24, AppBar().preferredSize.height + 15, 24, 0),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          CText(
-                            text: 'Giỏ hàng',
-                            textColor: FontColor.colorFFFFFF,
-                            fontWeight: FontWeight.w600,
-                            fontSize: FontSize.fontSize_30,
+                          Expanded(
+                            child: Text(
+                              "Giỏ hàng",
+                              style: GoogleFonts.roboto(
+                                textStyle: const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 20,
+                                    color: kMainDarkColor),
+                              ),
+                            ),
+                          ),
+                          const CImage(
+                            assetsPath: Assets.icNotification,
+                            height: 24,
+                            width: 24,
                           ),
                         ],
                       ),
@@ -402,9 +410,9 @@ class _CartPageState extends State<CartPage> {
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
+                          color: Colors.black.withOpacity(0.1),
                           spreadRadius: 2,
-                          blurRadius: 7,
+                          blurRadius: 5,
                           offset:
                               const Offset(0, 3), // changes position of shadow
                         ),
@@ -418,31 +426,19 @@ class _CartPageState extends State<CartPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              CText(
-                                text: 'Giá tiền',
-                                fontSize: FontSize.fontSize_16,
-                                fontWeight: FontWeight.w500,
+                              Text(
+                                'Tổng tiền',
+                                style: GoogleFonts.roboto(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: kMainBlackColor),
                               ),
-                              CText(
-                                text: '0',
-                                fontSize: FontSize.fontSize_16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ],
-                          ),
-                          5.spaceHeight,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CText(
-                                text: 'Phí giao hàng',
-                                fontSize: FontSize.fontSize_14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              CText(
-                                text: '0',
-                                fontSize: FontSize.fontSize_16,
-                                fontWeight: FontWeight.w500,
+                              Text(
+                                '0đ',
+                                style: GoogleFonts.roboto(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: kMainBlackColor),
                               ),
                             ],
                           ),
@@ -450,15 +446,39 @@ class _CartPageState extends State<CartPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              CText(
-                                text: 'Phí dịch vụ & phí khác',
-                                fontSize: FontSize.fontSize_16,
-                                fontWeight: FontWeight.w500,
+                              Text(
+                                'Phí giao hàng',
+                                style: GoogleFonts.roboto(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: kMainBlackColor),
                               ),
-                              CText(
-                                text: '0',
-                                fontSize: FontSize.fontSize_16,
-                                fontWeight: FontWeight.w500,
+                              Text(
+                                '0đ',
+                                style: GoogleFonts.roboto(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: kMainBlackColor),
+                              ),
+                            ],
+                          ),
+                          5.spaceHeight,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Phí dịch vụ & phí khác',
+                                style: GoogleFonts.roboto(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: kMainBlackColor),
+                              ),
+                              Text(
+                                '0đ',
+                                style: GoogleFonts.roboto(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: kMainBlackColor),
                               ),
                             ],
                           ),
@@ -472,15 +492,19 @@ class _CartPageState extends State<CartPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              CText(
-                                text: 'Tổng thanh toán',
-                                fontSize: FontSize.fontSize_18,
-                                fontWeight: FontWeight.w600,
+                              Text(
+                                'Tổng cộng',
+                                style: GoogleFonts.roboto(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    color: kMainBlackColor),
                               ),
-                              CText(
-                                text: '0 đ',
-                                fontSize: FontSize.fontSize_18,
-                                fontWeight: FontWeight.w600,
+                              Text(
+                                '0đ',
+                                style: GoogleFonts.roboto(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    color: kMainBlackColor),
                               ),
                             ],
                           ),
@@ -494,7 +518,7 @@ class _CartPageState extends State<CartPage> {
           ),
         ),
         floatingActionButton: Container(
-          margin: EdgeInsets.only(bottom: 15),
+          margin: const EdgeInsets.only(bottom: 15),
           child: FloatingActionButton(
             backgroundColor: Colors.pink,
             child: const Icon(

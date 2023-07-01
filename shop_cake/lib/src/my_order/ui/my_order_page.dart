@@ -6,8 +6,6 @@ import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/detail_my_order/ui/detail_my_order_page.dart';
 import 'package:shop_cake/src/my_order/bloc/my_order_cubit.dart';
 import 'package:shop_cake/src/my_order/repository/repository.dart';
-import 'package:shop_cake/utils/utils.dart';
-import 'package:shop_cake/validation/validation.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
 
 class MyOrderPage extends StatefulWidget {
@@ -28,7 +26,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
           style: TextStyle(
               fontWeight: FontWeight.w800, fontSize: 24, color: Colors.white),
         ),
-        backgroundColor: FontColor.colorFF3366,
+        backgroundColor: FontColor.kMainColor,
       ),
       body: BlocProvider(
         create: (BuildContext context) =>

@@ -42,6 +42,7 @@ class _CImageState extends State<CImage> {
                 widget.assetsPath ?? '',
                 height: widget.height,
                 width: widget.width,
+                color: widget.color,
                 fit: widget.boxFit ?? BoxFit.fill,
               ));
         } else {

@@ -39,7 +39,10 @@ dependencies:
   flutter_lints: ^2.0.0
   firebase_core_platform_interface: 4.5.1
   firebase_auth: ^3.3.2
+  stylish_bottom_bar: ^0.1.0
   google_sign_in: ^5.1.1
+  smooth_page_indicator: ^1.1.0
+  google_fonts: ^4.0.4
 
   common:
     path: ../

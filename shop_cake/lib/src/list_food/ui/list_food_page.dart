@@ -3,17 +3,22 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/color/colors.dart';
+import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/firebase/setup_firebase.dart';
 import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/detail_food/ui/detail_food_page.dart';
 import 'package:shop_cake/src/detail_my_order/ui/detail_my_order_page.dart';
+import 'package:shop_cake/src/list_food/components/item_card.dart';
 import 'package:shop_cake/src/home_page/repository/home_repository.dart';
 import 'package:shop_cake/src/list_food/bloc/category_cubit.dart';
 import 'package:shop_cake/src/list_food/bloc/list_food_cubit.dart';
 import 'package:shop_cake/src/list_food/components/category_item.dart';
 import 'package:shop_cake/src/list_food/components/input_search.dart';
 import 'package:shop_cake/validation/validation.dart';
+import 'package:shop_cake/widgets/c_image.dart';
 
 import '../../../constants/font_size/font_size.dart';
 
@@ -52,10 +57,10 @@ class _ListFoodPageState extends State<ListFoodPage> {
       if (message != null) {
         print("Data message firebase: ${message.data}");
         NavigatorManager.pushFullScreen(
-          context,
-          DetailMyOrder(
-            id: int.parse(message.data['orderId']),
-          ));
+            context,
+            DetailMyOrder(
+              id: int.parse(message.data['orderId']),
+            ));
       }
     });
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -72,8 +77,8 @@ class _ListFoodPageState extends State<ListFoodPage> {
   }
 
   Future<void> _refresh() async {
-     listCategoryCubit.getCategory();
-     listFoodCubit.getListFood(listFoodCubit.searchController.text);
+    listCategoryCubit.getCategory();
+    listFoodCubit.getListFood(listFoodCubit.searchController.text);
   }
 
   // Future<void> _refresh() async {
@@ -93,285 +98,185 @@ class _ListFoodPageState extends State<ListFoodPage> {
       ],
       child: Scaffold(
         backgroundColor: const Color(0xfFFFFFFF),
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: const Text(
-            'Danh sách món ăn',
-            style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 24,
-                color: Colors.white),
-          ),
-          elevation: 0,
-          backgroundColor: FontColor.colorFF3366,
-        ),
-        body: Column(
-          children: [
-          InputSearch(
-            controller: listFoodCubit.searchController,
-            maxWidth: double.infinity,
-            prefixIcon: Icon(
-              Icons.search,
-            ),
-            listFoodCubit: listFoodCubit,
-        ),
-          SizedBox(
-            height: 10,
-          ),
-          BlocBuilder<CategoryCubit, CategoryState>(
-            builder: (context, state) {
-              if (state is CategorySuccess) {
-                // print('state: $state');
-                return SizedBox(
-                  height: 40,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: state.data.length,
-                    // itemCount: 10,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 15, right: 15),
-                        child: CategoryItem(
-                          // imageUrl: state.data[index]['image'],
-                          title: state.data[index]['name'],
-                          // title: 'category',
-                        ),
-                      );
-                    },
+        body: SafeArea(
+          top: false,
+          bottom: true,
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 120,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
                   ),
-                );
-              }
-              else {
-                return SizedBox.shrink();
-              }
-            },
-          ),
-          Expanded(
-            child: BlocBuilder<ListFoodCubit, ListFoodState>(
-              builder: (context, stateListCake) {
-                if (stateListCake is ListFoodSuccess) {
-                  return Padding(
-                    padding: const EdgeInsets.only(
-                        left: 15, right: 15, top: 20, bottom: 20),
-                    child: CustomScrollView(
-                      slivers: [
-                        CupertinoSliverRefreshControl(
-                            onRefresh: _refresh),
-                        SliverGrid(
-                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: MediaQuery.of(context).size.height / 3,
-                              childAspectRatio: 0.83,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10),
-                              delegate: SliverChildBuilderDelegate(
-                                    (BuildContext context, int index) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                      4),
-                                  boxShadow: <BoxShadow>[
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      blurRadius: 5,
-                                      offset: const Offset(1, 4))
-                                  ],
-                                  color: Colors.white),
-                                child: InkWell(
-                                  onTap: () {
-                                    NavigatorManager.pushFullScreen(
-                                      context,
-                                      DetailFood(
-                                        id: stateListCake.data['result'][index]['id'] ?? '',
-                                      )
-                                    );
-                                  },
-                                  child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        child: SingleChildScrollView(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(
-                                                height: 95,
-                                                width: double.infinity,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                      4),
-                                                  child: Image.network(
-                                                    // stateListCake.data['result'][index]['image'],
-                                                    'http://103.187.5.254:8090/api/files/files/photo1678701206.jpeg',
-                                                    width: double.infinity,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              Padding(
-                                                padding:
-                                                const EdgeInsets.only(
-                                                    left: 10,
-                                                    right: 10),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                        stateListCake.data['result'][index]['name'],
-                                                        // stateListCake.data,
-                                                    ),
-                                                    Text(
-                                                      stateListCake.data['result'][index]['name'],
-                                                      // '${stateListCake.data[index]['name'] ?? ''}',
-                                                      maxLines: 1,
-                                                      overflow: TextOverflow.ellipsis,
-                                                      style:
-                                                      const TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.w700,
-                                                        color: Color(0xff231F20),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 2,
-                                                    ),
-                                                    Text(
-                                                      '${Validation.oCcy.format(stateListCake.data['result'][index]['price'] ?? 0)} đ',
-                                                      maxLines: 1,
-                                                      overflow: TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                        FontWeight.w400,
-                                                        fontSize: 12,
-                                                        color: FontColor.colorEC222D,
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 2,
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        RatingBar.builder(
-                                                          initialRating: 5,
-                                                          minRating: 1,
-                                                          direction: Axis.horizontal,
-                                                          ignoreGestures:
-                                                          true,
-                                                          itemCount: stateListCake.data.length,
-                                                          itemSize: 10,
-                                                          itemPadding:
-                                                          const EdgeInsets
-                                                              .symmetric(
-                                                              horizontal:
-                                                              1),
-                                                          itemBuilder:
-                                                              (context,
-                                                              _) =>
-                                                          const Icon(
-                                                            Icons.star,
-                                                            color: Colors.amber,
-                                                          ),
-                                                          onRatingUpdate:
-                                                              (rating) {},
-                                                        ),
-                                                        const Expanded(
-                                                          child: Text(
-                                                            // '${state.data[index]['status'] ?? ''}',
-                                                            'testStatus',
-                                                            textAlign: TextAlign.end,
-                                                            style: TextStyle(
-                                                              fontWeight: FontWeight.w400,
-                                                              fontSize: 10,
-                                                              // color: state.data[index]['status'] == "ACTIVE" ? Colors.green : Colors.deepOrange,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          listFoodCubit.addFoodToOrder(
-                                              context,
-                                              //
-                                              1,
-                                              1);
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.only(
-                                              top: 8, bottom: 10),
-                                          decoration: const BoxDecoration(
-                                              borderRadius:
-                                              BorderRadius.only(
-                                                bottomLeft:
-                                                Radius.circular(4),
-                                                bottomRight:
-                                                Radius.circular(4),
-                                              ),
-                                              color: Colors.red),
-                                          child: const Center(
-                                            child: Text(
-                                              'Thêm vào giỏ',
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight:
-                                                  FontWeight.w500,
-                                                  color: Colors.white),
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                            // childCount: stateListCake.data != null ? stateListCake.data.length : 0,
-                                  childCount: stateListCake.data.length,
-                            // childCount: 10,
+                  gradient: kBgMenu,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      height: 56,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: Text(
+                            "Sản phẩm",
+                            style: GoogleFonts.roboto(
+                              textStyle: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
+                                color: kMainDarkColor,
+                              ),
+                            ),
                           ),
+                        ),
+                        const CImage(
+                          assetsPath: Assets.icNotification,
+                          height: 24,
+                          width: 24,
+                        ),
+                        const SizedBox(
+                          width: 16,
                         ),
                       ],
                     ),
-                  );
-                } else if (state is ListFoodFailure) {
-                  return Center(
-                    child: Text(
-                      state.message,
-                      style: TextStyle(
-                          fontSize: FontSize.fontSize_16,
-                          color: FontColor.color212121),
+                    const SizedBox(
+                      height: 16,
                     ),
-                  );
-                  // return Center(
-                  //   child: Text(
-                  //     state.message,
-                  //     style: TextStyle(
-                  //         fontSize: FontSize.fontSize_16,
-                  //         color: FontColor.color212121),
-                  //   ),
-                  // );
-                }
-                return const Center(child: CircularProgressIndicator());
-              },
-            ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InputSearch(
+                      controller: listFoodCubit.searchController,
+                      maxWidth: double.infinity,
+                      prefixIcon: const Icon(
+                        Icons.search_outlined,
+                        color: Colors.grey,
+                      ),
+                      listFoodCubit: listFoodCubit,
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        'Tất cả sản phẩm',
+                        style: GoogleFonts.roboto(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    // BlocBuilder<CategoryCubit, CategoryState>(
+                    //   builder: (context, state) {
+                    //     if (state is CategorySuccess) {
+                    //       // print('state: $state');
+                    //       return SizedBox(
+                    //         height: 40,
+                    //         child: ListView.builder(
+                    //           shrinkWrap: true,
+                    //           itemCount: state.data.length,
+                    //           // itemCount: 10,
+                    //           scrollDirection: Axis.horizontal,
+                    //           itemBuilder: (context, index) {
+                    //             return Padding(
+                    //               padding: const EdgeInsets.only(left: 15, right: 15),
+                    //               child: CategoryItem(
+                    //                 // imageUrl: state.data[index]['image'],
+                    //                 title: state.data[index]['name'],
+                    //                 // title: 'category',
+                    //               ),
+                    //             );
+                    //           },
+                    //         ),
+                    //       );
+                    //     } else {
+                    //       return SizedBox.shrink();
+                    //     }
+                    //   },
+                    // ),
+                    Expanded(
+                      child: BlocBuilder<ListFoodCubit, ListFoodState>(
+                        builder: (context, stateListCake) {
+                          if (stateListCake is ListFoodSuccess) {
+                            return SingleChildScrollView(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
+                                child: Column(
+                                  children: [
+                                    GridView.custom(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      padding: EdgeInsets.zero,
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        mainAxisSpacing: 12,
+                                        crossAxisSpacing: 12,
+                                        childAspectRatio: 0.7,
+                                      ),
+                                      childrenDelegate:
+                                          SliverChildBuilderDelegate(
+                                        (context, index) => const ItemCard(),
+                                        childCount: 10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          } else if (state is ListFoodFailure) {
+                            return Center(
+                              child: Text(
+                                state.message,
+                                style: TextStyle(
+                                    fontSize: FontSize.fontSize_16,
+                                    color: FontColor.color212121),
+                              ),
+                            );
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: kMainColor,
+                              ),
+                            );
+                          }
+                          return const SizedBox.shrink();
+                        },
+                      ),
+                    ),
+                    // ),
+                  ],
+                ),
+              ),
+            ],
           ),
-      // ),
-      ],
-    )),
+        ),
+      ),
     );
   }
 }
