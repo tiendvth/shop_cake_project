@@ -46,11 +46,13 @@ class _CButtonState extends State<CButton> {
         height: widget.height ?? 40,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(widget.radius ?? 20)),
-              side: BorderSide(
-                  color: widget.borderColor ?? FontColor.colorFFCB05,
-                  width: 1),),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(widget.radius ?? 20),
+            ),
+            side: BorderSide(
+                color: widget.borderColor ?? FontColor.colorFFCB05, width: 1),
+            backgroundColor: widget.bgColor ?? FontColor.colorFFCB05,
+          ),
           onPressed: widget.onPressed,
           child: widget.checkLoading ?? true
               ? Center(

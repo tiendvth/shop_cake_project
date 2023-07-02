@@ -43,8 +43,8 @@ class ListFoodRepositoryImpl implements ListFoodRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> addFoodToOrder(foodId, quantity) async {
-    final respone = await _dio.post('/api/v1/carts', data: {"foodId": foodId, "quantity": quantity});
+  Future<Map<String, dynamic>> addFoodToOrder(cakeId, quantity) async {
+    final respone = await _dio.post('/api/shoppingCartTmt/create', data: {"cakeId": cakeId, "quantity": quantity});
     return respone.data as Map<String, dynamic>;
   }
 

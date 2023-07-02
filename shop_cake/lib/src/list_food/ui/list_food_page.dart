@@ -2,8 +2,8 @@ import 'package:common/common.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_cake/common/%20config/format_price.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/constants.dart';
@@ -15,9 +15,7 @@ import 'package:shop_cake/src/list_food/components/item_card.dart';
 import 'package:shop_cake/src/home_page/repository/home_repository.dart';
 import 'package:shop_cake/src/list_food/bloc/category_cubit.dart';
 import 'package:shop_cake/src/list_food/bloc/list_food_cubit.dart';
-import 'package:shop_cake/src/list_food/components/category_item.dart';
 import 'package:shop_cake/src/list_food/components/input_search.dart';
-import 'package:shop_cake/validation/validation.dart';
 import 'package:shop_cake/widgets/c_image.dart';
 
 import '../../../constants/font_size/font_size.dart';
@@ -108,8 +106,8 @@ class _ListFoodPageState extends State<ListFoodPage> {
                 height: 120,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
+                    bottomLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16),
                   ),
                   gradient: kBgMenu,
                 ),
@@ -241,8 +239,41 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                       ),
                                       childrenDelegate:
                                           SliverChildBuilderDelegate(
-                                        (context, index) => const ItemCard(),
-                                        childCount: 10,
+                                        (context, index) => ItemCard(
+                                          imageUrl: stateListCake.data['result']
+                                              [index]['image'],
+                                          title: stateListCake.data['result']
+                                              [index]['name'],
+                                          price: FormatPrice.formatVND(
+                                              stateListCake.data['result']
+                                                  [index]['price']),
+                                          onTap: () {
+                                            NavigatorManager.pushFullScreen(
+                                                context,
+                                                DetailFood(
+                                                  id: stateListCake
+                                                              .data['result']
+                                                          [index]['id'] ??
+                                                      '',
+                                                  detail: stateListCake
+                                                      .data['result'][index],
+                                                ));
+                                          },
+                                          addToCart: () {
+                                            listFoodCubit.addFoodToOrder(
+                                              context,
+                                              cakeId:
+                                                  stateListCake.data['result']
+                                                      [index]['cakeId'],
+                                              quantity:
+                                                  stateListCake.data['result']
+                                                          [index]['quantity'] ??
+                                                      1,
+                                            );
+                                          },
+                                        ),
+                                        childCount:
+                                            stateListCake.data['result'].length,
                                       ),
                                     ),
                                   ],
@@ -265,7 +296,6 @@ class _ListFoodPageState extends State<ListFoodPage> {
                               ),
                             );
                           }
-                          return const SizedBox.shrink();
                         },
                       ),
                     ),

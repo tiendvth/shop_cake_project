@@ -6,6 +6,7 @@ import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/Menu/components/label.dart';
 import 'package:shop_cake/src/Menu/components/user_avatar.dart';
+import 'package:shop_cake/src/my_order/ui/my_order_page.dart';
 import 'package:shop_cake/src/profile_user/bloc/profile_user_cubit.dart';
 import 'package:shop_cake/src/profile_user/repository/repository.dart';
 import 'package:shop_cake/src/profile_user/ui/profile_user_page.dart';
@@ -105,10 +106,15 @@ class MenuScreen extends StatelessWidget {
                       const SizedBox(
                         height: 8,
                       ),
-                      const CLabel(
+                       CLabel(
                         title: "Đơn hàng",
                         image: Assets.icOrderMenu,
-                        onTab: null,
+                        onTab: () {
+                          NavigatorManager.push(
+                            context,
+                            const MyOrderPage(),
+                          );
+                        },
                       ),
                       const SizedBox(
                         height: 8,

@@ -9,9 +9,22 @@ import 'package:shop_cake/src/profile_user/bloc/profile_user_cubit.dart';
 import 'package:shop_cake/src/profile_user/repository/repository.dart';
 import 'package:shop_cake/widgets/c_image.dart';
 
-class ProfileUserPage extends StatelessWidget {
+class ProfileUserPage extends StatefulWidget {
   const ProfileUserPage({Key? key}) : super(key: key);
 
+  @override
+  State<ProfileUserPage> createState() => _ProfileUserPageState();
+}
+
+class _ProfileUserPageState extends State<ProfileUserPage> {
+  final ProfileUserCubit _profileUserCubit =
+      ProfileUserCubit(ProfileUserRepositoryImpl(apiProvider));
+
+  @override
+  void initState() {
+    super.initState();
+    _profileUserCubit.getProfile();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

@@ -59,7 +59,7 @@ showDialogMessage(BuildContext context, String? mess, {checkBack = true}) {
       return Dialog(
         alignment: Alignment.center,
         backgroundColor: FontColor.colorFFFFFF,
-        insetPadding: EdgeInsets.only(
+        insetPadding: const EdgeInsets.only(
           left: 36,
           right: 36,
         ),
@@ -95,6 +95,28 @@ showDialogMessage(BuildContext context, String? mess, {checkBack = true}) {
                         ))),
               ],
             )),
+      );
+    },
+  );
+}
+
+showDialogMessageConfirm(BuildContext context,  Widget? child,
+    {checkBack = true}) {
+  showDialog(
+    context: context,
+    barrierDismissible: !checkBack,
+    builder: (BuildContext context) {
+      return Dialog(
+        alignment: Alignment.center,
+        backgroundColor: FontColor.colorFFFFFF,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        insetPadding: const EdgeInsets.only(
+          left: 36,
+          right: 36,
+        ),
+        child: child,
       );
     },
   );

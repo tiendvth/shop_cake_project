@@ -8,7 +8,6 @@ import 'package:shop_cake/src/home_page/ui/home_page.dart';
 import 'package:shop_cake/src/list_food/ui/list_food_page.dart';
 import 'package:shop_cake/widgets/c_image.dart';
 
-import 'my_order/ui/my_order_page.dart';
 
 class AppHome extends StatefulWidget {
   final AuthenticationStatus? openLogin;
@@ -128,8 +127,10 @@ class _AppHomeState extends State<AppHome> with SingleTickerProviderStateMixin {
       children: const [
         HomePage(),
         ListFoodPage(),
-        MyOrderPage(),
-        CartPage(),
+        ListFoodPage(),
+        CartPage(
+          isShowIconBack: false,
+        ),
         MenuScreen(),
       ],
     );
