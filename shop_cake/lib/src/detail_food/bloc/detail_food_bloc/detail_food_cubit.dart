@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:shop_cake/src/detail_food/components/confirm_dialogs.dart';
 import 'package:shop_cake/src/detail_food/repository/repository.dart';
 import 'package:shop_cake/utils/utils.dart';
 
@@ -29,8 +30,7 @@ class DetailFoodCubit extends Cubit<DetailFoodState> {
 
   addFoodToOrder(BuildContext context, foodId) {
     _detailFoodRepository.addFoodToOrder(foodId, quantity).then((value) {
-      Navigator.pop(context);
-      showDialogMessage(context, "Thêm món thành công", checkBack: false);
+      showDialogMessageConfirm(context, checkBack: false, const ConfirmDialog());
     }).catchError((onError) {
       showToast((onError as DioError).message);
     });

@@ -1,21 +1,24 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_cake/common/%20config/format_price.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/constants/font_size/font_size.dart';
 import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/cart_page/bloc/list_card_bloc/list_card_cubit.dart';
+import 'package:shop_cake/src/cart_page/componenst/appbar_cart_widget.dart';
+import 'package:shop_cake/src/cart_page/componenst/cart_item.dart';
 import 'package:shop_cake/src/cart_page/repository/cart_repository.dart';
 import 'package:shop_cake/src/payment/ui/payment_page.dart';
-import 'package:shop_cake/validation/validation.dart';
 import 'package:shop_cake/widgets/c_image.dart';
 import 'package:shop_cake/widgets/c_text.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
 
 class CartPage extends StatefulWidget {
-  const CartPage({Key? key}) : super(key: key);
+  final bool? isShowIconBack;
+  const CartPage({Key? key, this.isShowIconBack}) : super(key: key);
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -33,22 +36,23 @@ class _CartPageState extends State<CartPage> {
           top: false,
           bottom: true,
           child: BlocBuilder<ListCardCubit, ListCardState>(
-            builder: (context, state) {
-              if (state is ListCardSuccess) {
-                return SingleChildScrollView(
-                  physics: ScrollPhysics(),
-                  child: Column(
-                    children: [
-                      Stack(children: [
+            builder: (context, stateListCake) {
+              if (stateListCake is ListCardSuccess) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Stack(
+                      children: [
                         Container(
                           width: double.infinity,
-                          height: 200,
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(50),
-                              bottomRight: Radius.circular(50),
+                          height: 180,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20),
                             ),
-                            color: FontColor.colorFF3366,
+                            gradient: kBgMenu,
                           ),
                           child: Align(
                             alignment: Alignment.topLeft,
@@ -56,14 +60,52 @@ class _CartPageState extends State<CartPage> {
                               padding: EdgeInsets.fromLTRB(24,
                                   AppBar().preferredSize.height + 15, 24, 0),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  CText(
-                                    text: 'Giỏ hàng',
-                                    textColor: FontColor.colorFFFFFF,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: FontSize.fontSize_30,
+                                  if (widget.isShowIconBack == true) ...[
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Icon(
+                                        Icons.arrow_back_ios,
+                                        color: kMainRedColor.withOpacity(0.6),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        "Giỏ hàng",
+                                        style: GoogleFonts.roboto(
+                                          textStyle: const TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 20,
+                                            color: kMainDarkColor,
+                                          ),
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ],
+                                  if (widget.isShowIconBack == false) ...[
+                                    Expanded(
+                                      child: Text(
+                                        "Giỏ hàng",
+                                        style: GoogleFonts.roboto(
+                                          textStyle: const TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 20,
+                                            color: kMainDarkColor,
+                                          ),
+                                        ),
+                                        textAlign: TextAlign.start,
+                                      ),
+                                    ),
+                                  ],
+                                  const CImage(
+                                    assetsPath: Assets.icNotification,
+                                    height: 24,
+                                    width: 24,
                                   ),
                                 ],
                               ),
@@ -72,18 +114,18 @@ class _CartPageState extends State<CartPage> {
                         ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(
-                              24, AppBar().preferredSize.height + 90, 24, 0),
+                              24, AppBar().preferredSize.height + 70, 24, 0),
                           child: Container(
                             height: 130,
                             width: double.infinity,
                             decoration: BoxDecoration(
                               color: FontColor.colorFFFFFF,
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(16),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 7,
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
                                   offset: const Offset(
                                       0, 3), // changes position of shadow
                                 ),
@@ -105,8 +147,8 @@ class _CartPageState extends State<CartPage> {
                                       ),
                                       CText(
                                         text:
-                                        // '${Validation.oCcy.format(state.totalPrice ?? 0)}',
-                                        '5',
+                                            // '${Validation.oCcy.format(state.totalPrice ?? 0)}',
+                                            '0',
                                         fontSize: FontSize.fontSize_16,
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -165,7 +207,7 @@ class _CartPageState extends State<CartPage> {
                                       CText(
                                         text:
                                             // '${Validation.oCcy.format(state.totalPrice ?? 0)} đ',
-                                        '0 đ',
+                                            '0 đ',
                                         fontSize: FontSize.fontSize_18,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -176,344 +218,77 @@ class _CartPageState extends State<CartPage> {
                             ),
                           ),
                         ),
-                      ]),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(24, 20, 24, 15),
-                          child: CText(
-                            text: 'Tổng danh sách món',
-                            fontSize: FontSize.fontSize_20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          // print(state.data[index]['quantity']);
-                          return Align(
-                            alignment: Alignment.topLeft,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 24),
-                              child: Card(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    right: 10,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 110,
-                                        height: 110,
-                                        child: Image.network(
-                                          // '${state.data[index]['images'] ?? 'https://img.freepik.com/free-vector/thai-cuisine-food-flat-illustration_1284-74042.jpg?w=826&t=st=1662447770~exp=1662448370~hmac=d1eb58a73a830be233671c2c08232da012f7faca37554705b8971f4cb723fffa'}',
-                                          'https://img.freepik.com/free-vector/thai-cuisine-food-flat-illustration_1284-74042.jpg?w=826&t=st=1662447770~exp=1662448370~hmac=d1eb58a73a830be233671c2c08232da012f7faca37554705b8971f4cb723fffa',
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      8.spaceWidth,
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            CText(
-                                              text:
-                                                  // '${state.data[index]['name'] ?? 'vi cá mập'}',
-                                              'vi cá mập',
-                                              fontSize: FontSize.fontSize_16,
-                                              fontWeight: FontWeight.w500,
-                                              maxLine: 1,
-                                              textOverflow:
-                                                  TextOverflow.ellipsis,
-                                            ),
-                                            5.spaceHeight,
-                                            Row(
-                                              children: [
-                                                CText(
-                                                  text: 'Tổng số:',
-                                                  fontSize: FontSize.fontSize_12,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(left: 5),
-                                                  child: CText(
-                                                    text:
-                                                    // '${state.data[index]['quantity'] ?? 0}',
-                                                    '0',
-                                                    fontSize: FontSize.fontSize_12,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            5.spaceHeight,
-                                            Row(
-                                              children: [
-                                                CText(
-                                                  text: 'Đơn giá:',
-                                                  fontSize:
-                                                      FontSize.fontSize_14,
-                                                  fontWeight: FontWeight.w500,
-                                                  textColor:
-                                                      FontColor.colorEC222D,
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      EdgeInsets.only(left: 5),
-                                                  child: CText(
-                                                    text:
-                                                    // '${Validation.oCcy.format(state.data[index]['unitPrice'] ?? 0)} đ',
-                                                    '0 đ',
-                                                    fontSize: FontSize.fontSize_14,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Container(
-                                                  height: 22,
-                                                  width: 100,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(30),
-                                                      color: Colors.redAccent),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      IconButton(
-                                                        onPressed: () {
-                                                          // final count = state.data[index]['quantity'];
-                                                          final count = 0;
-                                                          final quantity =
-                                                              count - 1;
-                                                          if (quantity == 0) {
-                                                            listCardCubit
-                                                                .removeFood(
-                                                                    context,
-                                                                    // state.data[index]['id']
-                                                                    1
-                                                            );
-                                                          } else {
-                                                            listCardCubit.addFood(context,
-                                                                // state.data[index]['id'],
-                                                                1,
-                                                                quantity
-                                                            );
-                                                          }
-                                                        },
-                                                        icon: const Icon(
-                                                          Icons.remove,
-                                                          color: Colors.white,
-                                                          size: 12,
-                                                        ),
-                                                      ),
-                                                      IconButton(
-                                                        onPressed: () {
-                                                          // final count = state.data[index]['quantity'];
-                                                          final count = 0;
-                                                          final quantity = count + 1;
-                                                          listCardCubit.addFood(
-                                                              context,
-                                                              // state.data[index]['id'],
-                                                              1,
-                                                              quantity
-                                                          );
-                                                        },
-                                                        icon: const Icon(
-                                                          Icons.add,
-                                                          color: Colors.white,
-                                                          size: 12,
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                        // itemCount: state.data.length ?? 0,
-                        itemCount: 5,
-                        shrinkWrap: true,
-                      )
-                    ],
-                  ),
-                );
-              }
-              return Stack(children: [
-                Container(
-                  width: double.infinity,
-                  height: 200,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                    ),
-                    gradient: kBgMenu,
-                  ),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          24, AppBar().preferredSize.height + 15, 24, 0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              "Giỏ hàng",
-                              style: GoogleFonts.roboto(
-                                textStyle: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 20,
-                                    color: kMainDarkColor),
-                              ),
-                            ),
-                          ),
-                          const CImage(
-                            assetsPath: Assets.icNotification,
-                            height: 24,
-                            width: 24,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(24, AppBar().preferredSize.height + 90, 24, 0),
-                  child: Container(
-                    height: 130,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: FontColor.colorFFFFFF,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset:
-                              const Offset(0, 3), // changes position of shadow
-                        ),
                       ],
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Tổng tiền',
-                                style: GoogleFonts.roboto(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: kMainBlackColor),
-                              ),
-                              Text(
-                                '0đ',
-                                style: GoogleFonts.roboto(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: kMainBlackColor),
-                              ),
-                            ],
-                          ),
-                          5.spaceHeight,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Phí giao hàng',
-                                style: GoogleFonts.roboto(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: kMainBlackColor),
-                              ),
-                              Text(
-                                '0đ',
-                                style: GoogleFonts.roboto(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: kMainBlackColor),
-                              ),
-                            ],
-                          ),
-                          5.spaceHeight,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Phí dịch vụ & phí khác',
-                                style: GoogleFonts.roboto(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: kMainBlackColor),
-                              ),
-                              Text(
-                                '0đ',
-                                style: GoogleFonts.roboto(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: kMainBlackColor),
-                              ),
-                            ],
-                          ),
-                          10.spaceHeight,
-                          Container(
-                            width: double.infinity,
-                            height: 1,
-                            color: FontColor.colorBorder,
-                          ),
-                          10.spaceHeight,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Tổng cộng',
-                                style: GoogleFonts.roboto(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    color: kMainBlackColor),
-                              ),
-                              Text(
-                                '0đ',
-                                style: GoogleFonts.roboto(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    color: kMainBlackColor),
-                              ),
-                            ],
-                          ),
-                        ],
+                    20.spaceHeight,
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 16),
+                          itemBuilder: (context, index) {
+                            // print(state.data[index]['quantity']);
+                            return Column(
+                              children: [
+                                CartItem(
+                                  quantity: stateListCake.data[index]
+                                          ['quantityShoppingCartTmt']
+                                      .toString(),
+                                  name: stateListCake.data[index]['nameCake'],
+                                  price: FormatPrice.formatVND(
+                                      stateListCake.data[index]['priceCake']),
+                                  imageUrl: stateListCake.data[index]
+                                      ['imageCake'],
+                                  onTapAdd: () {
+                                    final count =
+                                        stateListCake.data[index]['quantity'];
+                                    final quantity = count + 1;
+                                    listCardCubit.addFood(
+                                        context,
+                                        // state.data[index]['id'],
+                                        1,
+                                        quantity);
+                                  },
+                                  onTapMinus: () {
+                                    final count =
+                                        stateListCake.data[index]['quantity'];
+                                    final quantity = count - 1;
+                                    if (quantity == 0) {
+                                      listCardCubit.removeFood(
+                                          context,
+                                          // state.data[index]['id']
+                                          1);
+                                    } else {
+                                      listCardCubit.addFood(
+                                          context,
+                                          stateListCake.data[index]['quantity'],
+                                          quantity);
+                                    }
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                              ],
+                            );
+                          },
+                          itemCount: stateListCake.data.length ?? 0,
+                          shrinkWrap: true,
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ]);
+                  ],
+                );
+              } else if (stateListCake is ListCardLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (stateListCake is ListCardFailure) {
+                return const AppbarCartWidget();
+              } else {
+                return const AppbarCartWidget();
+              }
             },
           ),
         ),

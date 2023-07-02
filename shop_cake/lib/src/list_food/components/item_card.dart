@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_cake/constants/constants.dart';
+import 'package:shop_cake/widgets/c_image.dart';
 
 import '../../home_page/components/favIcon.dart';
 
@@ -10,6 +11,7 @@ class ItemCard extends StatelessWidget {
   final String? price;
   final String? imageUrl;
   final GestureTapCallback? onTap;
+  final GestureTapCallback? addToCart;
 
   const ItemCard({
     Key? key,
@@ -18,6 +20,7 @@ class ItemCard extends StatelessWidget {
     this.price,
     this.imageUrl,
     this.onTap,
+    this.addToCart,
   }) : super(key: key);
 
   @override
@@ -45,12 +48,12 @@ class ItemCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16),
-                  child: Image.network(
-                    imageUrl ??
+                  child: CImage(
+                    assetsNetworkUrl: imageUrl ??
                         "https://thoidai.com.vn/stores/news_dataimages/thoidai/112017/06/22/chiem-nguong-nhung-chiec-banh-ngot-tinh-te-dep-nhu-thuy-tinh-44-.5835.jpg",
                     height: 150,
                     width: double.infinity,
-                    fit: BoxFit.cover,
+                    boxFit: BoxFit.cover,
                   ),
                 ),
                 Align(
@@ -98,18 +101,22 @@ class ItemCard extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: kDefaultPaddin / 2),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children:  [
                   Expanded(
                     child: Text(
-                      "Cà phê sữa đá",
-                      style: TextStyle(
+                     title ?? "Cà phê sữa đá",
+                      style:  GoogleFonts.roboto(
                         color: kMainDarkColor,
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w700,
                       ),
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.start,
+                      maxLines: 1,
                     ),
                   ),
-                  FavIcon(),
+                  const SizedBox(width: 4,),
+                  const FavIcon(),
                 ],
               ),
             ),
@@ -150,34 +157,39 @@ class ItemCard extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: Container(
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                        color: kFFA6BD,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        children: [
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            "Thêm",
-                            style: GoogleFonts.roboto(
-                              color: kMainWhiteColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
+                    child: InkWell(
+                      onTap: addToCart,
+                      child: Container(
+                        height: 25,
+                        width: 25,
+                        decoration: BoxDecoration(
+                          color: kFFA6BD,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 8,
                             ),
-                          ),
-                          const Expanded(
-                            child: Icon(
-                              Icons.add,
-                              color: kMainWhiteColor,
-                              size: 15,
+                            Text(
+                              "Thêm",
+                              style: GoogleFonts.roboto(
+                                color: kMainWhiteColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
+                            const Expanded(
+                              child: InkWell(
+                                child: Icon(
+                                  Icons.add,
+                                  color: kMainWhiteColor,
+                                  size: 15,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

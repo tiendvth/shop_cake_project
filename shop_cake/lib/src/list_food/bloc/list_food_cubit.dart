@@ -12,6 +12,7 @@ class ListFoodCubit extends Cubit<ListFoodState> {
   final ListFoodRepository _foodRepository =
       ListFoodRepositoryImpl(apiProvider);
   TextEditingController searchController = TextEditingController();
+  List cartCakeList = [];
 
   ListFoodCubit() : super(ListFoodInitial());
 
@@ -45,12 +46,13 @@ class ListFoodCubit extends Cubit<ListFoodState> {
     // });
   }
 
-  addFoodToOrder(BuildContext context, foodId, quantity) {
-    _foodRepository.addFoodToOrder(foodId, quantity).then((value) {
-      showDialogConfirmChangeTextAction(
-          context, "Đi tới giỏ hàng", "Thêm món thành công", () {
-        context.read<TabBarController>().tabIndex = 1;
-      });
+  addFoodToOrder(BuildContext context, {cakeId, quantity}) {
+    cartCakeList.add({
+      "cakeId": cakeId,
+      "quantity": quantity,
+    });
+    _foodRepository.addFoodToOrder(cakeId, quantity).then((value) {
+      showToast('Add to cart success');
     }).catchError((onError) {
       showToast((onError as DioError).message);
     });

@@ -20,8 +20,9 @@ class ListCardCubit extends Cubit<ListCardState> {
       emit(ListCardLoading());
       final data = await _cartRepository.ListCart();
       datas.clear();
-      datas.addAll(data['data']['items']);
-      emit(ListCardSuccess(data['totalPrice'],datas));
+      datas.addAll(data['data']['result']);
+      // emit(ListCardSuccess(data['totalPrice'],datas));
+      emit(ListCardSuccess(data['data']['result'],datas));
     } on DioError {
       emit(ListCardFailure("Is the device online?"));
     }
@@ -32,8 +33,9 @@ class ListCardCubit extends Cubit<ListCardState> {
     try {
       final data = await _cartRepository.updateFoodToCart(foodId, quantity);
       datas.clear();
-      datas.addAll(data['data']['items']);
-      emit(ListCardSuccess(data['totalPrice'],datas));
+      datas.addAll(data['data']['result']);
+      // emit(ListCardSuccess(data['totalPrice'],datas));
+      emit(ListCardSuccess(data['result'],datas));
       closeLoading(context);
     } on DioError {
       closeLoading(context);

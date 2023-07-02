@@ -19,8 +19,8 @@ class _UpperBodyState extends State<UpperBody> {
       decoration: const BoxDecoration(
         gradient: kBgMenu,
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(24),
-          bottomRight: Radius.circular(24),
+          bottomLeft: Radius.circular(16),
+          bottomRight: Radius.circular(16),
         ),
       ),
       child: Padding(
