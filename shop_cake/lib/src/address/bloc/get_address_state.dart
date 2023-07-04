@@ -6,8 +6,8 @@ abstract class GetAddressState {}
 class GetAddressInitial extends GetAddressState {}
 class GetAddressLoading extends GetAddressState {}
 class GetAddressSuccess extends GetAddressState {
-  final List<VietNamModel>? vietNamModel;
-  GetAddressSuccess(this.vietNamModel);
+  final List<Locations>? locations;
+  GetAddressSuccess(this.locations);
 }
 class GetAddressFailure extends GetAddressState {
   final String error;
