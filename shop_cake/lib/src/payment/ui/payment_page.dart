@@ -48,8 +48,8 @@ class PaymentPage extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.topLeft,
                           child: Padding(
-                            padding: EdgeInsets.fromLTRB(
-                                16, AppBar().preferredSize.height, 0, 0),
+                            padding: EdgeInsets.fromLTRB(24,
+                                AppBar().preferredSize.height + 0, 16, 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
