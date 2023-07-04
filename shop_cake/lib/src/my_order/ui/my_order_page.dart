@@ -2,6 +2,7 @@ import 'package:common/common.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_cake/common/badge_widget.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/constants.dart';
@@ -37,12 +38,19 @@ class _MyOrderPageState extends State<MyOrderPage> {
           decoration: const BoxDecoration(gradient: kBgMenu),
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const CImage(
-              assetsPath: Assets.icNotification,
-              width: 24,
-              height: 24,
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: Badge(
+              value: '3',
+              paddingTop: 16,
+              child: InkWell(
+                onTap: () {},
+                child: const CImage(
+                  assetsPath: Assets.icNotification,
+                  width: 24,
+                  height: 24,
+                ),
+              ),
             ),
           ),
         ],
