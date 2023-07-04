@@ -29,7 +29,7 @@ class PaymentCubit extends Cubit<PaymentState> {
       emit(PaymentLoading());
       final data = await _paymentRepository.listCart();
       datas.clear();
-      datas.addAll(data['data']['items'] as List);
+      datas.addAll(data['data']['result'] as List);
       totalPrice = '${Validation.oCcy.format(data['data']['totalPrice'] ?? 0)}';
       emit(PaymentSuccess(datas, totalPrice, selectedValue));
     } on DioError {

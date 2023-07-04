@@ -237,11 +237,11 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                         crossAxisSpacing: 12,
                                         childAspectRatio: 0.7,
                                       ),
-                                      childrenDelegate:
-                                          SliverChildBuilderDelegate(
+                                      childrenDelegate: SliverChildBuilderDelegate(
                                         (context, index) => ItemCard(
-                                          imageUrl: stateListCake.data['result']
-                                              [index]['image'],
+                                        //   imageUrl: 'http://103.187.5.254:8090/api/files/files/${stateListCake.data['result']
+                                        // [index]['image']}',
+                                          imageUrl: 'http://103.187.5.254:8090/api/files/files/${stateListCake.data['result'][index]['image']}',
                                           title: stateListCake.data['result']
                                               [index]['name'],
                                           price: FormatPrice.formatVND(

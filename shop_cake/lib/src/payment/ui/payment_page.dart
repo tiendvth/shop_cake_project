@@ -12,6 +12,8 @@ import 'package:shop_cake/src/payment/repository/repository.dart';
 import 'package:shop_cake/widgets/c_button.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
 
+import '../../../common/ config/format_price.dart';
+
 class PaymentPage extends StatelessWidget {
   const PaymentPage({Key? key}) : super(key: key);
 
@@ -26,8 +28,8 @@ class PaymentPage extends StatelessWidget {
         child: BlocProvider(
           create: (context) => paymentCubit,
           child: BlocBuilder<PaymentCubit, PaymentState>(
-            builder: (context, state) {
-              if (state is PaymentFailure) {
+            builder: (context, statePayment) {
+              if (statePayment is PaymentSuccess) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -239,15 +241,50 @@ class PaymentPage extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 // print(state.data[index]['quantity']);
                                 return Column(
-                                  children: const [
-                                    CartItem(),
+                                  children: [
+                                    CartItem(
+                                      quantity: statePayment.data[index]
+                                      ['quantityShoppingCartTmt']
+                                          .toString(),
+                                      name: statePayment.data[index]['nameCake'],
+                                      price: FormatPrice.formatVND(
+                                          statePayment.data[index]['priceCake']),
+                                      imageUrl: statePayment.data[index]
+                                      ['imageCake'],
+                                      onTapAdd: () {
+                                        final count =
+                                        statePayment.data[index]['quantity'];
+                                        final quantity = count + 1;
+                                        // listCardCubit.addFood(
+                                        //     context,
+                                        //     // state.data[index]['id'],
+                                        //     1,
+                                        //     quantity);
+                                      },
+                                      onTapMinus: () {
+                                        final count =
+                                        statePayment.data[index]['quantity'];
+                                        final quantity = count - 1;
+                                        if (quantity == 0) {
+                                          // listCardCubit.removeFood(
+                                          //     context,
+                                          //     // state.data[index]['id']
+                                          //     1);
+                                        } else {
+                                          // listCardCubit.addFood(
+                                          //     context,
+                                          //     statePayment.data[index]['quantity'],
+                                          //     quantity);
+                                        }
+                                      },
+                                    ),
                                     SizedBox(
                                       height: 12,
                                     ),
                                   ],
                                 );
                               },
-                              itemCount: 10,
+                              itemCount: statePayment.data.length ?? 0,
                               shrinkWrap: true,
                             ),
                             Container(
