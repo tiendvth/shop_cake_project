@@ -1,5 +1,4 @@
 import 'package:common/common.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_cake/constants/constants.dart';
@@ -118,7 +117,7 @@ class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
                   style: GoogleFonts.roboto(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    color: Colors.black,
+                    color: kMainBlackColor,
                   ),
                   textInputType: TextInputType.phone,
                   hintStyle: GoogleFonts.roboto(
@@ -190,19 +189,18 @@ class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
                                     color: k9B9B9B)),
                             value: selectedLocations,
                             items: locations.map((location) {
-                                  return DropdownMenuItem<Locations>(
-                                    value: location,
-                                    child: Text(
-                                      location.province!,
-                                      style: GoogleFonts.roboto(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color: k9B9B9B,
-                                      ),
-                                    ),
-                                  );
-                                }).toList() ??
-                                [],
+                              return DropdownMenuItem<Locations>(
+                                value: location,
+                                child: Text(
+                                  location.province!,
+                                  style: GoogleFonts.roboto(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: kMainBlackColor,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
                             onChanged: (selectedLocation) {
                               setState(() {
                                 selectedLocations = selectedLocation;
@@ -268,7 +266,7 @@ class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
                                           style: GoogleFonts.roboto(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400,
-                                            color: k9B9B9B,
+                                            color: kMainBlackColor,
                                           ),
                                         ),
                                       );
@@ -336,7 +334,7 @@ class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
                                       style: GoogleFonts.roboto(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
-                                        color: k9B9B9B,
+                                        color: kMainBlackColor,
                                       ),
                                     ),
                                   );
