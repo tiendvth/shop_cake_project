@@ -177,6 +177,11 @@ class _CreateMyOrderPageState extends State<CreateMyOrderPage> {
                           fontWeight: FontWeight.w400,
                           color: k9B9B9B,
                         ),
+                        style: GoogleFonts.roboto(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: kMainBlackColor,
+                        ),
                         onComplete: () {
                           //FocusManager.instance.primaryFocus?.dispose();
                         },
@@ -202,6 +207,11 @@ class _CreateMyOrderPageState extends State<CreateMyOrderPage> {
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                           color: k9B9B9B,
+                        ),
+                        style: GoogleFonts.roboto(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: kMainBlackColor,
                         ),
                         onComplete: () {
                           //FocusManager.instance.primaryFocus?.dispose();
@@ -285,6 +295,11 @@ class _CreateMyOrderPageState extends State<CreateMyOrderPage> {
                           fontWeight: FontWeight.w400,
                           color: k9B9B9B,
                         ),
+                        style: GoogleFonts.roboto(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: kMainBlackColor,
+                        ),
                         maxLines: 4,
                         onComplete: () {
                           //FocusManager.instance.primaryFocus?.dispose();
@@ -315,7 +330,7 @@ class _CreateMyOrderPageState extends State<CreateMyOrderPage> {
                         style: GoogleFonts.roboto(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
-                          color: k9B9B9B,
+                          color: kMainBlackColor,
                         ),
                         contentPadding: const EdgeInsets.only(
                           top: 12,
@@ -381,7 +396,7 @@ class _CreateMyOrderPageState extends State<CreateMyOrderPage> {
                       Text(
                         'Thêm ảnh mẫu sản phẩm',
                         style: GoogleFonts.roboto(
-                          fontSize: 20,
+                          fontSize: 14,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
