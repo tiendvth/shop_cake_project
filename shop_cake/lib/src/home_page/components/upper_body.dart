@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_cake/common/badge_widget.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/widgets/c_image.dart';
@@ -46,10 +47,16 @@ class _UpperBodyState extends State<UpperBody> {
                     ),
                   ),
                 ),
-                const CImage(
-                  assetsPath: Assets.icNotification,
-                  height: 24,
-                  width: 24,
+                Badge(
+                  value: '3',
+                  child: InkWell(
+                    onTap: () {},
+                    child: const CImage(
+                      assetsPath: Assets.icNotification,
+                      height: 24,
+                      width: 24,
+                    ),
+                  ),
                 ),
               ],
             ),

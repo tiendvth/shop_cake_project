@@ -1,6 +1,7 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_cake/common/badge_widget.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/network/network_manager.dart';
@@ -28,7 +29,7 @@ class MenuScreen extends StatelessWidget {
             children: [
               Container(
                 width: double.infinity,
-                height: 220,
+                height: 230,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(20),
@@ -43,33 +44,42 @@ class MenuScreen extends StatelessWidget {
                     const SizedBox(
                       height: 56,
                     ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        Expanded(
-                          child: Text(
-                            "Menu",
-                            style: GoogleFonts.roboto(
-                              textStyle: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 22,
-                                  color: kMainDarkColor),
+                    SizedBox(
+                      height: 56,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          Expanded(
+                            child: Text(
+                              "Menu",
+                              style: GoogleFonts.roboto(
+                                textStyle: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 22,
+                                    color: kMainDarkColor),
+                              ),
                             ),
                           ),
-                        ),
-                        const CImage(
-                          assetsPath: Assets.icNotification,
-                          height: 24,
-                          width: 24,
-                        ),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                      ],
+                          Badge(
+                            value: '3',
+                            child: InkWell(
+                              onTap: () {},
+                              child: const CImage(
+                                assetsPath: Assets.icNotification,
+                                height: 24,
+                                width: 24,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 16,
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 16,
