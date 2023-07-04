@@ -377,6 +377,11 @@ class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
                     fontWeight: FontWeight.w400,
                     color: k9B9B9B,
                   ),
+                  style: GoogleFonts.roboto(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                  ),
                   onComplete: () {
                     //FocusManager.instance.primaryFocus?.dispose();
                   },
