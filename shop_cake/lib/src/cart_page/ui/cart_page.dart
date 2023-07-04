@@ -5,7 +5,6 @@ import 'package:shop_cake/common/%20config/format_price.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/constants.dart';
-import 'package:shop_cake/constants/font_size/font_size.dart';
 import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/cart_page/bloc/list_card_bloc/list_card_cubit.dart';
 import 'package:shop_cake/src/cart_page/componenst/appbar_cart_widget.dart';
@@ -13,7 +12,6 @@ import 'package:shop_cake/src/cart_page/componenst/cart_item.dart';
 import 'package:shop_cake/src/cart_page/repository/cart_repository.dart';
 import 'package:shop_cake/src/payment/ui/payment_page.dart';
 import 'package:shop_cake/widgets/c_image.dart';
-import 'package:shop_cake/widgets/c_text.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
 
 class CartPage extends StatefulWidget {
@@ -114,13 +112,13 @@ class _CartPageState extends State<CartPage> {
                         ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(
-                              24, AppBar().preferredSize.height + 70, 24, 0),
+                              24, AppBar().preferredSize.height + 65, 24, 0),
                           child: Container(
-                            height: 130,
+                            height: 120,
                             width: double.infinity,
                             decoration: BoxDecoration(
                               color: FontColor.colorFFFFFF,
-                              borderRadius: BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.grey.withOpacity(0.5),
@@ -138,53 +136,74 @@ class _CartPageState extends State<CartPage> {
                                 children: [
                                   Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
-                                      CText(
-                                        text: 'Giá tiền',
-                                        fontSize: FontSize.fontSize_16,
-                                        fontWeight: FontWeight.w500,
+                                      Text(
+                                        'Giá tiền',
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: k514D56,
+                                        ),
                                       ),
-                                      CText(
-                                        text:
-                                            // '${Validation.oCcy.format(state.totalPrice ?? 0)}',
-                                            '0',
-                                        fontSize: FontSize.fontSize_16,
-                                        fontWeight: FontWeight.w500,
+                                      Text(
+                                        // text: '${state.totalPrice}',
+                                        '0đ',
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: k514D56,
+                                        ),
                                       ),
                                     ],
                                   ),
                                   5.spaceHeight,
                                   Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
-                                      CText(
-                                        text: 'Phí giao hàng',
-                                        fontSize: FontSize.fontSize_14,
-                                        fontWeight: FontWeight.w500,
+                                      Text(
+                                        // text: '${state.totalPrice}',
+                                        'Phí giao hàng',
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: k514D56,
+                                        ),
                                       ),
-                                      CText(
-                                        text: '0',
-                                        fontSize: FontSize.fontSize_16,
-                                        fontWeight: FontWeight.w500,
+                                      Text(
+                                        // text: '${state.totalPrice}',
+                                        '0đ',
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: k514D56,
+                                        ),
                                       ),
                                     ],
                                   ),
                                   5.spaceHeight,
                                   Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
-                                      CText(
-                                        text: 'Phí dịch vụ & phí khác',
-                                        fontSize: FontSize.fontSize_16,
-                                        fontWeight: FontWeight.w500,
+                                      Text(
+                                        // text: '${state.totalPrice}',
+                                        'Phí dich vụ khác',
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: k514D56,
+                                        ),
                                       ),
-                                      CText(
-                                        text: '0',
-                                        fontSize: FontSize.fontSize_16,
-                                        fontWeight: FontWeight.w500,
+                                      Text(
+                                        // text: '${state.totalPrice}',
+                                        '0đ',
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: k514D56,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -197,19 +216,25 @@ class _CartPageState extends State<CartPage> {
                                   10.spaceHeight,
                                   Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
-                                      CText(
-                                        text: 'Tổng thanh toán',
-                                        fontSize: FontSize.fontSize_18,
-                                        fontWeight: FontWeight.w600,
+                                      Text(
+                                        // text: '${state.totalPrice}',
+                                        'Tổng tiền',
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                          color: kMainRedColor,
+                                        ),
                                       ),
-                                      CText(
-                                        text:
-                                            // '${Validation.oCcy.format(state.totalPrice ?? 0)} đ',
-                                            '0 đ',
-                                        fontSize: FontSize.fontSize_18,
-                                        fontWeight: FontWeight.w600,
+                                      Text(
+                                        // text: '${state.totalPrice}',
+                                        '0đ',
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                          color: kMainRedColor,
+                                        ),
                                       ),
                                     ],
                                   ),
