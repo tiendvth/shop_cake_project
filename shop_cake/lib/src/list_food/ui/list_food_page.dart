@@ -75,13 +75,8 @@ class _ListFoodPageState extends State<ListFoodPage> {
   }
 
   Future<void> _refresh() async {
-    listCategoryCubit.getCategory();
     listFoodCubit.getListFood(listFoodCubit.searchController.text);
   }
-
-  // Future<void> _refresh() async {
-  //   await listFoodCubit.getListFood(listFoodCubit.searchController.text);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -187,96 +182,71 @@ class _ListFoodPageState extends State<ListFoodPage> {
                     const SizedBox(
                       height: 16,
                     ),
-                    // BlocBuilder<CategoryCubit, CategoryState>(
-                    //   builder: (context, state) {
-                    //     if (state is CategorySuccess) {
-                    //       // print('state: $state');
-                    //       return SizedBox(
-                    //         height: 40,
-                    //         child: ListView.builder(
-                    //           shrinkWrap: true,
-                    //           itemCount: state.data.length,
-                    //           // itemCount: 10,
-                    //           scrollDirection: Axis.horizontal,
-                    //           itemBuilder: (context, index) {
-                    //             return Padding(
-                    //               padding: const EdgeInsets.only(left: 15, right: 15),
-                    //               child: CategoryItem(
-                    //                 // imageUrl: state.data[index]['image'],
-                    //                 title: state.data[index]['name'],
-                    //                 // title: 'category',
-                    //               ),
-                    //             );
-                    //           },
-                    //         ),
-                    //       );
-                    //     } else {
-                    //       return SizedBox.shrink();
-                    //     }
-                    //   },
-                    // ),
                     Expanded(
                       child: BlocBuilder<ListFoodCubit, ListFoodState>(
                         builder: (context, stateListCake) {
                           if (stateListCake is ListFoodSuccess) {
-                            return SingleChildScrollView(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                child: Column(
-                                  children: [
-                                    GridView.custom(
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      padding: EdgeInsets.zero,
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        mainAxisSpacing: 12,
-                                        crossAxisSpacing: 12,
-                                        childAspectRatio: 0.7,
-                                      ),
-                                      childrenDelegate:
-                                          SliverChildBuilderDelegate(
-                                        (context, index) => ItemCard(
-                                          imageUrl: stateListCake.data['result']
-                                              [index]['image'],
-                                          title: stateListCake.data['result']
-                                              [index]['name'],
-                                          price: FormatPrice.formatVND(
-                                              stateListCake.data['result']
-                                                  [index]['price']),
-                                          onTap: () {
-                                            NavigatorManager.pushFullScreen(
-                                                context,
-                                                DetailFood(
-                                                  id: stateListCake
-                                                              .data['result']
-                                                          [index]['id'] ??
-                                                      '',
-                                                  detail: stateListCake
-                                                      .data['result'][index],
-                                                ));
-                                          },
-                                          addToCart: () {
-                                            listFoodCubit.addFoodToOrder(
-                                              context,
-                                              cakeId:
-                                                  stateListCake.data['result']
-                                                      [index]['cakeId'],
-                                              quantity:
-                                                  stateListCake.data['result']
-                                                          [index]['quantity'] ??
-                                                      1,
-                                            );
-                                          },
+                            return RefreshIndicator(
+                              onRefresh: _refresh,
+                              child: SingleChildScrollView(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 16),
+                                  child: Column(
+                                    children: [
+                                      GridView.custom(
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        padding: EdgeInsets.zero,
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          mainAxisSpacing: 12,
+                                          crossAxisSpacing: 12,
+                                          childAspectRatio: 0.7,
                                         ),
-                                        childCount:
-                                            stateListCake.data['result'].length,
+                                        childrenDelegate:
+                                            SliverChildBuilderDelegate(
+                                          (context, index) => ItemCard(
+                                            imageUrl: stateListCake.data['result']
+                                                [index]['image'],
+                                            title: stateListCake.data['result']
+                                                [index]['name'],
+                                            price: FormatPrice.formatVND(
+                                                stateListCake.data['result']
+                                                    [index]['price']),
+                                            onTap: () {
+                                              NavigatorManager.pushFullScreen(
+                                                  context,
+                                                  DetailFood(
+                                                    id: stateListCake
+                                                                .data['result']
+                                                            [index]['id'] ??
+                                                        '',
+                                                    detail: stateListCake
+                                                        .data['result'][index],
+                                                  ));
+                                            },
+                                            addToCart: () {
+                                              listFoodCubit.addFoodToOrder(
+                                                context,
+                                                cakeId:
+                                                    stateListCake.data['result']
+                                                        [index]['cakeId'],
+                                                quantity:
+                                                    stateListCake.data['result']
+                                                            [index]['quantity'] ??
+                                                        1,
+                                              );
+                                            },
+                                          ),
+                                          childCount:
+                                              stateListCake.data['result'].length,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
