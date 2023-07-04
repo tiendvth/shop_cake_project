@@ -213,18 +213,45 @@ class _CreateMyOrderPageState extends State<CreateMyOrderPage> {
                       const SizedBox(
                         height: 8,
                       ),
-                      CTextFormField(
-                        hintText: 'Địa chỉ',
-                        hintStyle: GoogleFonts.roboto(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: k9B9B9B,
+                      Container(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 8, left: 16),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: kMainDarkGreyColor,
+                            width: 0.5,
+                          ),
                         ),
-                        onComplete: () {
-                          //FocusManager.instance.primaryFocus?.dispose();
-                        },
-                        contentPadding: const EdgeInsets.only(
-                            top: 12, bottom: 12, left: 16),
+                        child: InkWell(
+                          onTap: () {
+                            //FocusManager.instance.primaryFocus?.dispose();
+                          },
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      'Chọn địa chỉ',
+                                      style: GoogleFonts.roboto(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: k9B9B9B,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const Center(
+                                child: Icon(
+                                  Icons.keyboard_arrow_right,
+                                  color: kF2F4B4E,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                       const SizedBox(
                         height: 16,
@@ -257,7 +284,7 @@ class _CreateMyOrderPageState extends State<CreateMyOrderPage> {
                         height: 16,
                       ),
                       Text(
-                        'Ngay giao hàng',
+                        'Ngày giao hàng',
                         style: GoogleFonts.roboto(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
