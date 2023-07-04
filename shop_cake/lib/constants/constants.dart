@@ -33,6 +33,7 @@ const kF6F6F6 = Color(0xFFF6F6F6);
 const kF7F7F7 = Color(0xFFF7F7F7);
 const kF8F8F8 = Color(0xFFF8F8F8);
 const k514D56 = Color(0xFF514D56);
+const k666666 = Color(0xFF666666);
 
 
 const Gradient kMainGradient = LinearGradient(

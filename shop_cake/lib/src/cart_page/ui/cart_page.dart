@@ -2,6 +2,7 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_cake/common/%20config/format_price.dart';
+import 'package:shop_cake/common/badge_widget.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/constants.dart';
@@ -100,10 +101,16 @@ class _CartPageState extends State<CartPage> {
                                       ),
                                     ),
                                   ],
-                                  const CImage(
-                                    assetsPath: Assets.icNotification,
-                                    height: 24,
-                                    width: 24,
+                                  Badge(
+                                    value: '3',
+                                    child: InkWell(
+                                      onTap: () {},
+                                      child: const CImage(
+                                        assetsPath: Assets.icNotification,
+                                        height: 24,
+                                        width: 24,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),

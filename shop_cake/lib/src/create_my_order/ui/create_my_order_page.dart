@@ -1,13 +1,16 @@
 import 'dart:io';
 
+import 'package:common/common.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shop_cake/common/badge_widget.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/constants.dart';
+import 'package:shop_cake/src/address/ui/address_page.dart';
 import 'package:shop_cake/widgets/c_image.dart';
 import 'package:shop_cake/widgets/c_textformfield.dart';
 
@@ -114,10 +117,16 @@ class _CreateMyOrderPageState extends State<CreateMyOrderPage> {
                           ),
                         ),
                       ),
-                      const CImage(
-                        assetsPath: Assets.icNotification,
-                        height: 24,
-                        width: 24,
+                      Badge(
+                        value: '3',
+                        child: InkWell(
+                          onTap: () {},
+                          child: const CImage(
+                            assetsPath: Assets.icNotification,
+                            height: 24,
+                            width: 24,
+                          ),
+                        ),
                       ),
                       const SizedBox(
                         width: 16,
@@ -213,20 +222,23 @@ class _CreateMyOrderPageState extends State<CreateMyOrderPage> {
                       const SizedBox(
                         height: 8,
                       ),
-                      Container(
-                        padding: const EdgeInsets.only(
-                            top: 8, bottom: 8, left: 16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: kMainDarkGreyColor,
-                            width: 0.5,
+                      InkWell(
+                        onTap: () {
+                          NavigatorManager.push(
+                            context,
+                            const AddressPage(),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.only(
+                              top: 8, bottom: 8, left: 16),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: kMainDarkGreyColor,
+                              width: 0.5,
+                            ),
                           ),
-                        ),
-                        child: InkWell(
-                          onTap: () {
-                            //FocusManager.instance.primaryFocus?.dispose();
-                          },
                           child: Row(
                             children: [
                               Expanded(
