@@ -1,11 +1,11 @@
-class VietNamModel {
-  String? name;
+class Locations {
+  String? province;
   List<Districts>? districts;
 
-  VietNamModel({this.name, this.districts});
+  Locations({this.province, this.districts});
 
-  VietNamModel.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
+  Locations.fromJson(Map<String, dynamic> json) {
+    province = json['name'];
     if (json['districts'] != null) {
       districts = <Districts>[];
       json['districts'].forEach((v) {
@@ -16,7 +16,7 @@ class VietNamModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
+    data['name'] = this.province;
     if (this.districts != null) {
       data['districts'] = this.districts!.map((v) => v.toJson()).toList();
     }
@@ -25,13 +25,13 @@ class VietNamModel {
 }
 
 class Districts {
-  String? name;
+  String? district;
   List<Wards>? wards;
 
-  Districts({this.name, this.wards});
+  Districts({this.district, this.wards});
 
   Districts.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
+    district = json['name'];
     if (json['wards'] != null) {
       wards = <Wards>[];
       json['wards'].forEach((v) {
@@ -42,7 +42,7 @@ class Districts {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
+    data['name'] = this.district;
     if (this.wards != null) {
       data['wards'] = this.wards!.map((v) => v.toJson()).toList();
     }
@@ -51,17 +51,17 @@ class Districts {
 }
 
 class Wards {
-  String? name;
+  String? ward;
 
-  Wards({this.name});
+  Wards({this.ward});
 
   Wards.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
+    ward = json['name'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
+    data['name'] = this.ward;
     return data;
   }
 }

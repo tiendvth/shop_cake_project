@@ -6,16 +6,20 @@ import 'package:shop_cake/src/address/repository/country_repository.dart';
 part 'get_address_state.dart';
 
 class GetAddressCubit extends Cubit<GetAddressState> {
-  final CountryRepository _countryRepository = CountryRepository();
+  final CountryRepository countryRepository = CountryRepository();
   GetAddressCubit() : super(GetAddressInitial());
 
   Future<void> loadLocationData() async {
     emit(GetAddressLoading());
     try {
-     final vietNamModel = await _countryRepository.loadLocationData();
-      emit(GetAddressSuccess(vietNamModel));
-    } catch (e) {
-      emit(GetAddressFailure(e.toString()));
+      final locations = await countryRepository.getLocations();
+      if (locations != null && locations.isNotEmpty) {
+        emit(GetAddressSuccess(locations));
+      } else {
+        emit(GetAddressFailure(''));
+      }
+    } catch (exception) {
+      emit(GetAddressFailure(exception.toString()));
     }
   }
 }
