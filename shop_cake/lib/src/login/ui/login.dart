@@ -1,8 +1,9 @@
-
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/color/colors.dart';
+import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/constants/font_size/font_size.dart';
 import 'package:shop_cake/generated/l10n.dart';
 import 'package:shop_cake/src/app_home.dart';
@@ -95,24 +96,38 @@ class _LoginState extends State<Login> {
                     ),
                     50.spaceHeight,
                     CTextFormField(
-                      backgroundColor: FontColor.colorText231F20.withOpacity(0.8),
+                      backgroundColor:
+                          FontColor.colorText231F20.withOpacity(0.8),
                       hintText: 'Tên đăng nhập',
+                      hintStyle: GoogleFonts.roboto(
+                        color: kMainLightGreyColor.withOpacity(0.5),
+                        fontSize: 16,
+                      ),
+                      maxLines: 1,
                       controller: usernameController,
                       onComplete: () {
                         //FocusManager.instance.primaryFocus?.dispose();
                       },
-                      contentPadding: const EdgeInsets.only(top: 12, bottom: 12, left: 24),
+                      contentPadding:
+                          const EdgeInsets.only(top: 12, bottom: 12, left: 24),
                     ),
                     20.spaceHeight,
                     CTextFormField(
                       obscureText: true,
-                      backgroundColor: FontColor.colorText231F20.withOpacity(0.8),
+                      maxLines: 1,
+                      backgroundColor:
+                          FontColor.colorText231F20.withOpacity(0.8),
                       hintText: 'Mật khẩu',
+                      hintStyle: GoogleFonts.roboto(
+                        color: kMainLightGreyColor.withOpacity(0.5),
+                        fontSize: 16,
+                      ),
                       controller: passwordController,
                       onComplete: () {
                         //FocusManager.instance.primaryFocus?.dispose();
                       },
-                      contentPadding: const EdgeInsets.only(top: 12, bottom: 12, left: 24),
+                      contentPadding:
+                          const EdgeInsets.only(top: 12, bottom: 12, left: 24),
                     ),
                     40.spaceHeight,
                     BlocConsumer(
@@ -132,50 +147,65 @@ class _LoginState extends State<Login> {
                           return CButton(
                             width: double.infinity,
                             height: 44,
-                            bgColor: FontColor.colorFF3366,
-                            title: 'Tiếp tục',
+                            bgColor: kMainRedColor.withOpacity(0.5),
+                            title: 'Đăng nhập',
                             fontSize: FontSize.fontSize_16,
                             fontWeight: FontWeight.w600,
                             fontColor: FontColor.colorFFFFFF,
-                            radius: 8,
+                            radius: 12,
+                            borderColor: kMainRedColor.withOpacity(0.5),
                             checkLoading: effectLoading,
                             onPressed: () async {
                               // _authenticationCubit.login(emailController.text, pwdController.text, context);
                               if (usernameController.text.split(' ').isEmpty) {
-                                showDialogMessage(context, 'Vui lòng nhập số điện thoại', checkBack: false);
+                                showDialogMessage(
+                                    context, 'Vui lòng nhập Tên đăng nhập',
+                                    checkBack: false);
                               } else if (usernameController.text.isEmpty) {
-                                showDialogMessage(context, 'Vui lòng nhập số điện thoại', checkBack: false);
+                                showDialogMessage(
+                                    context, 'Vui lòng nhập Tên đăng nhập',
+                                    checkBack: false);
                               }
                               if (passwordController.text.isEmpty) {
-                                showDialogMessage(context, 'Vui lòng nhập mật khẩu', checkBack: false);
-                              }
-                              // else if (usernameController.text.split(' ').length > 9 && usernameController.text.split(' ').length < 11) {
-                              //   showDialogMessage(context, 'Vui lòng nhập đúng định dạng số điện thoại', checkBack: false);
-                              // }
-                              else {
+                                showDialogMessage(
+                                    context, 'Vui lòng nhập mật khẩu',
+                                    checkBack: false);
+                              } else {
                                 final usernameString = usernameController.text;
                                 final passwordString = passwordController.text;
                                 showLoading(context);
                                 try {
                                   if (widget.isLogin == false) {
-                                    final result = await userRepository.login(usernameString, passwordString);
+                                    final result = await userRepository.login(
+                                        usernameString, passwordString);
 
                                     closeLoading(context);
                                     context.read<AuthenticationBloc>().add(
                                           AppLoginSuccessEvent(
-                                            {"accessToken": result['accessToken'], "refreshToken": result['refreshToken']},
+                                            {
+                                              "accessToken":
+                                                  result['accessToken'],
+                                              "refreshToken":
+                                                  result['refreshToken']
+                                            },
                                           ),
                                         );
                                   } else {
-                                    final result = await userRepository.login(usernameString, passwordString);
+                                    final result = await userRepository.login(
+                                        usernameString, passwordString);
                                     if (result != null) {
                                       print('AppLoginSuccessEvent: $result');
                                       closeLoading(context);
                                       context.read<AuthenticationBloc>().add(
-                                        AppLoginSuccessEvent(
-                                          {"accessToken": result['accessToken'], "refreshToken": result['refreshToken']},
-                                        ),
-                                      );
+                                            AppLoginSuccessEvent(
+                                              {
+                                                "accessToken":
+                                                    result['accessToken'],
+                                                "refreshToken":
+                                                    result['refreshToken']
+                                              },
+                                            ),
+                                          );
                                     }
                                   }
                                 } catch (e) {
@@ -216,8 +246,12 @@ class _LoginState extends State<Login> {
                             color: FontColor.colorFFFFFF,
                           ),
                           children: [
-                            TextSpan(text: Translate.of(context).dont_have_an_account),
-                            TextSpan(text: '  ${Translate.of(context).sign_up.toUpperCase()}'),
+                            TextSpan(
+                                text:
+                                    Translate.of(context).dont_have_an_account),
+                            TextSpan(
+                                text:
+                                    '  ${Translate.of(context).sign_up.toUpperCase()}'),
                           ],
                         ),
                       ),
@@ -231,9 +265,14 @@ class _LoginState extends State<Login> {
                           builder: (context, state) {
                             return InkWell(
                               onTap: () async {
-                                await context.read<LoginGoogleCubit>().signInWithGoogle();
+                                await context
+                                    .read<LoginGoogleCubit>()
+                                    .signInWithGoogle();
                                 // ignore: use_build_context_synchronously
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => AppHome()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AppHome()));
                               },
                               child: CImage(
                                 assetsPath: Assets.icGoogle,
