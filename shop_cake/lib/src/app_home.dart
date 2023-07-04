@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/src/Menu/ui/menu_screen.dart';
 import 'package:shop_cake/src/cart_page/ui/cart_page.dart';
+import 'package:shop_cake/src/create_my_order/ui/create_my_order_page.dart';
 import 'package:shop_cake/src/home_page/ui/home_page.dart';
 import 'package:shop_cake/src/list_food/ui/list_food_page.dart';
 import 'package:shop_cake/widgets/c_image.dart';
@@ -127,14 +128,12 @@ class _AppHomeState extends State<AppHome> with SingleTickerProviderStateMixin {
       children: const [
         HomePage(),
         ListFoodPage(),
-        ListFoodPage(),
+        CreateMyOrderPage(),
         CartPage(
           isShowIconBack: false,
         ),
         MenuScreen(),
       ],
     );
-
-    ;
   }
 }

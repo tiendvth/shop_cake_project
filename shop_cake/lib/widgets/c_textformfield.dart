@@ -26,6 +26,9 @@ class CTextFormField extends StatefulWidget {
   final Color? borderColor;
   final FocusNode? focusNode;
   final Color? backgroundColor;
+  final TextStyle? hintStyle;
+  final int? maxLines;
+  final TextStyle? style;
 
   // ignore: use_key_in_widget_constructors
   const CTextFormField(
@@ -49,7 +52,10 @@ class CTextFormField extends StatefulWidget {
       this.borderColor,
       this.onComplete,
       this.width,
-      this.backgroundColor});
+      this.backgroundColor,
+      this.hintStyle,
+      this.maxLines,
+      this.style});
 
   // factory CTextFormField.telephone({
   //   TextEditingController? controller,
@@ -148,8 +154,9 @@ class _CTextFormFieldState extends State<CTextFormField> {
         onFieldSubmitted: widget.onFieldSubmitted,
         obscureText: widget.obscureText ?? false,
         onEditingComplete: widget.onComplete,
+        maxLines: widget.maxLines,
         validator: (value) {},
-        style: TextStyle(
+        style: widget.style ?? TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w400,
           fontFamily: Assets.fontPlusJakartaSans,
@@ -158,13 +165,7 @@ class _CTextFormFieldState extends State<CTextFormField> {
         decoration: InputDecoration(
           icon: widget.icon,
           hintText: widget.hintText,
-          hintStyle: TextStyle(
-            color: FontColor.colorFFFFFF.withOpacity(0.6),
-            fontWeight: FontWeight.w400,
-            fontFamily: Assets.fontPlusJakartaSans,
-            fontSize: 14,
-            fontStyle: FontStyle.normal,
-          ),
+          hintStyle: widget.hintStyle,
           contentPadding: widget.contentPadding,
           labelText: widget.labelText,
           border: InputBorder.none,
