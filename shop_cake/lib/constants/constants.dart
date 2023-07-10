@@ -52,5 +52,13 @@ const Gradient kBgMenu = LinearGradient(
   begin: Alignment.centerLeft,
   end: Alignment.centerRight,
 );
+const Gradient kButtonGradient = LinearGradient(
+  colors: [
+    kMainColor,
+    kMainDarkColor,
+  ],
+  begin: Alignment.centerRight,
+  end: Alignment.centerLeft,
+);
 
 

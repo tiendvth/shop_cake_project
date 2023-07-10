@@ -47,6 +47,7 @@ dependencies:
   dotted_border: ^2.0.0+3
   calendar_date_picker2: ^0.5.2
   geocoding: ^2.0.5
+  flutter_slidable: ^1.3.2
 
   common:
     path: ../

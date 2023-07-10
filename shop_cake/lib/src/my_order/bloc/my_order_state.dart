@@ -8,7 +8,7 @@ class MyOrderInitial extends MyOrderState {}
 class MyOrderLoading extends MyOrderState {}
 
 class MyOrderSuccess extends MyOrderState {
-  final data;
+  final Map<String, dynamic> data;
   final typeShip;
   MyOrderSuccess(this.data,this.typeShip);
 }

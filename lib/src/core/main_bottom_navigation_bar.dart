@@ -151,7 +151,7 @@ mixin MainBottomNavigationBarMixin<T extends StatefulWidget> on State<T> {
   @override
   void dispose() {
     _pageController.dispose();
-    _tabBarController.dispose();
+    // _tabBarController.dispose();
     super.dispose();
   }
 }

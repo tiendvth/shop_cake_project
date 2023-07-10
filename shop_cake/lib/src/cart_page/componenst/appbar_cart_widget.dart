@@ -83,18 +83,21 @@ class AppbarCartWidget extends StatelessWidget {
                         MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Tổng tiền',
+                            'Giá tiền',
                             style: GoogleFonts.roboto(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: kMainBlackColor),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: k514D56,
+                            ),
                           ),
                           Text(
+                            // text: '${state.totalPrice}',
                             '0đ',
                             style: GoogleFonts.roboto(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: kMainBlackColor),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: k514D56,
+                            ),
                           ),
                         ],
                       ),
@@ -104,18 +107,22 @@ class AppbarCartWidget extends StatelessWidget {
                         MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
+                            // text: '${state.totalPrice}',
                             'Phí giao hàng',
                             style: GoogleFonts.roboto(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: kMainBlackColor),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: k514D56,
+                            ),
                           ),
                           Text(
+                            // text: '${state.totalPrice}',
                             '0đ',
                             style: GoogleFonts.roboto(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: kMainBlackColor),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: k514D56,
+                            ),
                           ),
                         ],
                       ),
@@ -125,18 +132,22 @@ class AppbarCartWidget extends StatelessWidget {
                         MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Phí dịch vụ & phí khác',
+                            // text: '${state.totalPrice}',
+                            'Phí dich vụ khác',
                             style: GoogleFonts.roboto(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: kMainBlackColor),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: k514D56,
+                            ),
                           ),
                           Text(
+                            // text: '${state.totalPrice}',
                             '0đ',
                             style: GoogleFonts.roboto(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: kMainBlackColor),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: k514D56,
+                            ),
                           ),
                         ],
                       ),
@@ -152,18 +163,22 @@ class AppbarCartWidget extends StatelessWidget {
                         MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Tổng cộng',
+                            // text: '${state.totalPrice}',
+                            'Tổng tiền',
                             style: GoogleFonts.roboto(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: kMainBlackColor),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: kMainRedColor,
+                            ),
                           ),
                           Text(
+                            // text: '${state.totalPrice}',
                             '0đ',
                             style: GoogleFonts.roboto(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: kMainBlackColor),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: kMainRedColor,
+                            ),
                           ),
                         ],
                       ),
