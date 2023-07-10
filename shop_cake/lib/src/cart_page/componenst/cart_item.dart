@@ -8,7 +8,7 @@ class CartItem extends StatelessWidget {
   final String? name;
   final String? imageUrl;
   final String? price;
-  final String? quantity;
+  final int? quantity;
   final GestureTapCallback? onTapAdd;
   final GestureTapCallback? onTapMinus;
 
@@ -72,7 +72,7 @@ class CartItem extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: 5),
                       child: Text(
-                        quantity ?? '0',
+                        quantity.toString(),
                         style: GoogleFonts.roboto(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,

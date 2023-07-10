@@ -39,7 +39,7 @@ class AddressItem extends StatelessWidget {
               ),
               4.spaceHeight,
               Text(
-                'Số 1, Ngõ 1, Phố 1, Quận 1, TP. Hồ Chí Minh',
+                address ?? 'Số 1, Ngõ 1, Phố 1, Quận 1, TP. Hồ Chí Minh',
                 style: GoogleFonts.roboto(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
@@ -48,7 +48,7 @@ class AddressItem extends StatelessWidget {
               ),
               4.spaceHeight,
               Text(
-                '0123456789',
+                phone ?? '0123456789',
                 style: GoogleFonts.roboto(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,

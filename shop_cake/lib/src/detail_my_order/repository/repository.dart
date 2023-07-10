@@ -9,7 +9,7 @@ class DetailMyOrderRepositoryImpl implements DetailMyOrderRepository{
   DetailMyOrderRepositoryImpl(this._dio);
   @override
   Future<Map<String, dynamic>> detailMyOrder(int? id) async {
-    final respone = await _dio.get('/api/v1/orders/${id}');
+    final respone = await _dio.get('/api/order/findById/${id}');
     return respone.data as Map<String, dynamic>;
   }
   @override

@@ -15,11 +15,23 @@ class CartRepositoryImpl implements CartRepository {
 
   @override
   Future<Map<String, dynamic>> ListCart() async {
-    final result = await _dio.post("/api/shoppingCartTmt/getAll", data: {
-      "size": 10,
-      "page": 1,
-    });
-    return result.data as Map<String, dynamic>;
+    try {
+      final result = await _dio.post("/api/shoppingCartTmt/getAll", data: {
+        "size": 10,
+        "page": 1,
+      });
+      if (result.statusCode == 200 && result.data != null) {
+        if (result.data != null && result.data["code"] == 204) {
+          return result.data;
+        } else {
+          return result.data as Map<String, dynamic>;
+        }
+      } else {
+        throw Exception("Error");
+      }
+    } catch (e) {
+      throw e;
+    }
   }
 
   @override
