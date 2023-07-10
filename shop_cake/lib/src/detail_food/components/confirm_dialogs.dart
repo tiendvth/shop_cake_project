@@ -64,6 +64,7 @@ class ConfirmDialog extends StatelessWidget {
                     context,
                     const CartPage(
                       isShowIconBack: true,
+
                     ),
                   );
                   // ignore: use_build_context_synchronously
