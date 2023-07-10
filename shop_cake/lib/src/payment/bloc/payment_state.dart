@@ -9,10 +9,10 @@ class PaymentLoading extends PaymentState {}
 
 class PaymentSuccess extends PaymentState {
   final datas;
-  final totalPrice;
-  final typeShip;
+  final double totalPrice;
+  // final typeShip;
 
-  PaymentSuccess(this.datas,this.totalPrice, this.typeShip);
+  PaymentSuccess(this.datas,this.totalPrice);
 }
 
 class PaymentFailure extends PaymentState {

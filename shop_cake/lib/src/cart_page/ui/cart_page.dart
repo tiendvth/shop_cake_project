@@ -1,5 +1,6 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_cake/common/%20config/format_price.dart';
 import 'package:shop_cake/common/badge_widget.dart';
@@ -17,6 +18,7 @@ import 'package:shop_cake/widgets/space_extention.dart';
 
 class CartPage extends StatefulWidget {
   final bool? isShowIconBack;
+
   const CartPage({Key? key, this.isShowIconBack}) : super(key: key);
 
   @override
@@ -24,9 +26,19 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  final listCardCubit = ListCardCubit(CartRepositoryImpl(apiProvider));
+
+  @override
+  void initState() {
+    super.initState();
+    listCardCubit.getListCart();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final listCardCubit = ListCardCubit(CartRepositoryImpl(apiProvider));
+    setState(() {
+      listCardCubit.getListCart();
+    });
     return BlocProvider(
       create: (context) => listCardCubit,
       child: Scaffold(
@@ -37,6 +49,7 @@ class _CartPageState extends State<CartPage> {
           child: BlocBuilder<ListCardCubit, ListCardState>(
             builder: (context, stateListCake) {
               if (stateListCake is ListCardSuccess) {
+                print("stateListCake ${stateListCake.data}");
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -143,7 +156,7 @@ class _CartPageState extends State<CartPage> {
                                 children: [
                                   Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         'Giá tiền',
@@ -167,7 +180,7 @@ class _CartPageState extends State<CartPage> {
                                   5.spaceHeight,
                                   Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         // text: '${state.totalPrice}',
@@ -192,7 +205,7 @@ class _CartPageState extends State<CartPage> {
                                   5.spaceHeight,
                                   Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         // text: '${state.totalPrice}',
@@ -223,7 +236,7 @@ class _CartPageState extends State<CartPage> {
                                   10.spaceHeight,
                                   Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         // text: '${state.totalPrice}',
@@ -255,59 +268,101 @@ class _CartPageState extends State<CartPage> {
                     20.spaceHeight,
                     Expanded(
                       child: SingleChildScrollView(
-                        child: ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 16),
-                          itemBuilder: (context, index) {
-                            // print(state.data[index]['quantity']);
-                            return Column(
-                              children: [
-                                CartItem(
-                                  quantity: stateListCake.data[index]
-                                          ['quantityShoppingCartTmt']
-                                      .toString(),
-                                  name: stateListCake.data[index]['nameCake'],
-                                  price: FormatPrice.formatVND(
-                                      stateListCake.data[index]['priceCake']),
-                                  imageUrl: stateListCake.data[index]
-                                      ['imageCake'],
-                                  onTapAdd: () {
-                                    final count =
-                                        stateListCake.data[index]['quantity'];
-                                    final quantity = count + 1;
-                                    listCardCubit.addFood(
-                                        context,
-                                        // state.data[index]['id'],
-                                        1,
-                                        quantity);
-                                  },
-                                  onTapMinus: () {
-                                    final count =
-                                        stateListCake.data[index]['quantity'];
-                                    final quantity = count - 1;
-                                    if (quantity == 0) {
-                                      listCardCubit.removeFood(
-                                          context,
-                                          // state.data[index]['id']
-                                          1);
-                                    } else {
-                                      listCardCubit.addFood(
-                                          context,
-                                          stateListCake.data[index]['quantity'],
-                                          quantity);
-                                    }
-                                  },
+                        child: stateListCake.data.isNotEmpty ||
+                                listCardCubit.datas.isNotEmpty
+                            ? ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 16),
+                                itemBuilder: (context, index) {
+                                  // print(state.data[index]['quantity']);
+                                  return Column(
+                                    children: [
+                                      Slidable(
+                                        endActionPane: ActionPane(
+                                          motion: const ScrollMotion(),
+                                          extentRatio: 0.5,
+                                          children: [
+                                            SlidableAction(
+                                              onPressed: (BuildContext context) {
+                                                listCardCubit.removeFood(context, stateListCake.data[index]['shoppingCartTmtId']);
+                                              },
+                                              backgroundColor: kMainRedColor.withOpacity(0.6),
+                                              foregroundColor: Colors.white,
+                                              icon: Icons.delete_forever_rounded,
+                                              label: 'Xóa',
+                                              borderRadius: BorderRadius.circular(8),
+                                            ),
+                                            SlidableAction(
+                                              onPressed: null,
+                                              backgroundColor: const Color(0xFF21B7CA),
+                                              foregroundColor: Colors.white,
+                                              icon: Icons.clear,
+                                              label: 'Đóng',
+                                              borderRadius: BorderRadius.circular(8),
+                                            ),
+                                          ],
+                                        ),
+                                        child: CartItem(
+                                          quantity: stateListCake.data[index]
+                                          ['quantityShoppingCartTmt'],
+                                          name: stateListCake.data[index]['nameCake'],
+                                          price: FormatPrice.formatVND(
+                                              stateListCake.data[index]['priceCake']),
+                                          imageUrl: stateListCake.data[index]
+                                          ['imageCake'],
+                                          onTapAdd: () {
+                                            final count =
+                                            stateListCake.data[index]['quantity'];
+                                            final quantity = count + 1;
+                                            listCardCubit.addFood(
+                                                context,
+                                                // state.data[index]['id'],
+                                                1,
+                                                quantity);
+                                          },
+                                          onTapMinus: () {
+                                            final count =
+                                            stateListCake.data[index]['quantity'];
+                                            final quantity = count - 1;
+                                            if (quantity == 0) {
+                                              listCardCubit.removeFood(
+                                                  context,
+                                                  // state.data[index]['id']
+                                                  1);
+                                            } else {
+                                              listCardCubit.addFood(
+                                                  context,
+                                                  stateListCake.data[index]
+                                                  ['quantity'],
+                                                  quantity);
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 12,
+                                      ),
+                                    ],
+                                  );
+                                },
+                                itemCount: stateListCake.data.length ?? 0,
+                                shrinkWrap: true,
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 100, right: 16, left: 16),
+                                child: Center(
+                                  child: Text(
+                                    'Không có sản phẩm nào trong giỏ hàng',
+                                    style: GoogleFonts.roboto(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: k9B9B9B,
+                                    ),
+                                  ),
                                 ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                              ],
-                            );
-                          },
-                          itemCount: stateListCake.data.length ?? 0,
-                          shrinkWrap: true,
-                        ),
+                              ),
                       ),
                     ),
                   ],
@@ -334,8 +389,12 @@ class _CartPageState extends State<CartPage> {
             ),
             onPressed: () {
               if (listCardCubit.datas.length > 0) {
-                NavigatorManager.pushFullScreen(context, PaymentPage())
-                    .then((value) {
+                NavigatorManager.pushFullScreen(context, PaymentPage(
+                  callback: () async {
+                    await listCardCubit.getListCart();
+                    listCardCubit.datas.clear();
+                  },
+                )).then((value) {
                   listCardCubit.getListCart();
                 });
               }

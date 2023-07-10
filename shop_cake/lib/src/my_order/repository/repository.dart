@@ -9,8 +9,10 @@ class MyOderRepositoryImpl implements MyOderRepository{
   MyOderRepositoryImpl(this._dio);
   @override
   Future<Map<String, dynamic>> listOrder(status) async{
-    final reposne = await _dio.get('/api/v1/orders',queryParameters: {
-      "status":status
+    final reposne = await _dio.post('/api/order/getAll',data: {
+        "size": 100,
+        "page": 1,
+        "userId": 1
     });
     return reposne.data as Map<String, dynamic>;
   }

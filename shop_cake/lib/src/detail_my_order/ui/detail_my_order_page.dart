@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/font_size/font_size.dart';
 import 'package:shop_cake/src/detail_my_order/bloc/detail_my_order_cubit.dart';
-import 'package:shop_cake/utils/utils.dart';
-import 'package:shop_cake/validation/validation.dart';
 import 'package:shop_cake/widgets/c_text.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
 
@@ -101,13 +99,13 @@ class DetailMyOrder extends StatelessWidget {
                                       fontSize: FontSize.fontSize_16,
                                       fontWeight: FontWeight.w500,
                                     ),
-                                    CText(
-                                      text:
-                                      '${Validation.oCcy.format(
-                                          state.totalPrice ?? 0)}',
-                                      fontSize: FontSize.fontSize_16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                    // CText(
+                                    //   text:
+                                    //   '${Validation.oCcy.format(
+                                    //       state.totalPrice ?? 0)}',
+                                    //   fontSize: FontSize.fontSize_16,
+                                    //   fontWeight: FontWeight.w500,
+                                    // ),
                                   ],
                                 ),
                                 5.spaceHeight,
@@ -160,13 +158,13 @@ class DetailMyOrder extends StatelessWidget {
                                       fontSize: FontSize.fontSize_18,
                                       fontWeight: FontWeight.w600,
                                     ),
-                                    CText(
-                                      text:
-                                      '${Validation.oCcy.format(
-                                          state.totalPrice ?? 0)} đ',
-                                      fontSize: FontSize.fontSize_18,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                    // CText(
+                                    //   text:
+                                    //   '${Validation.oCcy.format(
+                                    //       state.totalPrice ?? 0)} đ',
+                                    //   fontSize: FontSize.fontSize_18,
+                                    //   fontWeight: FontWeight.w600,
+                                    // ),
                                   ],
                                 ),
                               ],
@@ -187,12 +185,12 @@ class DetailMyOrder extends StatelessWidget {
                               fontSize: FontSize.fontSize_20,
                               fontWeight: FontWeight.w600,
                             ),
-                            CText(
-                              text: '  (${state.status ?? ''})',
-                              fontSize: FontSize.fontSize_16,
-                              fontWeight: FontWeight.w500,
-                              textColor: FontColor.colorEC222D,
-                            ),
+                            // CText(
+                            //   text: '  (${state.status ?? ''})',
+                            //   fontSize: FontSize.fontSize_16,
+                            //   fontWeight: FontWeight.w500,
+                            //   textColor: FontColor.colorEC222D,
+                            // ),
                           ],
                         ),
                       ),
@@ -215,8 +213,8 @@ class DetailMyOrder extends StatelessWidget {
                                       width: 110,
                                       height: 110,
                                       child: Image.network(
-                                        '${state.data[index]['images'] ??
-                                            'https://img.freepik.com/free-vector/thai-cuisine-food-flat-illustration_1284-74042.jpg?w=826&t=st=1662447770~exp=1662448370~hmac=d1eb58a73a830be233671c2c08232da012f7faca37554705b8971f4cb723fffa'}',
+                                        // '${state.data[index]['images'] ??
+                                            'https://img.freepik.com/free-vector/thai-cuisine-food-flat-illustration_1284-74042.jpg?w=826&t=st=1662447770~exp=1662448370~hmac=d1eb58a73a830be233671c2c08232da012f7faca37554705b8971f4cb723fffa',
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -228,8 +226,9 @@ class DetailMyOrder extends StatelessWidget {
                                         children: [
                                           CText(
                                             text:
-                                            '${state.data[index]['name'] ??
-                                                'vi cá mập'}',
+                                            // '${state.data[index]['name'] ??
+                                            //     'vi cá mập'}',
+                                            'vi cá mập',
                                             fontSize: FontSize.fontSize_16,
                                             fontWeight: FontWeight.w500,
                                             maxLine: 1,
@@ -248,9 +247,10 @@ class DetailMyOrder extends StatelessWidget {
                                                 const EdgeInsets.only(left: 5),
                                                 child: CText(
                                                   text:
-                                                  '${state
-                                                      .data[index]['quantity'] ??
-                                                      0}',
+                                                  // '${state
+                                                  //     .data[index]['quantity'] ??
+                                                  //     0}',
+                                                  '0',
                                                   fontSize:
                                                   FontSize.fontSize_12,
                                                   fontWeight: FontWeight.w400,
@@ -273,10 +273,11 @@ class DetailMyOrder extends StatelessWidget {
                                                 const EdgeInsets.only(left: 5),
                                                 child: CText(
                                                   text:
-                                                  '${Validation.oCcy.format(
-                                                      state
-                                                          .data[index]['unitPrice'] ??
-                                                          0)} đ',
+                                                  // '${Validation.oCcy.format(
+                                                  //     state
+                                                  //         .data[index]['unitPrice'] ??
+                                                  //         0)} đ',
+                                                  '0 đ',
                                                   fontSize:
                                                   FontSize.fontSize_14,
                                                   fontWeight: FontWeight.w500,
@@ -298,50 +299,50 @@ class DetailMyOrder extends StatelessWidget {
                       shrinkWrap: true,
                     ),
                     const SizedBox(height: 20,),
-                    if(state.status == 'PENDING')
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                hintText: 'Lí do hủy đơn',
-                              ),
-                              maxLines: 3,
-                              controller: detailMyOrderCubit.cenCelController,
-                            ),
-                          ),
-                          const SizedBox(height: 20,),
-                          MaterialButton(
-                            height: 50,
-                            minWidth: MediaQuery.of(context).size.width - 30,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            color: Colors.redAccent,
-                            onPressed: () {
-                              if(detailMyOrderCubit.cenCelController.text.isEmpty){
-                                showDialogMessage(context, 'Lí do hủy không thể để trống', checkBack: false);
-                                return;
-                              }
-                              // detailMyOrderCubit.callApiCanCel(context);
-                              showDialogConfirm(context,'Bạn chắc chắnn muốn hủy đơn', (){
-                                detailMyOrderCubit.callApiCanCel(context);
-                              });
-                            },
-                            child: const Text(
-                              'Huỷ đơn hàng',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white),
-                            ),
-                          ),
-                        ],
-                      ),
+                    // if(state.status == 'PENDING')
+                    //   Column(
+                    //     children: [
+                    //       Padding(
+                    //         padding: const EdgeInsets.symmetric(horizontal: 15),
+                    //         child: TextFormField(
+                    //           decoration: InputDecoration(
+                    //             border: OutlineInputBorder(
+                    //               borderRadius: BorderRadius.circular(4),
+                    //             ),
+                    //             hintText: 'Lí do hủy đơn',
+                    //           ),
+                    //           maxLines: 3,
+                    //           controller: detailMyOrderCubit.cenCelController,
+                    //         ),
+                    //       ),
+                    //       const SizedBox(height: 20,),
+                    //       MaterialButton(
+                    //         height: 50,
+                    //         minWidth: MediaQuery.of(context).size.width - 30,
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.circular(4),
+                    //         ),
+                    //         color: Colors.redAccent,
+                    //         onPressed: () {
+                    //           if(detailMyOrderCubit.cenCelController.text.isEmpty){
+                    //             showDialogMessage(context, 'Lí do hủy không thể để trống', checkBack: false);
+                    //             return;
+                    //           }
+                    //           // detailMyOrderCubit.callApiCanCel(context);
+                    //           showDialogConfirm(context,'Bạn chắc chắnn muốn hủy đơn', (){
+                    //             detailMyOrderCubit.callApiCanCel(context);
+                    //           });
+                    //         },
+                    //         child: const Text(
+                    //           'Huỷ đơn hàng',
+                    //           style: TextStyle(
+                    //               fontSize: 14,
+                    //               fontWeight: FontWeight.w500,
+                    //               color: Colors.white),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
                   ],
                 ),
               );
