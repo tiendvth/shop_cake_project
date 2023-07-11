@@ -24,9 +24,6 @@ class ListCardCubit extends Cubit<ListCardState> {
         datas.addAll(data['data']['result']);
         emit(ListCardSuccess(data['data']['result'], datas));
       }
-      // datas.clear();
-      // datas.addAll(data['data']['result']);
-      // // emit(ListCardSuccess(data['totalPrice'],datas));
     } on DioError {
       emit(ListCardFailure("Is the device online?"));
     }
