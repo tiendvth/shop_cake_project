@@ -24,116 +24,129 @@ class _AppHomeState extends State<AppHome> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return MainBottomNavigationBar(
-      wantKeepAliveChildren: [true, false, false, true, false],
-      bottomNavigatorItemBuilder: (BuildContext contextNavigation, int currentIndex) {
-        return BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          selectedItemColor: Colors.pink,
-          elevation: 1,
-          currentIndex: currentIndex,
-          onTap: (index) {
-            contextNavigation.read<TabBarController>().tabIndex = index;
-          },
-          items: const [
-            BottomNavigationBarItem(
-              icon: SizedBox(
-                width: 22,
-                height: 22,
-                child: CImage(
-                  assetsPath: Assets.icHome,
-                ),
-              ),
-              activeIcon: SizedBox(
+    return Scaffold(
+      body: MainBottomNavigationBar(
+        wantKeepAliveChildren: [true, false, false, true, false],
+        bottomNavigatorItemBuilder: (BuildContext contextNavigation, int currentIndex) {
+          return BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.white,
+            selectedItemColor: Colors.pink,
+            elevation: 1,
+            currentIndex: currentIndex,
+            onTap: (index) {
+              if (index == 3) {
+                Navigator.push(
+                  contextNavigation,
+                  MaterialPageRoute(
+                    builder: (context) => const CartPage(
+                      isShowIconBack: true,
+                    ),
+                  ),
+                );
+                return;
+              }
+              contextNavigation.read<TabBarController>().tabIndex = index;
+            },
+            items: const [
+              BottomNavigationBarItem(
+                icon: SizedBox(
                   width: 22,
                   height: 22,
                   child: CImage(
-                   assetsPath: Assets.icHome,
-                    color: Colors.pink,
-                  )),
-              label: 'Trang chủ',
-            ),
-            BottomNavigationBarItem(
-              icon: SizedBox(
-                width: 22,
-                height: 22,
-                child: CImage(
-                  assetsPath: Assets.icCake,
+                    assetsPath: Assets.icHome,
+                  ),
                 ),
+                activeIcon: SizedBox(
+                    width: 22,
+                    height: 22,
+                    child: CImage(
+                     assetsPath: Assets.icHome,
+                      color: Colors.pink,
+                    )),
+                label: 'Trang chủ',
               ),
-              activeIcon: SizedBox(
+              BottomNavigationBarItem(
+                icon: SizedBox(
                   width: 22,
                   height: 22,
                   child: CImage(
                     assetsPath: Assets.icCake,
-                    color: Colors.pink,
-                  )),
-              label: 'Sản phẩm',
-            ),
-            BottomNavigationBarItem(
-              icon: SizedBox(
-                width: 22,
-                height: 22,
-                child: CImage(
-                  assetsPath: Assets.icCreateOder,
+                  ),
                 ),
+                activeIcon: SizedBox(
+                    width: 22,
+                    height: 22,
+                    child: CImage(
+                      assetsPath: Assets.icCake,
+                      color: Colors.pink,
+                    )),
+                label: 'Sản phẩm',
               ),
-              activeIcon: SizedBox(
+              BottomNavigationBarItem(
+                icon: SizedBox(
                   width: 22,
                   height: 22,
                   child: CImage(
                     assetsPath: Assets.icCreateOder,
-                    color: Colors.pink,
-                  )),
-              label: 'Tạo đơn',
-            ),
-            BottomNavigationBarItem(
-              icon: SizedBox(
-                width: 22,
-                height: 22,
-                child: CImage(
-                  assetsPath: Assets.icCart,
+                  ),
                 ),
+                activeIcon: SizedBox(
+                    width: 22,
+                    height: 22,
+                    child: CImage(
+                      assetsPath: Assets.icCreateOder,
+                      color: Colors.pink,
+                    )),
+                label: 'Tạo đơn',
               ),
-              activeIcon: SizedBox(
+              BottomNavigationBarItem(
+                icon: SizedBox(
                   width: 22,
                   height: 22,
                   child: CImage(
                     assetsPath: Assets.icCart,
-                    color: Colors.pink,
-                  )),
-              label: 'Giỏ hàng',
-            ),
-            BottomNavigationBarItem(
-              icon: SizedBox(
-                width: 22,
-                height: 22,
-                child: CImage(
-                  assetsPath: Assets.icMenu,
+                  ),
                 ),
+                activeIcon: SizedBox(
+                    width: 22,
+                    height: 22,
+                    child: CImage(
+                      assetsPath: Assets.icCart,
+                      color: Colors.pink,
+                    )),
+                label: 'Giỏ hàng',
               ),
-              activeIcon: SizedBox(
+              BottomNavigationBarItem(
+                icon: SizedBox(
                   width: 22,
                   height: 22,
                   child: CImage(
                     assetsPath: Assets.icMenu,
-                    color: Colors.pink,
-                  )),
-              label: 'Menu',
-            ),
-          ],
-        );
-      },
-      children: const [
-        HomePage(),
-        ListFoodPage(),
-        CreateMyOrderPage(),
-        CartPage(
-          isShowIconBack: false,
-        ),
-        MenuScreen(),
-      ],
+                  ),
+                ),
+                activeIcon: SizedBox(
+                    width: 22,
+                    height: 22,
+                    child: CImage(
+                      assetsPath: Assets.icMenu,
+                      color: Colors.pink,
+                    )),
+                label: 'Menu',
+              ),
+            ],
+          );
+        },
+        children: const [
+          HomePage(),
+          ListFoodPage(),
+          CreateMyOrderPage(),
+          CartPage(
+            isShowIconBack: false,
+          ),
+          MenuScreen(),
+        ],
+      ),
     );
   }
 }
