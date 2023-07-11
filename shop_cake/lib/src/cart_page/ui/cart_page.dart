@@ -12,6 +12,7 @@ import 'package:shop_cake/src/cart_page/bloc/list_card_bloc/list_card_cubit.dart
 import 'package:shop_cake/src/cart_page/componenst/appbar_cart_widget.dart';
 import 'package:shop_cake/src/cart_page/componenst/cart_item.dart';
 import 'package:shop_cake/src/cart_page/repository/cart_repository.dart';
+import 'package:shop_cake/src/detail_food/bloc/counter_bloc/count_dish_cubit.dart';
 import 'package:shop_cake/src/payment/ui/payment_page.dart';
 import 'package:shop_cake/widgets/c_image.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
@@ -27,6 +28,7 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   final listCardCubit = ListCardCubit(CartRepositoryImpl(apiProvider));
+  final CountDishCubit _countDishCubit = CountDishCubit();
 
   @override
   void initState() {
@@ -36,11 +38,15 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      listCardCubit.getListCart();
-    });
-    return BlocProvider(
-      create: (context) => listCardCubit,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => listCardCubit,
+        ),
+        BlocProvider(
+          create: (_) => _countDishCubit,
+        ),
+      ],
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: SafeArea(
@@ -49,7 +55,6 @@ class _CartPageState extends State<CartPage> {
           child: BlocBuilder<ListCardCubit, ListCardState>(
             builder: (context, stateListCake) {
               if (stateListCake is ListCardSuccess) {
-                print("stateListCake ${stateListCake.data}");
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -284,22 +289,31 @@ class _CartPageState extends State<CartPage> {
                                           extentRatio: 0.5,
                                           children: [
                                             SlidableAction(
-                                              onPressed: (BuildContext context) {
-                                                listCardCubit.removeFood(context, stateListCake.data[index]['shoppingCartTmtId']);
+                                              onPressed:
+                                                  (BuildContext context) {
+                                                listCardCubit.removeFood(
+                                                    context,
+                                                    stateListCake.data[index]
+                                                        ['shoppingCartTmtId']);
                                               },
-                                              backgroundColor: kMainRedColor.withOpacity(0.6),
+                                              backgroundColor: kMainRedColor
+                                                  .withOpacity(0.6),
                                               foregroundColor: Colors.white,
-                                              icon: Icons.delete_forever_rounded,
+                                              icon:
+                                                  Icons.delete_forever_rounded,
                                               label: 'Xóa',
-                                              borderRadius: BorderRadius.circular(8),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
                                             ),
                                             SlidableAction(
                                               onPressed: null,
-                                              backgroundColor: const Color(0xFF21B7CA),
+                                              backgroundColor:
+                                                  const Color(0xFF21B7CA),
                                               foregroundColor: Colors.white,
                                               icon: Icons.clear,
                                               label: 'Đóng',
-                                              borderRadius: BorderRadius.circular(8),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
                                             ),
                                           ],
                                         ),
