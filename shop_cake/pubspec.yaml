@@ -48,6 +48,8 @@ dependencies:
   calendar_date_picker2: ^0.5.2
   geocoding: ^2.0.5
   flutter_slidable: ^1.3.2
+  webview_flutter: ^3.0.4
+  crypto: 3.0.1
 
   common:
     path: ../
@@ -56,13 +58,16 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.10.0
+  flutter_native_splash: ^2.2.16
 
 flutter_icons:
   android: "launcher_icon"
   ios: false
-  image_path: "assets/logo/cake-shop-logo-.jpg"
+  image_path: "assets/icon/splash.png"
   min_sdk_android: 22 # android min sdk min:16, default 21
-
+flutter_native_splash:
+  image: "assets/icon/splash.png"
+  color: "#ffffff"
 
 flutter_intl:
   enabled: true

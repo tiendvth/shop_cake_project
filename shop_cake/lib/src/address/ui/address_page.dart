@@ -79,7 +79,7 @@ class _AddressPageState extends State<AddressPage> {
                       ListView.builder(
                         scrollDirection: Axis.vertical,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 3,
+                        itemCount: state.address?.length,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           print(state.address?[index].address);
@@ -87,7 +87,7 @@ class _AddressPageState extends State<AddressPage> {
                             children: [
                               12.spaceHeight,
                                AddressItem(
-                                name: 'Nguyễn Văn A',
+                                name: 'Đặng Văn Tiến',
                                 address: state.address?[index].address,
                                  phone: state.address?[index].phone,
                               ),

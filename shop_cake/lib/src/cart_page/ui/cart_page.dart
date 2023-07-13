@@ -139,7 +139,9 @@ class _CartPageState extends State<CartPage> {
                           padding: EdgeInsets.fromLTRB(
                               24, AppBar().preferredSize.height + 65, 24, 0),
                           child: Container(
-                            height: 120,
+                            // height: 125,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
                             width: double.infinity,
                             decoration: BoxDecoration(
                               color: FontColor.colorFFFFFF,
@@ -154,117 +156,113 @@ class _CartPageState extends State<CartPage> {
                                 ),
                               ],
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Giá tiền',
-                                        style: GoogleFonts.roboto(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: k514D56,
-                                        ),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Giá tiền',
+                                      style: GoogleFonts.roboto(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: k514D56,
                                       ),
-                                      Text(
-                                        // text: '${state.totalPrice}',
-                                        '0đ',
-                                        style: GoogleFonts.roboto(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: k514D56,
-                                        ),
+                                    ),
+                                    Text(
+                                      // text: '${state.totalPrice}',
+                                      '0đ',
+                                      style: GoogleFonts.roboto(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: k514D56,
                                       ),
-                                    ],
-                                  ),
-                                  5.spaceHeight,
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        // text: '${state.totalPrice}',
-                                        'Phí giao hàng',
-                                        style: GoogleFonts.roboto(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: k514D56,
-                                        ),
+                                    ),
+                                  ],
+                                ),
+                                5.spaceHeight,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      // text: '${state.totalPrice}',
+                                      'Phí giao hàng',
+                                      style: GoogleFonts.roboto(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: k514D56,
                                       ),
-                                      Text(
-                                        // text: '${state.totalPrice}',
-                                        '0đ',
-                                        style: GoogleFonts.roboto(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: k514D56,
-                                        ),
+                                    ),
+                                    Text(
+                                      // text: '${state.totalPrice}',
+                                      '0đ',
+                                      style: GoogleFonts.roboto(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: k514D56,
                                       ),
-                                    ],
-                                  ),
-                                  5.spaceHeight,
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        // text: '${state.totalPrice}',
-                                        'Phí dich vụ khác',
-                                        style: GoogleFonts.roboto(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: k514D56,
-                                        ),
+                                    ),
+                                  ],
+                                ),
+                                5.spaceHeight,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      // text: '${state.totalPrice}',
+                                      'Phí dich vụ khác',
+                                      style: GoogleFonts.roboto(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: k514D56,
                                       ),
-                                      Text(
-                                        // text: '${state.totalPrice}',
-                                        '0đ',
-                                        style: GoogleFonts.roboto(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: k514D56,
-                                        ),
+                                    ),
+                                    Text(
+                                      // text: '${state.totalPrice}',
+                                      '0đ',
+                                      style: GoogleFonts.roboto(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: k514D56,
                                       ),
-                                    ],
-                                  ),
-                                  10.spaceHeight,
-                                  Container(
-                                    width: double.infinity,
-                                    height: 1,
-                                    color: FontColor.colorBorder,
-                                  ),
-                                  10.spaceHeight,
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        // text: '${state.totalPrice}',
-                                        'Tổng tiền',
-                                        style: GoogleFonts.roboto(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w700,
-                                          color: kMainRedColor,
-                                        ),
+                                    ),
+                                  ],
+                                ),
+                                10.spaceHeight,
+                                Container(
+                                  width: double.infinity,
+                                  height: 1,
+                                  color: FontColor.colorBorder,
+                                ),
+                                10.spaceHeight,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      // text: '${state.totalPrice}',
+                                      'Tổng tiền',
+                                      style: GoogleFonts.roboto(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                        color: kMainRedColor,
                                       ),
-                                      Text(
-                                        // text: '${state.totalPrice}',
-                                        '0đ',
-                                        style: GoogleFonts.roboto(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w700,
-                                          color: kMainRedColor,
-                                        ),
+                                    ),
+                                    Text(
+                                      // text: '${state.totalPrice}',
+                                      '0đ',
+                                      style: GoogleFonts.roboto(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                        color: kMainRedColor,
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ),
