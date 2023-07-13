@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:common/common.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -224,7 +223,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                             ),
                                           ),
                                           Text(
-                                            '${FormatTextToNumber().formatPositiveNumber(money: state.totalPrice)}đ',
+                                            // '${FormatTextToNumber().formatPositiveNumber(money: state.totalPrice)}đ',
+                                            '0đ',
                                             style: GoogleFonts.roboto(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,

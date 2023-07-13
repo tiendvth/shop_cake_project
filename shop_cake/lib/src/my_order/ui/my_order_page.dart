@@ -123,7 +123,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         // itemCount: state.data['data']['content'].length ?? 0,
-                        itemCount: 5,
+                        itemCount: stateOrder.data['data']['result'].length,
                         itemBuilder: (BuildContext context, index) {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,6 +153,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
                                       '${stateOrder.data['data']['result'][index]['deliveryAddress'] ?? ''}',
                                   orderDate:
                                       '${FormatDate.formatDate(stateOrder.data['data']['result'][index]['createdAt'] ?? '')}',
+                                  deliveryDate: '${FormatDate.formatDate(stateOrder.data['data']['result'][index]['deliveryDate'] ?? '')}',
                                 ),
                               ),
                               Divider(

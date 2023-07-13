@@ -10,8 +10,9 @@ class ListCardLoading extends ListCardState {}
 class ListCardSuccess extends ListCardState {
   final totalPrice;
   final data;
+  final double total;
 
-  ListCardSuccess(this.totalPrice,this.data);
+  ListCardSuccess(this.totalPrice,this.data, this.total);
 }
 
 class ListCardFailure extends ListCardState {

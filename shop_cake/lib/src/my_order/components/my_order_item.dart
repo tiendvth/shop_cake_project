@@ -13,6 +13,7 @@ class MyOrderItem extends StatelessWidget {
   final String? totalPrice;
   final String? orderDate;
   final String? address;
+  final String? deliveryDate;
   final GestureTapCallback? onTap;
 
   const MyOrderItem({
@@ -27,6 +28,7 @@ class MyOrderItem extends StatelessWidget {
     this.orderDate,
     this.onTap,
     this.address,
+    this.deliveryDate,
   }) : super(key: key);
 
   @override
@@ -57,28 +59,28 @@ class MyOrderItem extends StatelessWidget {
           ),
         ),
         4.spaceHeight,
-        RichText(
-          text: TextSpan(
-            text: 'sản phẩm: ',
-            style: GoogleFonts.roboto(
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-              color: kMainBlackColor,
-            ),
-            children: <TextSpan>[
-              TextSpan(
-                // 'Mã đơn hàng:${state.data['data']['content'][index]['id'] ?? ''}',
-                text: orderName ?? 'Bánh kem socola',
-                style: GoogleFonts.roboto(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: kMainRedColor,
-                ),
-              ),
-            ],
-          ),
-        ),
-        4.spaceHeight,
+        // RichText(
+        //   text: TextSpan(
+        //     text: 'sản phẩm: ',
+        //     style: GoogleFonts.roboto(
+        //       fontWeight: FontWeight.w500,
+        //       fontSize: 14,
+        //       color: kMainBlackColor,
+        //     ),
+        //     children: <TextSpan>[
+        //       TextSpan(
+        //         // 'Mã đơn hàng:${state.data['data']['content'][index]['id'] ?? ''}',
+        //         text: orderName ?? 'Bánh kem socola',
+        //         style: GoogleFonts.roboto(
+        //           fontWeight: FontWeight.w500,
+        //           fontSize: 14,
+        //           color: kMainRedColor,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        // 4.spaceHeight,
         RichText(
           text: TextSpan(
             text: 'Trạng thái: ',
@@ -101,28 +103,28 @@ class MyOrderItem extends StatelessWidget {
           ),
         ),
         4.spaceHeight,
-        RichText(
-          text: TextSpan(
-            text: 'Tổng tiền: ',
-            style: GoogleFonts.roboto(
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-              color: kMainRedColor,
-            ),
-            children: <TextSpan>[
-              TextSpan(
-                // 'Tổng tiền: ${Validation.oCcy.format(state.data['data']['content'][index]['totalPrice'] ?? 0)} đ',
-                text: totalPrice ?? '123 đ',
-                style: GoogleFonts.roboto(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: kMainRedColor,
-                ),
-              ),
-            ],
-          ),
-        ),
-        4.spaceHeight,
+        // RichText(
+        //   text: TextSpan(
+        //     text: 'Tổng tiền: ',
+        //     style: GoogleFonts.roboto(
+        //       fontWeight: FontWeight.w500,
+        //       fontSize: 14,
+        //       color: kMainRedColor,
+        //     ),
+        //     children: <TextSpan>[
+        //       TextSpan(
+        //         // 'Tổng tiền: ${Validation.oCcy.format(state.data['data']['content'][index]['totalPrice'] ?? 0)} đ',
+        //         text: totalPrice ?? '123 đ',
+        //         style: GoogleFonts.roboto(
+        //           fontWeight: FontWeight.w500,
+        //           fontSize: 14,
+        //           color: kMainRedColor,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        // 4.spaceHeight,
         RichText(
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
@@ -163,6 +165,32 @@ class MyOrderItem extends StatelessWidget {
                 //     ? '${parserTime(state.data['data']['content'][index]['createdAt'] ?? "")}'
                 //     : '',
                 text: orderDate ?? '12/12/2021',
+                style: GoogleFonts.roboto(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  color: kMainBlackColor,
+                ),
+              ),
+            ],
+          ),
+        ),
+        8.spaceHeight,
+        RichText(
+          text: TextSpan(
+            text: 'Ngày nhận hàng: ',
+            style: GoogleFonts.roboto(
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+              color: kMainBlackColor,
+            ),
+            children: <TextSpan>[
+              TextSpan(
+                // state.data['data']['content'][index]
+                //             ['createdAt'] !=
+                //         null
+                //     ? '${parserTime(state.data['data']['content'][index]['createdAt'] ?? "")}'
+                //     : '',
+                text: deliveryDate ?? '12/12/2021',
                 style: GoogleFonts.roboto(
                   fontWeight: FontWeight.w500,
                   fontSize: 14,

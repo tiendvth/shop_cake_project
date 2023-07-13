@@ -10,6 +10,7 @@ part 'list_card_state.dart';
 class ListCardCubit extends Cubit<ListCardState> {
   final List datas = [];
   final CartRepository _cartRepository;
+   double totalPrice = 0;
 
   ListCardCubit(this._cartRepository) : super(ListCardInitial());
 
@@ -18,11 +19,14 @@ class ListCardCubit extends Cubit<ListCardState> {
       emit(ListCardLoading());
       final data = await _cartRepository.ListCart();
       if (data != null && data["code"] == 204) {
-        emit(ListCardSuccess(data, datas));
+        emit(ListCardSuccess(data, datas, totalPrice));
       } else {
         datas.clear();
-        datas.addAll(data['data']['result']);
-        emit(ListCardSuccess(data['data']['result'], datas));
+        totalPrice = data['data']['result'].fold(
+            0, (previousValue, element) => previousValue + element['priceCake'] * element['quantityShoppingCartTmt']);
+        datas.addAll(data['data']['result'],);
+        print('ListCardSuccess $totalPrice');
+        emit(ListCardSuccess(data['data']['result'], datas, totalPrice));
       }
     } on DioError {
       emit(ListCardFailure("Is the device online?"));
@@ -36,7 +40,7 @@ class ListCardCubit extends Cubit<ListCardState> {
       datas.clear();
       datas.addAll(data['data']['result']);
       // emit(ListCardSuccess(data['totalPrice'],datas));
-      emit(ListCardSuccess(data['result'], datas));
+      emit(ListCardSuccess(data['result'], datas, totalPrice));
       closeLoading(context);
     } on DioError {
       closeLoading(context);
@@ -50,7 +54,7 @@ class ListCardCubit extends Cubit<ListCardState> {
       final data = await _cartRepository.removeFoodToCart(foodId);
       datas.clear();
       datas.addAll(data['data']['result']);
-      emit(ListCardSuccess(data['data']['result'], datas));
+      emit(ListCardSuccess(data['data']['result'], datas, totalPrice));
       closeLoading(context);
     } on DioError {
       closeLoading(context);

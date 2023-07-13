@@ -172,7 +172,7 @@ class _CartPageState extends State<CartPage> {
                                     ),
                                     Text(
                                       // text: '${state.totalPrice}',
-                                      '0đ',
+                                      FormatPrice.formatVND(stateListCake.total),
                                       style: GoogleFonts.roboto(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
@@ -252,8 +252,8 @@ class _CartPageState extends State<CartPage> {
                                       ),
                                     ),
                                     Text(
-                                      // text: '${state.totalPrice}',
-                                      '0đ',
+                                      FormatPrice.formatVND(stateListCake.total),
+                                      // '0đ',
                                       style: GoogleFonts.roboto(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w700,
