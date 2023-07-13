@@ -25,7 +25,7 @@ class PaymentCubit extends Cubit<PaymentState> {
   // final List<String> items = ['RESTAURANT', 'SHIP'];
   // String selectedValue = 'RESTAURANT';
   var datas = [];
-  var totalPrice = 100000.0;
+  double totalPrice = 0;
   var visibleShip = false;
 
   PaymentCubit(this._paymentRepository, this._cartRepository) : super(PaymentInitial());
@@ -39,6 +39,9 @@ class PaymentCubit extends Cubit<PaymentState> {
       // totalPrice = '${Validation.oCcy.format(data['data']['price'] ?? 0)}';
       // emit(PaymentSuccess(datas, totalPrice, selectedValue));
       // totalPrice = '${FormatPrice.formatStringVND(totalPrice)}';
+      totalPrice = data['data']['result'].fold(
+          0, (previousValue, element) => previousValue + element['priceCake'] * element['quantityShoppingCartTmt']);
+      print('getPayment $totalPrice');
       emit(PaymentSuccess(datas, totalPrice));
     } on DioError {
       emit(PaymentFailure("Is the device online?"));
