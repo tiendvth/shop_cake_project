@@ -21,7 +21,7 @@ class DetailMyOrderCubit extends Cubit<DetailMyOrderState> {
       emit(DetailMyOrderLoading());
       final data = await _detailMyOrderRepositoryImpl.detailMyOrder(id);
       // emit(DetailMyOrderSuccess(data['data']['totalPrice'],data['data']['status'],data['data']['orderDetails']));
-      emit(DetailMyOrderSuccess(data));
+      emit(DetailMyOrderSuccess(data['data']));
     } on DioError {
       emit(DetailMyOrderFailure('$DioError'));
     }

@@ -56,9 +56,18 @@ class ListFoodCubit extends Cubit<ListFoodState> {
     _foodRepository.addFoodToOrder(cakeId, quantity).then((value) {
       cartCakeList.clear();
       cartCakeList.addAll(value['data']);
+      // showToast('Add to cart success');
+    }).catchError((onError) {
+      showToast((onError as DioError).message);
+    });
+  }
+
+  addFood(BuildContext context, cakeId, quantity) {
+    _foodRepository.addFoodToOrder(cakeId, quantity).then((value) {
       showToast('Add to cart success');
     }).catchError((onError) {
       showToast((onError as DioError).message);
     });
   }
+
 }
