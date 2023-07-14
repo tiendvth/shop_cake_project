@@ -37,7 +37,7 @@ class ListCardCubit extends Cubit<ListCardState> {
       datas.addAll(data['data']['result']);
       // emit(ListCardSuccess(data['totalPrice'],datas));
       emit(ListCardSuccess(data['result'], datas));
-      closeLoading(context);
+      // closeLoading(context);
     } on DioError {
       closeLoading(context);
       showToast('aaaa');

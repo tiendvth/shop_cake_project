@@ -21,6 +21,8 @@ import 'package:shop_cake/widgets/c_image.dart';
 
 import '../../../constants/font_size/font_size.dart';
 
+List list = ['0', '100', '1000', '10000'];
+
 class ListFoodPage extends StatefulWidget {
   const ListFoodPage({Key? key}) : super(key: key);
 
@@ -32,6 +34,9 @@ class _ListFoodPageState extends State<ListFoodPage> {
   final listFoodCubit = ListFoodCubit();
   final listCategoryCubit = CategoryCubit();
   final homeRepository = HomeRepositoryImpl(apiProvider);
+
+  String valueChoose1 = list.first;
+  String valueChoose2 = list.first;
 
   get state => null;
 
@@ -222,6 +227,104 @@ class _ListFoodPageState extends State<ListFoodPage> {
                     //     }
                     //   },
                     // ),
+
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 16),
+                    //   child: Container(
+                    //     color: Colors.white,
+                    //     height: 50,
+                    //     child: Row(
+                    //       // mainAxisAlignment: MainAxisAlignment.start,
+                    //       // crossAxisAlignment: CrossAxisAlignment.start,
+                    //       children: [
+                    //         DecoratedBox(
+                    //           decoration: BoxDecoration(
+                    //             color:Colors.white, //background color of dropdown button
+                    //             border: Border.all(color: Colors.black38, width:1), //border of dropdown button
+                    //             borderRadius: BorderRadius.circular(30), //border raiuds of dropdown button
+                    //             // boxShadow: <BoxShadow>[ //apply shadow on Dropdown button
+                    //             //   BoxShadow(
+                    //             //       color: Color.fromRGBO(0, 0, 0, 0.57), //shadow for button
+                    //             //       blurRadius: 5) //blur radius of shadow
+                    //             // ]
+                    //           ),
+                    //           child: Padding(
+                    //             padding: EdgeInsets.all(double.infinity),
+                    //             child: DropdownButton<String>(
+                    //               hint: Text('Select Items: '),
+                    //               value: valueChoose1,
+                    //               icon: null,
+                    //               elevation: 16,
+                    //               style: const TextStyle(color: Colors.black38),
+                    //               // underline: Container(
+                    //               //   decoration: ShapeDecoration(
+                    //               //     shape: RoundedRectangleBorder(
+                    //               //       side: BorderSide(width: 1.0, style: BorderStyle.solid),
+                    //               //       borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    //               //     ),
+                    //               //   ),
+                    //               // ),
+                    //               // borderRadius: BorderRadius(),
+                    //               onChanged: (value) {
+                    //                 // This is called when the user selects an item.
+                    //                 setState(() {
+                    //                   valueChoose1 = value ?? '';
+                    //                 });
+                    //               },
+                    //               items: list.map((valueItem) {
+                    //                 return DropdownMenuItem<String>(
+                    //                   value: valueItem,
+                    //                   child: Text(valueItem),
+                    //                 );
+                    //               }).toList(),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //
+                    //         DecoratedBox(
+                    //           decoration: BoxDecoration(
+                    //             color:Colors.white, //background color of dropdown button
+                    //             border: Border.all(color: Colors.black38, width:1), //border of dropdown button
+                    //             borderRadius: BorderRadius.circular(30), //border raiuds of dropdown button
+                    //             // boxShadow: <BoxShadow>[ //apply shadow on Dropdown button
+                    //             //   BoxShadow(
+                    //             //       color: Color.fromRGBO(0, 0, 0, 0.57), //shadow for button
+                    //             //       blurRadius: 5) //blur radius of shadow
+                    //             // ]
+                    //           ),
+                    //           child: Padding(
+                    //             padding: EdgeInsets.only(left:30, right:30),
+                    //             child: DropdownButton<String>(
+                    //               hint: Text('Select Items: '),
+                    //               value: valueChoose2,
+                    //               icon: null,
+                    //               elevation: 16,
+                    //               style: const TextStyle(color: Colors.black38),
+                    //               // underline: Container(
+                    //               //   height: 2,
+                    //               //   color: Colors.deepPurpleAccent,
+                    //               // ),
+                    //               onChanged: (value) {
+                    //                 // This is called when the user selects an item.
+                    //                 setState(() {
+                    //                   valueChoose2 = value ?? '';
+                    //                 });
+                    //               },
+                    //               items: list.map((valueItem) {
+                    //                 return DropdownMenuItem<String>(
+                    //                   value: valueItem,
+                    //                   child: Text(valueItem),
+                    //                 );
+                    //               }).toList(),
+                    //             ),
+                    //           ),
+                    //         )
+                    //       ],
+                    //
+                    //     ),
+                    //   ),
+                    // ),
+
                     Expanded(
                       child: BlocBuilder<ListFoodCubit, ListFoodState>(
                         builder: (context, stateListCake) {

@@ -8,6 +8,7 @@ import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/detail_food/bloc/counter_bloc/count_dish_cubit.dart';
 import 'package:shop_cake/src/detail_food/bloc/detail_food_bloc/detail_food_cubit.dart';
 import 'package:shop_cake/src/detail_food/repository/repository.dart';
+import 'package:shop_cake/utils/utils.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
 
 class DetailFood extends StatelessWidget {
@@ -290,9 +291,11 @@ class DetailFood extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               color: kFFA6BD,
-                              onPressed: () {
-                                detailFoodCubit.addFoodToOrder(context, id);
+                              onPressed: () async{
+                               await detailFoodCubit.addFoodToOrder(context, id);
                                 print(id);
+                               closeLoading(context);
+
                               },
                               child: Text(
                                 'Thêm vào giỏ hàng',
