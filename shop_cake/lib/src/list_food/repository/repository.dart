@@ -19,7 +19,7 @@ class ListFoodRepositoryImpl implements ListFoodRepository {
   Future<Map<String, dynamic>> listFood(search, priceFrom, priceTo) async {
     try {
       Map<String, dynamic> body = {
-        "name": "",
+        "name": search,
         "size": 100,
         "page": 1,
         "priceTo": priceTo,
@@ -39,7 +39,6 @@ class ListFoodRepositoryImpl implements ListFoodRepository {
         throw Exception('Failed to load data!');
       }
     } catch (e) {
-      print('ExceptionError: $e');
       throw Exception('Failed to load data!');
     }
   }
