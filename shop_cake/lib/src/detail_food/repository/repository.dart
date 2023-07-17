@@ -31,7 +31,9 @@ class DetailFoodRepositoryImpl implements DetailFoodRepository {
   @override
   Future<Map<String, dynamic>> addFoodToOrder(cakeId, quantity) async {
     final respone = await _dio
-        .post('/api/shoppingCartTmt/create', data: {"cakeId": cakeId, "quantity": quantity.toString()});
+        .post('/api/shoppingCartTmt/create', data: {
+          "cakeId": cakeId, "quantity": quantity.toString()
+        });
     return respone.data as Map<String, dynamic>;
   }
 }
