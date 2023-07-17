@@ -20,7 +20,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    listFoodCubit.getListFood(listFoodCubit.searchController.text);
+    listFoodCubit.getListFood(listFoodCubit.searchController.text, 0, 0);
+    // listFoodCubit.getListFood(search, priceFrom, priceTo);
     categoryCubit.getCategory();
   }
 

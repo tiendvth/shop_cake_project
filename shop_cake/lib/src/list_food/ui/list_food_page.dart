@@ -96,7 +96,6 @@ class _ListFoodPageState extends State<ListFoodPage> {
     priceFilterCubit.listPriceFilter();
   }
 
-
   @override
   void dispose() {
     super.dispose();
