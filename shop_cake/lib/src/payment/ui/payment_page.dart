@@ -1,4 +1,5 @@
 
+
 import 'package:common/common.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
@@ -15,6 +16,7 @@ import 'package:shop_cake/src/cart_page/componenst/cart_item.dart';
 import 'package:shop_cake/src/cart_page/repository/cart_repository.dart';
 import 'package:shop_cake/src/payment/bloc/payment_cubit.dart';
 import 'package:shop_cake/src/payment/repository/repository.dart';
+import 'package:shop_cake/src/payment/ui/vnpay_payment_page.dart';
 import 'package:shop_cake/widgets/c_button.dart';
 import 'package:shop_cake/widgets/c_textformfield.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
@@ -48,47 +50,6 @@ class _PaymentPageState extends State<PaymentPage> {
     noteController.dispose();
     reasonController.dispose();
   }
-  // Future _paymentVnPay() async {
-  //    try {
-  //      String url = 'http://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
-  //      String tmnCode = 'XXX'; // Get from VNPay
-  //      String hashKey = 'XXX'; // Get from VNPay
-  //
-  //      final params = <String, dynamic>{
-  //        'vnp_Command': 'pay',
-  //        'vnp_Amount': '3000000',
-  //        'vnp_CreateDate': '20210315151908',
-  //        'vnp_CurrCode': 'VND',
-  //        // 'vnp_IpAddr': '192.168.0.23',
-  //        'vnp_Locale': 'vn',
-  //        'vnp_OrderInfo': '5fa66b8b5f376a000417e501 pay coin 30000 VND',
-  //        'vnp_ReturnUrl': 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=1806000&vnp_Command=pay&vnp_CreateDate=20210801153333&vnp_CurrCode=VND&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+%3A5&vnp_OrderType=other&vnp_ReturnUrl=https%3A%2F%2Fdomainmerchant.vn%2FReturnUrl&vnp_TmnCode=DEMOV210&vnp_TxnRef=5&vnp_Version=2.1.0&vnp_SecureHash=3e0d61a0c0534b2e36680b3f7277743e8784cc4e1d68fa7d276e79c23be7d6318d338b477910a27992f5057bb1582bd44bd82ae8009ffaf6d141219218625c42', // Your Server https://sandbox.vnpayment.vn/apis/docs/huong-dan-tich-hop/#code-returnurl
-  //        'vnp_TmnCode': tmnCode,
-  //        'vnp_TxnRef': '604f187c862cd70004478e',
-  //        'vnp_Version': '2.0.0'
-  //      };
-  //
-  //      final sortedParams = FlutterHlVnpay.instance.sortParams(params);
-  //      final hashDataBuffer = new StringBuffer();
-  //      sortedParams.forEach((key, value) {
-  //        hashDataBuffer.write(key);
-  //        hashDataBuffer.write('=');
-  //        hashDataBuffer.write(value);
-  //        hashDataBuffer.write('&');
-  //      });
-  //      final hashData = hashDataBuffer.toString().substring(0, hashDataBuffer.length - 1);
-  //      final query = Uri(queryParameters: sortedParams).query;
-  //      print('hashData = $hashData');
-  //      print('query = $query');
-  //
-  //      var bytes = utf8.encode(hashKey + hashData.toString());
-  //      final vnpSecureHash = sha256.convert(bytes);
-  //      final paymentUrl = "$url?$query&vnp_SecureHashType=SHA256&vnp_SecureHash=$vnpSecureHash";
-  //      print('paymentUrl = $paymentUrl');
-  //    } on PlatformException {
-  //       print('error');
-  //    }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -607,6 +568,11 @@ class _PaymentPageState extends State<PaymentPage> {
                                   fontWeight: FontWeight.w600,
                                   fontColor: FontColor.colorFFFFFF,
                                   onPressed: () async  {
+                                   await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                 VnPayPaymentPage()));
                                     paymentCubit.callApiPayment(context,
                                         dateController.text, state.datas, noteController.text, reasonController.text,stateAddress.address![0].id!);
                                     Navigator.pop(context);
