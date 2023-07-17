@@ -151,9 +151,10 @@ class ItemCard extends StatelessWidget {
                       price ?? "20.000đ",
                       style: GoogleFonts.roboto(
                         color: kF2F4B4E,
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Expanded(

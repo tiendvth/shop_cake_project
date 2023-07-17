@@ -5,7 +5,7 @@ class FormatPrice {
   static String format(double price) {
     return NumberFormat.currency(locale: 'vi').format(price);
   }
-  static String formatVND(double price) {
+  static String formatVND(double? price) {
     return NumberFormat.currency(locale: 'vi', symbol: 'đ').format(price);
   }
   static String formatStringVND(String price) {
@@ -28,5 +28,8 @@ class FormatPrice {
     ).currencySymbol;
     String result = '$formattedAmount $formattedCurrency';
     return result;
+  }
+  static String formatPriceToInt(int? price) {
+    return NumberFormat.currency(locale: 'vi', symbol: 'đ').format(price);
   }
 }

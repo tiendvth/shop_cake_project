@@ -11,6 +11,7 @@ class InputSearch extends StatefulWidget {
   final String? labelText;
   final Widget? prefixIcon;
   final double maxWidth;
+  final GestureTapCallback? onTap;
   final ListFoodCubit listFoodCubit;
 
   const InputSearch(
@@ -21,7 +22,8 @@ class InputSearch extends StatefulWidget {
       this.labelText,
       this.prefixIcon,
       this.maxWidth = 350,
-      required this.listFoodCubit})
+      required this.listFoodCubit,
+      this.onTap})
       : super(key: key);
 
   @override
@@ -53,53 +55,57 @@ class _InputSearchState extends State<InputSearch> {
         obscureText: _obscureText ?? false,
         style: const TextStyle(fontSize: 15),
         decoration: InputDecoration(
-            labelText: widget.labelText,
-            labelStyle: const TextStyle(color: Colors.black, fontSize: 15),
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            border: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black),
-                borderRadius: BorderRadius.all(Radius.circular(16))),
-            focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: kMainDarkColor),
-                borderRadius: BorderRadius.all(Radius.circular(16))),
-            filled: true,
-            prefixIcon: widget.prefixIcon,
-            fillColor: Colors.white,
-            iconColor: FontColor.color212121,
-            hintText: widget.hintText,
-            suffixIcon: widget.fieldPassword
-                ? _obscureText == true
-                    ? InkWell(
-                        onTap: () {
-                          _obscureText = false;
-                          setState(() {});
-                        },
-                        child: Icon(
-                          CupertinoIcons.eye,
-                          color: Colors.black,
-                          size: _sizeIcon,
-                        ),
-                      )
-                    : InkWell(
-                        onTap: () {
-                          _obscureText = true;
-                          setState(() {});
-                        },
-                        child: Icon(
-                          CupertinoIcons.eye_slash,
-                          size: _sizeIcon,
-                          color: Colors.black,
-                        ),
-                      )
-                : Icon(
+          labelText: widget.labelText,
+          labelStyle: const TextStyle(color: Colors.black, fontSize: 15),
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          border: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black),
+              borderRadius: BorderRadius.all(Radius.circular(16))),
+          focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: kMainDarkColor),
+              borderRadius: BorderRadius.all(Radius.circular(16))),
+          filled: true,
+          prefixIcon: widget.prefixIcon,
+          fillColor: Colors.white,
+          iconColor: FontColor.color212121,
+          hintText: widget.hintText,
+          suffixIcon: widget.fieldPassword
+              ? _obscureText == true
+                  ? InkWell(
+                      onTap: () {
+                        _obscureText = false;
+                        setState(() {});
+                      },
+                      child: Icon(
+                        CupertinoIcons.eye,
+                        color: Colors.black,
+                        size: _sizeIcon,
+                      ),
+                    )
+                  : InkWell(
+                      onTap: () {
+                        _obscureText = true;
+                        setState(() {});
+                      },
+                      child: Icon(
+                        CupertinoIcons.eye_slash,
+                        size: _sizeIcon,
+                        color: Colors.black,
+                      ),
+                    )
+              : InkWell(
+                  onTap: widget.onTap,
+                  child: Icon(
                     Icons.filter_list_outlined,
                     color: Colors.grey,
                     size: _sizeIcon,
-                  )),
+                  ),
+                ),
+        ),
         onChanged: (value) {
-          widget.listFoodCubit.getListFood(value);
+          // widget.listFoodCubit.getListFood(value, 1, 10);
         },
       ),
     );

@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:group_button/group_button.dart';
 import 'package:shop_cake/common/%20config/format_price.dart';
 import 'package:shop_cake/common/badge_widget.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
@@ -12,6 +13,8 @@ import 'package:shop_cake/firebase/setup_firebase.dart';
 import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/detail_food/ui/detail_food_page.dart';
 import 'package:shop_cake/src/detail_my_order/ui/detail_my_order_page.dart';
+import 'package:shop_cake/src/list_food/bloc/list_price_filter_cubit.dart';
+import 'package:shop_cake/src/list_food/components/dialog_filter.dart';
 import 'package:shop_cake/src/list_food/components/item_card.dart';
 import 'package:shop_cake/src/home_page/repository/home_repository.dart';
 import 'package:shop_cake/src/list_food/bloc/category_cubit.dart';
@@ -32,6 +35,11 @@ class _ListFoodPageState extends State<ListFoodPage> {
   final listFoodCubit = ListFoodCubit();
   final listCategoryCubit = CategoryCubit();
   final homeRepository = HomeRepositoryImpl(apiProvider);
+  final controller = GroupButtonController();
+  final searchController = TextEditingController();
+  final priceFilterCubit = ListPriceFilterCubit();
+  int? priceFrom = 0;
+  int? priceTo = 0;
 
   get state => null;
 
@@ -52,16 +60,19 @@ class _ListFoodPageState extends State<ListFoodPage> {
 
     FirebaseMessaging.onMessage.listen(firebaseMessagingBackgroundHandler);
 
-    FirebaseMessaging.instance.getInitialMessage().then((message) {
-      if (message != null) {
-        print("Data message firebase: ${message.data}");
-        NavigatorManager.pushFullScreen(
+    FirebaseMessaging.instance.getInitialMessage().then(
+      (message) {
+        if (message != null) {
+          print("Data message firebase: ${message.data}");
+          NavigatorManager.pushFullScreen(
             context,
             DetailMyOrder(
               id: int.parse(message.data['orderId']),
-            ));
-      }
-    });
+            ),
+          );
+        }
+      },
+    );
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print("Data message firebase: ${message.data}");
       Future.delayed(const Duration(milliseconds: 2000), () {
@@ -76,7 +87,12 @@ class _ListFoodPageState extends State<ListFoodPage> {
   }
 
   Future<void> _refresh() async {
-    listFoodCubit.getListFood(listFoodCubit.searchController.text);
+    listFoodCubit.getListFood(
+      listFoodCubit.searchController.text,
+      priceFrom,
+      priceTo,
+    );
+    priceFilterCubit.listPriceFilter();
   }
 
   @override
@@ -88,6 +104,9 @@ class _ListFoodPageState extends State<ListFoodPage> {
         ),
         BlocProvider(
           create: (_) => listCategoryCubit,
+        ),
+        BlocProvider(
+          create: (_) => priceFilterCubit,
         ),
       ],
       child: Scaffold(
@@ -163,14 +182,87 @@ class _ListFoodPageState extends State<ListFoodPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    InputSearch(
-                      controller: listFoodCubit.searchController,
-                      maxWidth: double.infinity,
-                      prefixIcon: const Icon(
-                        Icons.search_outlined,
-                        color: Colors.grey,
-                      ),
-                      listFoodCubit: listFoodCubit,
+                    BlocBuilder<ListPriceFilterCubit, ListPriceFilterState>(
+                      builder: (context, statePrice) {
+                        if (statePrice is ListPriceFilterSuccess) {
+                          return InputSearch(
+                            controller: listFoodCubit.searchController,
+                            maxWidth: double.infinity,
+                            prefixIcon: const Icon(
+                              Icons.search_outlined,
+                              color: Colors.grey,
+                            ),
+                            hintText: 'Tìm kiếm sản phẩm',
+                            listFoodCubit: listFoodCubit,
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return DialogFilter(
+                                    child: Container(
+                                      height: 380,
+                                      decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                      ),
+                                      child: GroupButton(
+                                        controller: controller,
+                                        buttons: statePrice.data
+                                            .map((e) =>
+                                                '${FormatPrice.formatPriceToInt(e.priceFrom)} - ${FormatPrice.formatPriceToInt(e.priceTo)}')
+                                            .toList(),
+                                        onSelected: (index, value, isSelected) {
+                                          priceFrom =
+                                              statePrice.data[value].priceFrom;
+                                          priceTo =
+                                              statePrice.data[value].priceTo;
+                                        },
+                                        options: GroupButtonOptions(
+                                          spacing: 8,
+                                          unselectedTextStyle:
+                                              GoogleFonts.roboto(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.black,
+                                          ),
+                                          groupRunAlignment: GroupRunAlignment
+                                              .start,
+                                          unselectedColor: Colors.white,
+                                          selectedColor: kMainDarkColor,
+                                          selectedTextStyle: GoogleFonts.roboto(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.white,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          textAlign: TextAlign.center,
+                                          buttonWidth: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2 -
+                                              56,
+                                          runSpacing: 8,
+                                          direction: Axis.horizontal,
+                                        ),
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      listFoodCubit.getListFood(
+                                        searchController.text,
+                                        priceFrom,
+                                        priceTo,
+                                      );
+                                      Navigator.pop(context);
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        } else {
+                          return const SizedBox();
+                        }
+                      },
                     ),
                     const SizedBox(
                       height: 16,
@@ -193,70 +285,97 @@ class _ListFoodPageState extends State<ListFoodPage> {
                       child: BlocBuilder<ListFoodCubit, ListFoodState>(
                         builder: (context, stateListCake) {
                           if (stateListCake is ListFoodSuccess) {
-                            return RefreshIndicator(
-                              onRefresh: _refresh,
-                              child: SingleChildScrollView(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 16),
-                                  child: Column(
-                                    children: [
-                                      GridView.custom(
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        padding: EdgeInsets.zero,
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          mainAxisSpacing: 12,
-                                          crossAxisSpacing: 12,
-                                          childAspectRatio: 0.7,
-                                        ),
-                                        childrenDelegate:
-                                            SliverChildBuilderDelegate(
-                                          (context, index) => ItemCard(
-                                            imageUrl: stateListCake.data['result']
-                                                [index]['image'],
-                                            title: stateListCake.data['result']
-                                                [index]['name'],
-                                            price: FormatPrice.formatVND(
-                                                stateListCake.data['result']
-                                                    [index]['price']),
-                                            onTap: () {
-                                              NavigatorManager.pushFullScreen(
-                                                  context,
-                                                  DetailFood(
-                                                    id: stateListCake
-                                                                .data['result']
-                                                            [index]['id'] ??
-                                                        '',
-                                                    detail: stateListCake
-                                                        .data['result'][index],
-                                                  ));
-                                            },
-                                            addToCart: () {
-                                              listFoodCubit.addFoodToOrder(
-                                                context,
-                                                cakeId:
-                                                    stateListCake.data['result']
-                                                        [index]['cakeId'],
-                                                quantity:
-                                                    stateListCake.data['result']
-                                                            [index]['quantity'] ??
-                                                        1,
-                                              );
-                                            },
+                            if (stateListCake.data!.isNotEmpty &&
+                                stateListCake.data != null &&
+                                stateListCake.data['result'] != null) {
+                              return RefreshIndicator(
+                                onRefresh: _refresh,
+                                child: SingleChildScrollView(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
+                                    child: Column(
+                                      children: [
+                                        GridView.custom(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          padding: EdgeInsets.zero,
+                                          gridDelegate:
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            mainAxisSpacing: 12,
+                                            crossAxisSpacing: 12,
+                                            childAspectRatio: 0.7,
                                           ),
-                                          childCount:
-                                              stateListCake.data['result'].length,
+                                          childrenDelegate:
+                                              SliverChildBuilderDelegate(
+                                            (context, index) => ItemCard(
+                                              imageUrl:
+                                                  stateListCake.data['result']
+                                                      [index]['image'],
+                                              title:
+                                                  stateListCake.data['result']
+                                                      [index]['name'],
+                                              price: FormatPrice.formatVND(
+                                                  stateListCake.data['result']
+                                                      [index]['price']),
+                                              onTap: () {
+                                                NavigatorManager.pushFullScreen(
+                                                    context,
+                                                    DetailFood(
+                                                      id: stateListCake.data[
+                                                                  'result']
+                                                              [index]['id'] ??
+                                                          '',
+                                                      detail: stateListCake
+                                                              .data['result']
+                                                          [index],
+                                                    ));
+                                              },
+                                              addToCart: () {
+                                                listFoodCubit.addFoodToOrder(
+                                                  context,
+                                                  cakeId: stateListCake
+                                                          .data['result'][index]
+                                                      ['cakeId'],
+                                                  quantity: stateListCake
+                                                              .data['result']
+                                                          [index]['quantity'] ??
+                                                      1,
+                                                );
+                                              },
+                                            ),
+                                            childCount: stateListCake
+                                                .data['result'].length,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
+                            if (stateListCake.data['code'] == 204 ||
+                                stateListCake.data['data'] == null) {
+                              return Center(
+                                child: Text(
+                                  'Không có sản phẩm nào',
+                                  style: TextStyle(
+                                      fontSize: FontSize.fontSize_16,
+                                      color: FontColor.color212121),
+                                ),
+                              );
+                            } else {
+                              return Center(
+                                child: Text(
+                                  'Không có sản phẩm nào',
+                                  style: TextStyle(
+                                      fontSize: FontSize.fontSize_16,
+                                      color: FontColor.color212121),
+                                ),
+                              );
+                            }
                           } else if (state is ListFoodFailure) {
                             return Center(
                               child: Text(
