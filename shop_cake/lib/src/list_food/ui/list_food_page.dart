@@ -38,6 +38,7 @@ class _ListFoodPageState extends State<ListFoodPage> {
   final controller = GroupButtonController();
   final searchController = TextEditingController();
   final priceFilterCubit = ListPriceFilterCubit();
+  final searchFocusNode = FocusNode();
   int? priceFrom = 0;
   int? priceTo = 0;
 
@@ -93,6 +94,14 @@ class _ListFoodPageState extends State<ListFoodPage> {
       priceTo,
     );
     priceFilterCubit.listPriceFilter();
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    searchController.dispose();
+    searchFocusNode.dispose();
   }
 
   @override
@@ -194,6 +203,13 @@ class _ListFoodPageState extends State<ListFoodPage> {
                             ),
                             hintText: 'Tìm kiếm sản phẩm',
                             listFoodCubit: listFoodCubit,
+                            onChanged: (value) {
+                              listFoodCubit.getListFood(
+                                value,
+                                priceFrom,
+                                priceTo,
+                              );
+                            },
                             onTap: () {
                               showDialog(
                                 context: context,
@@ -224,8 +240,8 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                           ),
-                                          groupRunAlignment: GroupRunAlignment
-                                              .start,
+                                          groupRunAlignment:
+                                              GroupRunAlignment.start,
                                           unselectedColor: Colors.white,
                                           selectedColor: kMainDarkColor,
                                           selectedTextStyle: GoogleFonts.roboto(

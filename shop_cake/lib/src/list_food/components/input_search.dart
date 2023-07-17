@@ -13,6 +13,8 @@ class InputSearch extends StatefulWidget {
   final double maxWidth;
   final GestureTapCallback? onTap;
   final ListFoodCubit listFoodCubit;
+  final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
 
   const InputSearch(
       {Key? key,
@@ -23,7 +25,9 @@ class InputSearch extends StatefulWidget {
       this.prefixIcon,
       this.maxWidth = 350,
       required this.listFoodCubit,
-      this.onTap})
+      this.onTap,
+      this.onChanged,
+      this.onSubmitted})
       : super(key: key);
 
   @override
@@ -105,7 +109,10 @@ class _InputSearchState extends State<InputSearch> {
                 ),
         ),
         onChanged: (value) {
-          // widget.listFoodCubit.getListFood(value, 1, 10);
+          widget.onChanged!(value);
+        },
+        onSubmitted: (value) {
+          widget.onSubmitted!(value);
         },
       ),
     );
