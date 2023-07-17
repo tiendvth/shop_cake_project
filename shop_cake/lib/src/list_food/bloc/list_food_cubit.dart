@@ -16,12 +16,14 @@ class ListFoodCubit extends Cubit<ListFoodState> {
 
   ListFoodCubit() : super(ListFoodInitial());
 
-  Future<void> getListFood(search) async{
+  Future<void> getListFood(search, priceFrom, priceTo) async {
     try {
       emit(ListFoodLoading());
-      var data = await _foodRepository.listFood(search);
-      if (data != null){
+      var data = await _foodRepository.listFood(search, priceFrom, priceTo);
+      if (data != null && data.isNotEmpty && data['data'] != null && data['data'].isNotEmpty) {
         emit(ListFoodSuccess(data['data']));
+      } else if (data != null && data['code'] == 204 && data['data'] == null) {
+        emit(ListFoodSuccess(data));
       } else {
         emit(ListFoodFailure('Backend error 403'));
       }

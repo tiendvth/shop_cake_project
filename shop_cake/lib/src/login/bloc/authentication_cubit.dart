@@ -1,8 +1,6 @@
 import 'package:common/common.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/login/repository/authen_repository.dart';
 
@@ -34,7 +32,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     //     ),
     //   );
     // });
-      context.read<AuthenticationBloc>().add(AppLoginSuccessEvent({
+      context.read<AuthenticationBloc>().add(AppLoginSuccessEvent(const {
             "accessToken": 'accessToken',
             "refreshToken": 'refreshToken'
           }));

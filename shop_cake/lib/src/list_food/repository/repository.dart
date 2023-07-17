@@ -2,7 +2,7 @@ import 'package:common/common.dart';
 import 'package:shop_cake/auth/AuthServiceImpl.dart';
 
 abstract class ListFoodRepository {
-  Future listFood(search);
+  Future listFood(search, priceFrom, priceTo);
 
   Future addFoodToOrder(foodId, quantity);
 
@@ -16,24 +16,26 @@ class ListFoodRepositoryImpl implements ListFoodRepository {
   ListFoodRepositoryImpl(this._dio);
 
   @override
-  Future<Map<String, dynamic>> listFood(search) async {
+  Future<Map<String, dynamic>> listFood(search, priceFrom, priceTo) async {
     try {
       Map<String, dynamic> body = {
         "name": "",
-        "size": 10,
+        "size": 100,
         "page": 1,
-        "priceTo": 1000,
-        "priceFrom": 10,
+        "priceTo": priceTo,
+        "priceFrom": priceFrom,
         "token": "${_authService.getAccessToken()}"
       };
       final respone = await _dio.post(
-        '/api/cake/getAll',
-        data: body
+          '/api/cake/getAll',
+          data: body
       );
-      if (respone.statusCode == 200) {
-        print('responeFoood: $respone');
+      if (respone.statusCode == 200 && respone.data['data'] != null && respone.data['data'].isNotEmpty) {
         return respone.data as Map<String, dynamic>;
-      } else {
+      } else if (respone.statusCode == 200 && respone.data['code'] == 204 && respone.data['data'] == null) {
+        return respone.data as Map<String, dynamic>;
+      }
+      else {
         throw Exception('Failed to load data!');
       }
     } catch (e) {
@@ -44,7 +46,8 @@ class ListFoodRepositoryImpl implements ListFoodRepository {
 
   @override
   Future<Map<String, dynamic>> addFoodToOrder(cakeId, quantity) async {
-    final respone = await _dio.post('/api/shoppingCartTmt/create', data: {"cakeId": cakeId, "quantity": quantity});
+    final respone = await _dio.post('/api/shoppingCartTmt/create',
+        data: {"cakeId": cakeId, "quantity": quantity});
     return respone.data as Map<String, dynamic>;
   }
 

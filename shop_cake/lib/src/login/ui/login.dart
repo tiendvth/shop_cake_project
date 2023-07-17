@@ -6,7 +6,6 @@ import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/constants/font_size/font_size.dart';
 import 'package:shop_cake/generated/l10n.dart';
-import 'package:shop_cake/src/app_home.dart';
 import 'package:shop_cake/src/login/bloc/authentication_cubit.dart';
 import 'package:shop_cake/src/login/bloc/login_google_cubit.dart';
 import 'package:shop_cake/src/login/repository/user_repository.dart';
@@ -261,27 +260,14 @@ class _LoginState extends State<Login> {
                         child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        BlocBuilder<LoginGoogleCubit, LoginGoogleState>(
-                          builder: (context, state) {
-                            return InkWell(
-                              onTap: () async {
-                                await context
-                                    .read<LoginGoogleCubit>()
-                                    .signInWithGoogle();
-                                // ignore: use_build_context_synchronously
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => AppHome()));
-                              },
-                              child: CImage(
-                                assetsPath: Assets.icGoogle,
-                                height: 24,
-                                width: 24,
-                                color: FontColor.bgcolorFFFFFF,
-                              ),
-                            );
-                          },
+                        InkWell(
+                          onTap: () {},
+                          child: CImage(
+                            assetsPath: Assets.icGoogle,
+                            height: 24,
+                            width: 24,
+                            color: FontColor.bgcolorFFFFFF,
+                          ),
                         ),
                         20.spaceWidth,
                         CImage(
