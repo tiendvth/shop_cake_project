@@ -34,6 +34,9 @@ const kF7F7F7 = Color(0xFFF7F7F7);
 const kF8F8F8 = Color(0xFFF8F8F8);
 const k514D56 = Color(0xFF514D56);
 const k666666 = Color(0xFF666666);
+const kD16BA5 = Color(0xFFD16BA5);
+const kB993D6 =Color(0xFFB993D6);
+const k8CA6DB =Color(0xFF8CA6DB);
 
 
 const Gradient kMainGradient = LinearGradient(
@@ -59,6 +62,15 @@ const Gradient kButtonGradient = LinearGradient(
   ],
   begin: Alignment.centerRight,
   end: Alignment.centerLeft,
+);
+const Gradient kGradientAppBar = LinearGradient(
+  colors: [
+    kD16BA5,
+    kB993D6,
+    k8CA6DB,
+  ],
+  begin: Alignment.topLeft,
+  end: Alignment.bottomRight,
 );
 
 
