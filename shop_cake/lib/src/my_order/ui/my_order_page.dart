@@ -25,6 +25,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -36,7 +37,13 @@ class _MyOrderPageState extends State<MyOrderPage> {
           ),
         ),
         flexibleSpace: Container(
-          decoration: const BoxDecoration(gradient: kBgMenu),
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(16),
+              bottomRight: Radius.circular(16),
+            ),
+            gradient: kBgMenu,
+          ),
         ),
         actions: [
           Padding(
@@ -55,7 +62,8 @@ class _MyOrderPageState extends State<MyOrderPage> {
             ),
           ),
         ],
-        backgroundColor: FontColor.kMainColor,
+        backgroundColor: Colors.white,
+        elevation: 0,
       ),
       body: BlocProvider(
         create: (BuildContext context) =>
@@ -153,7 +161,8 @@ class _MyOrderPageState extends State<MyOrderPage> {
                                       '${stateOrder.data['data']['result'][index]['deliveryAddress'] ?? ''}',
                                   orderDate:
                                       '${FormatDate.formatDate(stateOrder.data['data']['result'][index]['createdAt'] ?? '')}',
-                                  deliveryDate: '${FormatDate.formatDate(stateOrder.data['data']['result'][index]['deliveryDate'] ?? '')}',
+                                  deliveryDate:
+                                      '${FormatDate.formatDate(stateOrder.data['data']['result'][index]['deliveryDate'] ?? '')}',
                                 ),
                               ),
                               Divider(
@@ -182,13 +191,12 @@ class _MyOrderPageState extends State<MyOrderPage> {
               //   //   ),
               //   // );
               // }
-              return const Center(child: CircularProgressIndicator());
             } else {
               return Center(
                 child: Text(
                   'Bạn chưa có đơn hàng nào',
                   style: GoogleFonts.roboto(
-                      fontSize: 16, color: FontColor.color212121),
+                      fontSize: 16, color: FontColor.colorText514D56),
                 ),
               );
             }

@@ -2,6 +2,7 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_cake/common/%20config/format_text_to_number.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/constants/font_size/font_size.dart';
@@ -33,11 +34,11 @@ class DetailMyOrder extends StatelessWidget {
                   Stack(children: [
                     Container(
                       width: double.infinity,
-                      height: 200,
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(50),
-                          bottomRight: Radius.circular(50),
+                      height: 230,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(16),
+                          bottomRight: Radius.circular(16),
                         ),
                         gradient: kBgMenu,
                       ),
@@ -53,15 +54,15 @@ class DetailMyOrder extends StatelessWidget {
                                 text: 'Chi tiết đơn hàng',
                                 textColor: kMainDarkColor,
                                 fontWeight: FontWeight.w600,
-                                fontSize: FontSize.fontSize_30,
+                                fontSize: FontSize.fontSize_22,
                               ),
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: const Text(
+                                child: Text(
                                   'Đóng',
-                                  style: TextStyle(
+                                  style: GoogleFonts.roboto(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500,
                                       color: kMainDarkColor
@@ -74,9 +75,10 @@ class DetailMyOrder extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(24, AppBar().preferredSize.height + 90, 24, 0),
+                      padding: EdgeInsets.fromLTRB(
+                          24, AppBar().preferredSize.height + 65, 24, 0),
                       child: Container(
-                        height: 130,
+                        height: 120,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: FontColor.colorFFFFFF,
@@ -86,47 +88,35 @@ class DetailMyOrder extends StatelessWidget {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 2,
                               blurRadius: 7,
-                              offset: const Offset(0, 3), // changes position of shadow
+                              offset: const Offset(
+                                  0, 3), // changes position of shadow
                             ),
                           ],
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
                           child: Column(
                             children: [
                               Row(
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceBetween,
                                 children: [
-                                  CText(
-                                    text: 'Giá tiền',
-                                    fontSize: FontSize.fontSize_16,
-                                    fontWeight: FontWeight.w500,
+                                  Text(
+                                    'Giá tiền',
+                                    style: GoogleFonts.roboto(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: k514D56,
+                                    ),
                                   ),
-                                  CText(
-                                    // text:
-                                    // '${Validation.oCcy.format(
-                                    //     state.totalPrice ?? 0)}',
-                                    text: '0',
-                                    fontSize: FontSize.fontSize_16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ],
-                              ),
-                              5.spaceHeight,
-                              Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  CText(
-                                    text: 'Phí giao hàng',
-                                    fontSize: FontSize.fontSize_14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  CText(
-                                    text: '0',
-                                    fontSize: FontSize.fontSize_16,
-                                    fontWeight: FontWeight.w500,
+                                  Text(
+                                    '${FormatTextToNumber().formatPositiveNumber(money: state.totalPrice)}đ',
+                                    style: GoogleFonts.roboto(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: k514D56,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -135,15 +125,48 @@ class DetailMyOrder extends StatelessWidget {
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceBetween,
                                 children: [
-                                  CText(
-                                    text: 'Phí dịch vụ & phí khác',
-                                    fontSize: FontSize.fontSize_16,
-                                    fontWeight: FontWeight.w500,
+                                  Text(
+                                    // text: '${state.totalPrice}',
+                                    'Phí giao hàng',
+                                    style: GoogleFonts.roboto(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: k514D56,
+                                    ),
                                   ),
-                                  CText(
-                                    text: '0',
-                                    fontSize: FontSize.fontSize_16,
-                                    fontWeight: FontWeight.w500,
+                                  Text(
+                                    // '${FormatTextToNumber().formatPositiveNumber(money: state.totalPrice)}đ',
+                                    '0đ',
+                                    style: GoogleFonts.roboto(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: k514D56,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              5.spaceHeight,
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    // text: '${state.totalPrice}',
+                                    'Phí dich vụ khác',
+                                    style: GoogleFonts.roboto(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: k514D56,
+                                    ),
+                                  ),
+                                  Text(
+                                    // text: '${state.totalPrice}',
+                                    '0đ',
+                                    style: GoogleFonts.roboto(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: k514D56,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -158,18 +181,22 @@ class DetailMyOrder extends StatelessWidget {
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceBetween,
                                 children: [
-                                  CText(
-                                    text: 'Tổng thanh toán',
-                                    fontSize: FontSize.fontSize_18,
-                                    fontWeight: FontWeight.w600,
+                                  Text(
+                                    // text: '${state.totalPrice}',
+                                    'Tổng tiền',
+                                    style: GoogleFonts.roboto(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      color: kMainRedColor,
+                                    ),
                                   ),
-                                  CText(
-                                    // text:
-                                    // '${Validation.oCcy.format(
-                                    //     state.totalPrice ?? 0)} đ',
-                                    text: '0 đ',
-                                    fontSize: FontSize.fontSize_18,
-                                    fontWeight: FontWeight.w600,
+                                  Text(
+                                    '${FormatTextToNumber().formatPositiveNumber(money: state.totalPrice)}đ',
+                                    style: GoogleFonts.roboto(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      color: kMainRedColor,
+                                    ),
                                   ),
                                 ],
                               ),

@@ -16,7 +16,8 @@ class AddressPage extends StatefulWidget {
 
 class _AddressPageState extends State<AddressPage> {
   final GetAddressCubit addressCubit = GetAddressCubit();
-
+  int selectedValue = 0;
+  int idAddress = 0;
 
   @override
   void initState() {
@@ -30,12 +31,32 @@ class _AddressPageState extends State<AddressPage> {
       create: (context) => addressCubit,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Địa chỉ của tôi',
-              style: GoogleFonts.roboto(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                color: kMainRedColor,
-              )),
+          title: Text(
+            'Địa chỉ của tôi',
+            style: GoogleFonts.roboto(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: kMainRedColor,
+            ),
+          ),
+          actions: [
+            selectedValue != 0
+                ? TextButton(
+                    onPressed: () {
+                      print('selectedValueButton $selectedValue');
+                      print('Value id Address ${idAddress.toString()}');
+                    },
+                    child: Text(
+                      'Lưu',
+                      style: GoogleFonts.roboto(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: kMainRedColor,
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
+          ],
           backgroundColor: Colors.white,
           elevation: 0,
           flexibleSpace: Container(
@@ -56,8 +77,7 @@ class _AddressPageState extends State<AddressPage> {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else
-                if (state is GetAddressSuccess) {
+                } else if (state is GetAddressSuccess) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -86,18 +106,45 @@ class _AddressPageState extends State<AddressPage> {
                           return Column(
                             children: [
                               12.spaceHeight,
-                               AddressItem(
+                              AddressItem(
                                 name: 'Đặng Văn Tiến',
                                 address: state.address?[index].address,
-                                 phone: state.address?[index].phone,
+                                phone: state.address?[index].phone,
+                                value: index,
+                                groupValue: selectedValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedValue = value as int;
+                                    print(
+                                        'selectedValue $selectedValue');
+                                    print(
+                                        'IdAddress  ${state.address?[index].id}');
+                                    idAddress =
+                                        state.address?[index].id as int;
+                                  });
+                                },
+                                // child: Radio(
+                                //   value: index,
+                                //   groupValue: selectedValue,
+                                //   onChanged: (value) {
+                                //     setState(() {
+                                //       selectedValue = value as int;
+                                //       print('selectedValue $selectedValue');
+                                //       print(
+                                //           'Value Address ${state.address?[index].id.runtimeType}');
+                                //       idAddress =
+                                //           state.address?[index].id as int;
+                                //     });
+                                //   },
+                                //   activeColor: kMainRedColor,
+                                //   focusNode: FocusNode(),
+                                // ),
                               ),
                               12.spaceHeight,
                               const Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 24),
                                 child: Divider(
-                                    thickness: 0.5,
-                                    color: kMainDarkGreyColor
-                                ),
+                                    thickness: 0.5, color: kMainDarkGreyColor),
                               )
                             ],
                           );
@@ -115,7 +162,8 @@ class _AddressPageState extends State<AddressPage> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 4, horizontal: 12),
                           decoration: BoxDecoration(
-                            border: Border.all(width: 0.5, color: kMainRedColor),
+                            border:
+                                Border.all(width: 0.5, color: kMainRedColor),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Center(
