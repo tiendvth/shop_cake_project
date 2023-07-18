@@ -19,6 +19,7 @@ class FontSize {
   static double get fontSize_18 => 18;
   static double get fontSize_19 => 19;
   static double get fontSize_20 => 20;
+  static double get fontSize_22 => 22;
   static double get fontSize_30 => 30;
   static double get fontSize_24 => 24;
   static double get fontSize_36 => 36;

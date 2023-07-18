@@ -376,18 +376,20 @@ class _ListFoodPageState extends State<ListFoodPage> {
                               return Center(
                                 child: Text(
                                   'Không có sản phẩm nào',
-                                  style: TextStyle(
-                                      fontSize: FontSize.fontSize_16,
-                                      color: FontColor.color212121),
+                                  style: GoogleFonts.roboto(
+                                    fontSize: FontSize.fontSize_16,
+                                    color: FontColor.colorText514D56,
+                                  ),
                                 ),
                               );
                             } else {
                               return Center(
                                 child: Text(
                                   'Không có sản phẩm nào',
-                                  style: TextStyle(
-                                      fontSize: FontSize.fontSize_16,
-                                      color: FontColor.color212121),
+                                  style: GoogleFonts.roboto(
+                                    fontSize: FontSize.fontSize_16,
+                                    color: FontColor.colorText514D56,
+                                  ),
                                 ),
                               );
                             }

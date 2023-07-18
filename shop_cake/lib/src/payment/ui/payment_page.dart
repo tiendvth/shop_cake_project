@@ -16,7 +16,6 @@ import 'package:shop_cake/src/cart_page/componenst/cart_item.dart';
 import 'package:shop_cake/src/cart_page/repository/cart_repository.dart';
 import 'package:shop_cake/src/payment/bloc/payment_cubit.dart';
 import 'package:shop_cake/src/payment/repository/repository.dart';
-import 'package:shop_cake/src/payment/ui/vnpay_payment_page.dart';
 import 'package:shop_cake/widgets/c_button.dart';
 import 'package:shop_cake/widgets/c_textformfield.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
@@ -568,11 +567,11 @@ class _PaymentPageState extends State<PaymentPage> {
                                   fontWeight: FontWeight.w600,
                                   fontColor: FontColor.colorFFFFFF,
                                   onPressed: () async  {
-                                   await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                 VnPayPaymentPage()));
+                                   // await Navigator.push(
+                                   //      context,
+                                   //      MaterialPageRoute(
+                                   //          builder: (context) =>
+                                   //               VnPayPaymentPage()));
                                     paymentCubit.callApiPayment(context,
                                         dateController.text, state.datas, noteController.text, reasonController.text,stateAddress.address![0].id!);
                                     Navigator.pop(context);

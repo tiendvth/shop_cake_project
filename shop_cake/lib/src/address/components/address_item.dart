@@ -7,12 +7,18 @@ class AddressItem extends StatelessWidget {
   final String? name;
   final String? address;
   final String? phone;
+  final int? value;
+  final int? groupValue;
+  final Function(int?)? onChanged;
 
   const AddressItem({
     Key? key,
     this.name,
     this.address,
     this.phone,
+    this.value,
+    this.groupValue,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -20,11 +26,12 @@ class AddressItem extends StatelessWidget {
     return Row(
       children: [
         Radio(
-          value: 1,
-          groupValue: 1,
-          onChanged: (value) {},
+          value: value ?? 0,
+          groupValue: groupValue,
+          onChanged: onChanged,
           activeColor: kMainRedColor.withOpacity(0.5),
         ),
+        // child ?? const SizedBox(),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

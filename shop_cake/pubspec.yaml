@@ -51,7 +51,6 @@ dependencies:
   webview_flutter: ^3.0.4
   crypto: 3.0.1
   group_button: ^5.3.0
-  flutter_hl_vnpay: ^2.0.1
 
   common:
     path: ../

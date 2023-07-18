@@ -11,6 +11,7 @@ part 'detail_my_order_state.dart';
 class DetailMyOrderCubit extends Cubit<DetailMyOrderState> {
   TextEditingController cenCelController =TextEditingController();
   final id;
+  double totalPrice = 0;
   final _detailMyOrderRepositoryImpl =DetailMyOrderRepositoryImpl(apiProvider);
   DetailMyOrderCubit(this.id,) : super(DetailMyOrderInitial()){
     getDetailMyOrder();
@@ -21,7 +22,9 @@ class DetailMyOrderCubit extends Cubit<DetailMyOrderState> {
       emit(DetailMyOrderLoading());
       final data = await _detailMyOrderRepositoryImpl.detailMyOrder(id);
       // emit(DetailMyOrderSuccess(data['data']['totalPrice'],data['data']['status'],data['data']['orderDetails']));
-      emit(DetailMyOrderSuccess(data['data']));
+      totalPrice = data['data'].fold(
+          0, (previousValue, element) => previousValue + element['price'] * element['quantity']);
+      emit(DetailMyOrderSuccess(data['data'], totalPrice));
     } on DioError {
       emit(DetailMyOrderFailure('$DioError'));
     }

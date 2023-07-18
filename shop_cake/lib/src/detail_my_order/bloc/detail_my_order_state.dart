@@ -9,10 +9,10 @@ class DetailMyOrderLoading extends DetailMyOrderState {}
 
 class DetailMyOrderSuccess extends DetailMyOrderState {
   // final status;
-  // final totalPrice;
+  final totalPrice;
   final data;
   // DetailMyOrderSuccess(this.totalPrice,this.status,this.data);
-  DetailMyOrderSuccess(this.data);
+  DetailMyOrderSuccess(this.data, this.totalPrice);
 }
 
 class DetailMyOrderFailure extends DetailMyOrderState {
