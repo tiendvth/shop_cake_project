@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/widgets/c_image.dart';
 
@@ -48,12 +49,18 @@ class ItemCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16),
-                  child: CImage(
-                    assetsNetworkUrl: imageUrl ??
-                        "https://thoidai.com.vn/stores/news_dataimages/thoidai/112017/06/22/chiem-nguong-nhung-chiec-banh-ngot-tinh-te-dep-nhu-thuy-tinh-44-.5835.jpg",
+                  child: Image.network(
+                    imageUrl ?? "",
                     height: 150,
                     width: double.infinity,
-                    boxFit: BoxFit.cover,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const CImage(
+                        assetsPath: Assets.imgDefault,
+                        width: double.infinity,
+                        height: 150,
+                      );
+                    },
                   ),
                 ),
                 Align(
@@ -101,11 +108,11 @@ class ItemCard extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: kDefaultPaddin / 2),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children:  [
+                children: [
                   Expanded(
                     child: Text(
-                     title ?? "Cà phê sữa đá",
-                      style:  GoogleFonts.roboto(
+                      title ?? "Cà phê sữa đá",
+                      style: GoogleFonts.roboto(
                         color: kMainDarkColor,
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
@@ -115,7 +122,9 @@ class ItemCard extends StatelessWidget {
                       maxLines: 1,
                     ),
                   ),
-                  const SizedBox(width: 4,),
+                  const SizedBox(
+                    width: 4,
+                  ),
                   const FavIcon(),
                 ],
               ),

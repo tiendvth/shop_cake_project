@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:group_button/group_button.dart';
 import 'package:shop_cake/common/%20config/format_price.dart';
 import 'package:shop_cake/common/badge_widget.dart';
+import 'package:shop_cake/common/config_read_file.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/constants.dart';
@@ -326,9 +327,9 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                           childrenDelegate:
                                               SliverChildBuilderDelegate(
                                             (context, index) => ItemCard(
-                                              imageUrl:
-                                                  stateListCake.data['result']
-                                                      [index]['image'],
+                                              imageUrl: ReadFile.readFile(stateListCake.data['result'][index]['image']),
+                                              // '${ReadFile.url}'
+                                              //     '${stateListCake.data['result'][index]['image']}',
                                               title:
                                                   stateListCake.data['result']
                                                       [index]['name'],
