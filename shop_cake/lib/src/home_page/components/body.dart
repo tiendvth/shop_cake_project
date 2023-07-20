@@ -66,6 +66,7 @@ class _BodyState extends State<Body> {
                             ),
                             childrenDelegate: SliverChildBuilderDelegate(
                               (context, index) => ItemCard(
+                                isPromotion: true,
                                 addToCart: () {
                                   listFoodCubit.addFoodToOrder(
                                     context,
