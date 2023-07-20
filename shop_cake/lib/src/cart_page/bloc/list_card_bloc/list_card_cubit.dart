@@ -36,11 +36,17 @@ class ListCardCubit extends Cubit<ListCardState> {
   addFood(BuildContext context, foodId, quantity) async {
     showLoading(context);
     try {
+      final list = await _cartRepository.ListCart();
       final data = await _cartRepository.updateFoodToCart(foodId, quantity);
       datas.clear();
-      datas.addAll(data['data']['result']);
+      if (data['data']['result'] != null) {
+        // totalPrice = data['data']['result'].fold(
+        //     0, (previousValue, element) => previousValue + element['priceCake'] * element['quantityShoppingCartTmt']);
+        datas.addAll(data['data']['result']);
+        emit(ListCardSuccess(data['data']['result'], datas, totalPrice));
+      }
       // emit(ListCardSuccess(data['totalPrice'],datas));
-      emit(ListCardSuccess(data['result'], datas, totalPrice));
+      emit(ListCardSuccess(data['data']['result'], datas, totalPrice));
       closeLoading(context);
     } on DioError {
       closeLoading(context);

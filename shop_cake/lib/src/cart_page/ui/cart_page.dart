@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_cake/common/%20config/format_price.dart';
 import 'package:shop_cake/common/badge_widget.dart';
+import 'package:shop_cake/common/config_read_file.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/constants.dart';
@@ -35,6 +36,10 @@ class _CartPageState extends State<CartPage> {
     super.initState();
     listCardCubit.getListCart();
   }
+  void updateCartItemQuantity(String? shopCartId, int quantity) async {
+   await listCardCubit.addFood(context,shopCartId, quantity,);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +79,8 @@ class _CartPageState extends State<CartPage> {
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: Padding(
-                              padding: EdgeInsets.fromLTRB(24, AppBar().preferredSize.height + 15, 24, 0),
+                              padding: EdgeInsets.fromLTRB(24,
+                                  AppBar().preferredSize.height + 15, 24, 0),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -171,7 +177,8 @@ class _CartPageState extends State<CartPage> {
                                     ),
                                     Text(
                                       // text: '${state.totalPrice}',
-                                      FormatPrice.formatVND(stateListCake.total),
+                                      FormatPrice.formatVND(
+                                          stateListCake.total),
                                       style: GoogleFonts.roboto(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
@@ -251,7 +258,8 @@ class _CartPageState extends State<CartPage> {
                                       ),
                                     ),
                                     Text(
-                                      FormatPrice.formatVND(stateListCake.total),
+                                      FormatPrice.formatVND(
+                                          stateListCake.total),
                                       // '0đ',
                                       style: GoogleFonts.roboto(
                                         fontSize: 16,
@@ -270,108 +278,116 @@ class _CartPageState extends State<CartPage> {
                     20.spaceHeight,
                     Expanded(
                       child: SingleChildScrollView(
-                        child: stateListCake.data.isNotEmpty || listCardCubit.datas.isNotEmpty
-                          ? ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                              itemBuilder: (context, index) {
-                                // print(state.data[index]['quantity']);
-                                return Column(
-                                  children: [
-                                    Slidable(
-                                      endActionPane: ActionPane(
-                                        motion: const ScrollMotion(),
-                                        extentRatio: 0.5,
-                                        children: [
-                                          SlidableAction(
-                                            onPressed:
-                                                (BuildContext context) {
-                                              listCardCubit.removeFood(
-                                                  context,
-                                                  stateListCake.data[index]
-                                                      ['shoppingCartTmtId']);
-                                            },
-                                            backgroundColor: kMainRedColor
-                                                .withOpacity(0.6),
-                                            foregroundColor: Colors.white,
-                                            icon:
-                                                Icons.delete_forever_rounded,
-                                            label: 'Xóa',
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          SlidableAction(
-                                            onPressed: null,
-                                            backgroundColor:
-                                                const Color(0xFF21B7CA),
-                                            foregroundColor: Colors.white,
-                                            icon: Icons.clear,
-                                            label: 'Đóng',
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                        ],
-                                      ),
-                                      child: CartItem(
-                                        quantity: stateListCake.data[index]
-                                        ['quantityShoppingCartTmt'],
-                                        name: stateListCake.data[index]['nameCake'],
-                                        price: FormatPrice.formatVND(
-                                            stateListCake.data[index]['priceCake']),
-                                        imageUrl: stateListCake.data[index]
-                                        ['imageCake'],
-                                        onTapAdd: () {
-                                          final count =
-                                          stateListCake.data[index]['quantity'];
-                                          final quantity = count + 1;
-                                          listCardCubit.addFood(
-                                              context,
-                                              // state.data[index]['id'],
-                                              1,
-                                              quantity);
-                                        },
-                                        onTapMinus: () {
-                                          final count =
-                                          stateListCake.data[index]['quantity'];
-                                          final quantity = count - 1;
-                                          if (quantity == 0) {
-                                            listCardCubit.removeFood(
-                                                context,
-                                                // state.data[index]['id']
-                                                1);
-                                          } else {
+                        child: stateListCake.data.isNotEmpty ||
+                                listCardCubit.datas.isNotEmpty
+                            ? ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 16),
+                                itemBuilder: (context, index) {
+                                  // print(state.data[index]['quantity']);
+                                  return Column(
+                                    children: [
+                                      Slidable(
+                                        endActionPane: ActionPane(
+                                          motion: const ScrollMotion(),
+                                          extentRatio: 0.5,
+                                          children: [
+                                            SlidableAction(
+                                              onPressed:
+                                                  (BuildContext context) {
+                                                listCardCubit.removeFood(
+                                                    context,
+                                                    stateListCake.data[index]
+                                                        ['shoppingCartTmtId']);
+                                              },
+                                              backgroundColor: kMainRedColor
+                                                  .withOpacity(0.6),
+                                              foregroundColor: Colors.white,
+                                              icon:
+                                                  Icons.delete_forever_rounded,
+                                              label: 'Xóa',
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            SlidableAction(
+                                              onPressed: null,
+                                              backgroundColor:
+                                                  const Color(0xFF21B7CA),
+                                              foregroundColor: Colors.white,
+                                              icon: Icons.clear,
+                                              label: 'Đóng',
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                          ],
+                                        ),
+                                        child: CartItem(
+                                          quantity: stateListCake.data[index]
+                                              ['quantityShoppingCartTmt'],
+                                          name: stateListCake.data[index]
+                                              ['nameCake'],
+                                          price: FormatPrice.formatVND(
+                                              stateListCake.data[index]
+                                                  ['priceCake']),
+                                          imageUrl: ReadFile.readFile(
+                                              stateListCake.data[index]
+                                                  ['imageCake']),
+                                          onTapAdd: () {
+                                            final count = stateListCake
+                                                .data[index]['quantityShoppingCartTmt'];
+                                            final quantity = count + 1;
                                             listCardCubit.addFood(
                                                 context,
+                                                // state.data[index]['id'],
                                                 stateListCake.data[index]
-                                                ['quantity'],
+                                                    ['shoppingCartTmtId'],
                                                 quantity);
-                                          }
-                                        },
+                                          },
+                                          onTapMinus: () async {
+                                            updateCartItemQuantity(stateListCake.data[index]['shoppingCartTmtId'], stateListCake.data[index]['quantityShoppingCartTmt']);
+                                            // final count = stateListCake.data[index]['quantityShoppingCartTmt'];
+                                            // final quantity = count - 1;
+                                            // if (quantity == 0) {
+                                            //   listCardCubit.addFood(
+                                            //       context,
+                                            //       // state.data[index]['id']
+                                            //       stateListCake.data[index]['shoppingCartTmtId'],
+                                            //       quantity
+                                            //       );
+                                            // } else {
+                                            //   listCardCubit.addFood(
+                                            //       context,
+                                            //       stateListCake.data[index]
+                                            //           ['shoppingCartTmtId'],
+                                            //       quantity);
+                                            // }
+                                          },
+                                        ),
                                       ),
+                                      const SizedBox(
+                                        height: 12,
+                                      ),
+                                    ],
+                                  );
+                                },
+                                itemCount: stateListCake.data.length ?? 0,
+                                shrinkWrap: true,
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 100, right: 16, left: 16),
+                                child: Center(
+                                  child: Text(
+                                    'Không có sản phẩm nào trong giỏ hàng',
+                                    style: GoogleFonts.roboto(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: k9B9B9B,
                                     ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                  ],
-                                );
-                              },
-                              itemCount: stateListCake.data.length ?? 0,
-                              shrinkWrap: true,
-                            )
-                          : Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 100, right: 16, left: 16),
-                              child: Center(
-                                child: Text(
-                                  'Không có sản phẩm nào trong giỏ hàng',
-                                  style: GoogleFonts.roboto(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    color: k9B9B9B,
                                   ),
                                 ),
                               ),
-                            ),
                       ),
                     ),
                   ],

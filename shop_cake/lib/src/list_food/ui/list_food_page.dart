@@ -327,6 +327,7 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                           childrenDelegate:
                                               SliverChildBuilderDelegate(
                                             (context, index) => ItemCard(
+                                              // isPromotion: true,
                                               imageUrl: ReadFile.readFile(stateListCake.data['result'][index]['image']),
                                               // '${ReadFile.url}'
                                               //     '${stateListCake.data['result'][index]['image']}',

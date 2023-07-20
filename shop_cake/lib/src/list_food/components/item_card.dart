@@ -13,6 +13,8 @@ class ItemCard extends StatelessWidget {
   final String? imageUrl;
   final GestureTapCallback? onTap;
   final GestureTapCallback? addToCart;
+  final bool? isPromotion;
+  final String? promotionSale;
 
   const ItemCard({
     Key? key,
@@ -22,6 +24,8 @@ class ItemCard extends StatelessWidget {
     this.imageUrl,
     this.onTap,
     this.addToCart,
+    this.promotionSale,
+    this.isPromotion = false,
   }) : super(key: key);
 
   @override
@@ -47,21 +51,56 @@ class ItemCard extends StatelessWidget {
           children: [
             Stack(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Image.network(
-                    imageUrl ?? "",
-                    height: 150,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const CImage(
-                        assetsPath: Assets.imgDefault,
-                        width: double.infinity,
+                Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.network(
+                        imageUrl ?? "",
                         height: 150,
-                      );
-                    },
-                  ),
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const CImage(
+                            assetsPath: Assets.imgDefault,
+                            width: double.infinity,
+                            height: 150,
+                          );
+                        },
+                      ),
+                    ),
+                    if (isPromotion == true)
+                      Positioned(
+                        bottom: 8,
+                        right: 40,
+                        left: 40,
+                        child: Container(
+                          height: 24,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                          ),
+                          decoration:  BoxDecoration(
+                            gradient: kGradientAppBar,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(12),
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              promotionSale ?? " Sale 20%",
+                              style: GoogleFonts.roboto(
+                                color: kMainWhiteColor,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
+                              maxLines: 1,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
                 Align(
                   alignment: Alignment.topLeft,
@@ -105,13 +144,13 @@ class ItemCard extends StatelessWidget {
               height: 6,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: kDefaultPaddin / 2),
+              padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin / 2),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     child: Text(
-                      title ?? "Cà phê sữa đá",
+                      title ?? "Bánh ngọt tinh tế",
                       style: GoogleFonts.roboto(
                         color: kMainDarkColor,
                         fontSize: 16,

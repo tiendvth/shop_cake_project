@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/constants.dart';
-import 'package:shop_cake/widgets/c_image.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
 
 class CartItem extends StatelessWidget {
@@ -37,11 +37,17 @@ class CartItem extends StatelessWidget {
             height: 110,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: CImage(
+              child: Image.network(
                 // '${state.data[index]['images'] ?? 'https://img.freepik.com/free-vector/thai-cuisine-food-flat-illustration_1284-74042.jpg?w=826&t=st=1662447770~exp=1662448370~hmac=d1eb58a73a830be233671c2c08232da012f7faca37554705b8971f4cb723fffa'}',
-                assetsNetworkUrl: imageUrl ??
+                 imageUrl ??
                     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrthQqVfCco3_Pj5My7QSayyY4ZmkAo98zbw&usqp=CAU',
-                boxFit: BoxFit.cover,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    Assets.imgDefault,
+                    fit: BoxFit.cover,
+                  );
+                },
               ),
             ),
           ),

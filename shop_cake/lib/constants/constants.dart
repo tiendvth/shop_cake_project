@@ -63,11 +63,10 @@ const Gradient kButtonGradient = LinearGradient(
   begin: Alignment.centerRight,
   end: Alignment.centerLeft,
 );
-const Gradient kGradientAppBar = LinearGradient(
+ Gradient kGradientAppBar = const LinearGradient(
   colors: [
-    kD16BA5,
-    kB993D6,
-    k8CA6DB,
+    kMainRedColor,
+    kMainOrangeColor,
   ],
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
