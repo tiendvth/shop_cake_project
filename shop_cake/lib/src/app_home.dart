@@ -26,7 +26,7 @@ class _AppHomeState extends State<AppHome> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: MainBottomNavigationBar(
-        wantKeepAliveChildren: [true, false, false, true, false],
+        wantKeepAliveChildren: [true, true, false, false, false],
         bottomNavigatorItemBuilder: (BuildContext contextNavigation, int currentIndex) {
           return BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
@@ -35,17 +35,6 @@ class _AppHomeState extends State<AppHome> with SingleTickerProviderStateMixin {
             elevation: 1,
             currentIndex: currentIndex,
             onTap: (index) {
-              if (index == 3) {
-                Navigator.push(
-                  contextNavigation,
-                  MaterialPageRoute(
-                    builder: (context) => const CartPage(
-                      isShowIconBack: true,
-                    ),
-                  ),
-                );
-                return;
-              }
               contextNavigation.read<TabBarController>().tabIndex = index;
             },
             items: const [

@@ -6,7 +6,8 @@ import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/widgets/c_image.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
 class AppbarCartWidget extends StatelessWidget {
-  const AppbarCartWidget({Key? key}) : super(key: key);
+  final bool? isShowBack;
+  const AppbarCartWidget({Key? key, this.isShowBack}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,16 @@ class AppbarCartWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      if (isShowBack == true)
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(
+                            Icons.arrow_back_ios,
+                            color: kMainDarkColor,
+                          ),
+                        ),
                       Expanded(
                         child: Text(
                           "Giỏ hàng",

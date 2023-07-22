@@ -36,10 +36,14 @@ class _CartPageState extends State<CartPage> {
     super.initState();
     listCardCubit.getListCart();
   }
-  void updateCartItemQuantity(String? shopCartId, int quantity) async {
-   await listCardCubit.addFood(context,shopCartId, quantity,);
-  }
 
+  void updateCartItemQuantity(String? shopCartId, int quantity) async {
+    await listCardCubit.addFood(
+      context,
+      shopCartId,
+      quantity,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -203,7 +207,7 @@ class _CartPageState extends State<CartPage> {
                                     ),
                                     Text(
                                       // text: '${state.totalPrice}',
-                                      '0đ',
+                                      '0 đ',
                                       style: GoogleFonts.roboto(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
@@ -228,7 +232,7 @@ class _CartPageState extends State<CartPage> {
                                     ),
                                     Text(
                                       // text: '${state.totalPrice}',
-                                      '0đ',
+                                      '0 đ',
                                       style: GoogleFonts.roboto(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
@@ -334,8 +338,9 @@ class _CartPageState extends State<CartPage> {
                                               stateListCake.data[index]
                                                   ['imageCake']),
                                           onTapAdd: () {
-                                            final count = stateListCake
-                                                .data[index]['quantityShoppingCartTmt'];
+                                            final count =
+                                                stateListCake.data[index]
+                                                    ['quantityShoppingCartTmt'];
                                             final quantity = count + 1;
                                             listCardCubit.addFood(
                                                 context,
@@ -345,7 +350,11 @@ class _CartPageState extends State<CartPage> {
                                                 quantity);
                                           },
                                           onTapMinus: () async {
-                                            updateCartItemQuantity(stateListCake.data[index]['shoppingCartTmtId'], stateListCake.data[index]['quantityShoppingCartTmt']);
+                                            updateCartItemQuantity(
+                                                stateListCake.data[index]
+                                                    ['shoppingCartTmtId'],
+                                                stateListCake.data[index][
+                                                    'quantityShoppingCartTmt']);
                                             // final count = stateListCake.data[index]['quantityShoppingCartTmt'];
                                             // final quantity = count - 1;
                                             // if (quantity == 0) {
@@ -420,7 +429,7 @@ class _CartPageState extends State<CartPage> {
                     listCardCubit.datas.clear();
                   },
                 )).then((value) {
-                  listCardCubit.getListCart();
+                  listCardCubit.datas.clear();
                 });
               }
             },

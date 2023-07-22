@@ -17,9 +17,11 @@ class ListCardCubit extends Cubit<ListCardState> {
   Future<void> getListCart() async {
     try {
       emit(ListCardLoading());
-      final data = await _cartRepository.ListCart();
+      final data = await _cartRepository.listCart();
       if (data != null && data["code"] == 204) {
-        emit(ListCardSuccess(data, datas, totalPrice));
+        // print('ListCardLoading $totalPrice');
+        datas.clear();
+        emit(ListCardSuccess(data, datas, totalPrice = 0));
       } else {
         datas.clear();
         totalPrice = data['data']['result'].fold(
@@ -36,7 +38,6 @@ class ListCardCubit extends Cubit<ListCardState> {
   addFood(BuildContext context, foodId, quantity) async {
     showLoading(context);
     try {
-      final list = await _cartRepository.ListCart();
       final data = await _cartRepository.updateFoodToCart(foodId, quantity);
       datas.clear();
       if (data['data']['result'] != null) {

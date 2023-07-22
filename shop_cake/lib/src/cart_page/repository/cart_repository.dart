@@ -1,7 +1,7 @@
 import 'package:network/network.dart';
 
 abstract class CartRepository {
-  Future ListCart();
+  Future listCart();
 
   Future updateFoodToCart(foodId, quantity);
 
@@ -14,21 +14,13 @@ class CartRepositoryImpl implements CartRepository {
   CartRepositoryImpl(this._dio);
 
   @override
-  Future<Map<String, dynamic>> ListCart() async {
+  Future<Map<String, dynamic>> listCart() async {
     try {
       final result = await _dio.post("/api/shoppingCartTmt/getAll", data: {
         "size": 10,
         "page": 1,
       });
-      if (result.statusCode == 200 && result.data != null) {
-        if (result.data != null && result.data["code"] == 204) {
-          return result.data;
-        } else {
-          return result.data as Map<String, dynamic>;
-        }
-      } else {
-        throw Exception("Error");
-      }
+      return result.data as Map<String, dynamic>;
     } catch (e) {
       throw e;
     }
