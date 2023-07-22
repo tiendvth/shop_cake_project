@@ -33,7 +33,7 @@ class PaymentCubit extends Cubit<PaymentState> {
   Future<void> getPayment() async {
     try {
       emit(PaymentLoading());
-      final data = await _cartRepository.ListCart();
+      final data = await _cartRepository.listCart();
       datas.clear();
       datas.addAll(data['data']['result'] as List);
       // totalPrice = '${Validation.oCcy.format(data['data']['price'] ?? 0)}';

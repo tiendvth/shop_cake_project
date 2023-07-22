@@ -1,5 +1,3 @@
-
-
 import 'package:common/common.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
@@ -21,7 +19,8 @@ import 'package:shop_cake/widgets/c_textformfield.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
 
 class PaymentPage extends StatefulWidget {
-  final Function() callback;
+  final VoidCallback? callback;
+
   const PaymentPage({Key? key, required this.callback}) : super(key: key);
 
   @override
@@ -30,7 +29,8 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   final GetAddressCubit getAddressCubit = GetAddressCubit();
-  final paymentCubit = PaymentCubit(PaymentRepositoryImpl(apiProvider), CartRepositoryImpl(apiProvider));
+  final paymentCubit = PaymentCubit(
+      PaymentRepositoryImpl(apiProvider), CartRepositoryImpl(apiProvider));
   final TextEditingController dateController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
   final TextEditingController reasonController = TextEditingController();
@@ -94,7 +94,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                       AppBar().preferredSize.height + 0, 16, 0),
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         'Thanh toán',
@@ -123,8 +123,8 @@ class _PaymentPageState extends State<PaymentPage> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.fromLTRB(
-                                  24, AppBar().preferredSize.height + 65, 24, 0),
+                              padding: EdgeInsets.fromLTRB(24,
+                                  AppBar().preferredSize.height + 65, 24, 0),
                               child: Container(
                                 height: 120,
                                 width: double.infinity,
@@ -148,7 +148,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                     children: [
                                       Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
                                             'Giá tiền',
@@ -171,7 +171,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                       5.spaceHeight,
                                       Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
                                             // text: '${state.totalPrice}',
@@ -196,7 +196,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                       5.spaceHeight,
                                       Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
                                             // text: '${state.totalPrice}',
@@ -227,7 +227,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                       10.spaceHeight,
                                       Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
                                             // text: '${state.totalPrice}',
@@ -278,7 +278,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   ListView.builder(
-                                    physics: const NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 16, vertical: 16),
                                     itemBuilder: (context, index) {
@@ -289,8 +290,9 @@ class _PaymentPageState extends State<PaymentPage> {
                                             name: state.datas[index]['name'],
                                             price: state.datas[index]['price'],
                                             quantity: state.datas[index]
-                                            ['quantityShoppingCartTmt'],
-                                            imageUrl: state.datas[index]['image'],
+                                                ['quantityShoppingCartTmt'],
+                                            imageUrl: state.datas[index]
+                                                ['image'],
                                           ),
                                           const SizedBox(
                                             height: 12,
@@ -302,7 +304,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                     shrinkWrap: true,
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
                                     child: Text(
                                       'Ngày giao hàng',
                                       style: GoogleFonts.roboto(
@@ -316,7 +319,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                     height: 8,
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
                                     child: CTextFormField(
                                       hintText: 'Ngày',
                                       hintStyle: GoogleFonts.roboto(
@@ -349,7 +353,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                         ),
                                         onPressed: () async {
                                           DateTime? pickedDate =
-                                          await showDatePicker(
+                                              await showDatePicker(
                                             context: context,
                                             initialDate: DateTime.now(),
                                             firstDate: DateTime.now(),
@@ -357,16 +361,17 @@ class _PaymentPageState extends State<PaymentPage> {
                                             builder: (BuildContext context,
                                                 Widget? child) {
                                               return Theme(
-                                                data: ThemeData.light().copyWith(
+                                                data:
+                                                    ThemeData.light().copyWith(
                                                   colorScheme:
-                                                  const ColorScheme.light(
+                                                      const ColorScheme.light(
                                                     primary: kMainDarkColor,
                                                     onPrimary: Colors.white,
                                                     surface: kMainDarkColor,
                                                     onSurface: kMainDarkColor,
                                                   ),
                                                   dialogBackgroundColor:
-                                                  Colors.white,
+                                                      Colors.white,
                                                 ),
                                                 child: child!,
                                               );
@@ -377,8 +382,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                               print(pickedDate);
                                             }
                                             String formattedDate =
-                                            DateFormat('yyyy-MM-dd HH:mm')
-                                                .format(pickedDate);
+                                                DateFormat('yyyy-MM-dd HH:mm')
+                                                    .format(pickedDate);
                                             if (kDebugMode) {
                                               print(formattedDate);
                                             }
@@ -395,7 +400,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                   ),
                                   16.spaceHeight,
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
                                     child: Text(
                                       'Ghi chú',
                                       style: GoogleFonts.roboto(
@@ -407,7 +413,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                   ),
                                   8.spaceHeight,
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
                                     child: CTextFormField(
                                       hintText: 'Ghi chú',
                                       hintStyle: GoogleFonts.roboto(
@@ -566,16 +573,26 @@ class _PaymentPageState extends State<PaymentPage> {
                                   fontSize: FontSize.fontSize_16,
                                   fontWeight: FontWeight.w600,
                                   fontColor: FontColor.colorFFFFFF,
-                                  onPressed: () async  {
-                                   // await Navigator.push(
-                                   //      context,
-                                   //      MaterialPageRoute(
-                                   //          builder: (context) =>
-                                   //               VnPayPaymentPage()));
-                                    paymentCubit.callApiPayment(context,
-                                        dateController.text, state.datas, noteController.text, reasonController.text,stateAddress.address![0].id!);
-                                    Navigator.pop(context);
-                                    widget.callback();
+                                  onPressed: () async {
+                                    // await Navigator.push(
+                                    //      context,
+                                    //      MaterialPageRoute(
+                                    //          builder: (context) =>
+                                    //               VnPayPaymentPage()));
+                                    await paymentCubit.callApiPayment(
+                                        context,
+                                        dateController.text,
+                                        state.datas,
+                                        noteController.text,
+                                        reasonController.text,
+                                        stateAddress.address![0].id!);
+                                    Future.delayed(
+                                        const Duration(milliseconds: 500), () {
+                                      Navigator.pop(context);
+                                      widget.callback!();
+                                    });
+                                    // Navigator.pop(context);
+                                    // widget.callback!();
                                   },
                                 ),
                               ],
