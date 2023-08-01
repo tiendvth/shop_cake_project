@@ -11,6 +11,9 @@ class CartItem extends StatelessWidget {
   final int? quantity;
   final GestureTapCallback? onTapAdd;
   final GestureTapCallback? onTapMinus;
+  final GestureTapCallback? onTapRemove;
+  final bool? isShowButton;
+  final bool? isShowQuantity;
 
   const CartItem({
     Key? key,
@@ -20,6 +23,9 @@ class CartItem extends StatelessWidget {
     this.quantity,
     this.onTapAdd,
     this.onTapMinus,
+    this.onTapRemove,
+    this.isShowButton,
+    this.isShowQuantity,
   }) : super(key: key);
 
   @override
@@ -27,10 +33,12 @@ class CartItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.grey.shade300),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
             width: 110,
@@ -39,7 +47,7 @@ class CartItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
                 // '${state.data[index]['images'] ?? 'https://img.freepik.com/free-vector/thai-cuisine-food-flat-illustration_1284-74042.jpg?w=826&t=st=1662447770~exp=1662448370~hmac=d1eb58a73a830be233671c2c08232da012f7faca37554705b8971f4cb723fffa'}',
-                 imageUrl ??
+                imageUrl ??
                     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrthQqVfCco3_Pj5My7QSayyY4ZmkAo98zbw&usqp=CAU',
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
@@ -102,7 +110,7 @@ class CartItem extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: 5),
                       child: Text(
-                        price ??'0đ',
+                        price ?? '0đ',
                         style: GoogleFonts.roboto(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -118,10 +126,11 @@ class CartItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    isShowQuantity == true ?
                     Container(
                       height: 28,
                       width: 80,
-                      padding:  EdgeInsets.symmetric(horizontal: 8),
+                      padding: EdgeInsets.symmetric(horizontal: 8),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         color: kMainColor,
@@ -175,11 +184,27 @@ class CartItem extends StatelessWidget {
                           )
                         ],
                       ),
-                    )
+                    ) : const SizedBox(),
                   ],
                 ),
               ],
             ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              isShowButton == true
+                  ? InkWell(
+                      onTap: onTapRemove,
+                      child: const Icon(
+                        size: 28,
+                        Icons.restore_from_trash_rounded,
+                        color: Colors.grey,
+                      ),
+                    )
+                  : const SizedBox(),
+            ],
           )
         ],
       ),

@@ -22,9 +22,9 @@ class DetailMyOrderCubit extends Cubit<DetailMyOrderState> {
       emit(DetailMyOrderLoading());
       final data = await _detailMyOrderRepositoryImpl.detailMyOrder(id);
       // emit(DetailMyOrderSuccess(data['data']['totalPrice'],data['data']['status'],data['data']['orderDetails']));
-      totalPrice = data['data'].fold(
+      totalPrice = data['data']['detailDtoList'].fold(
           0, (previousValue, element) => previousValue + element['price'] * element['quantity']);
-      emit(DetailMyOrderSuccess(data['data'], totalPrice));
+      emit(DetailMyOrderSuccess(data['data']['detailDtoList'], totalPrice));
     } on DioError {
       emit(DetailMyOrderFailure('$DioError'));
     }

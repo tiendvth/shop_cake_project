@@ -160,9 +160,9 @@ class _MyOrderPageState extends State<MyOrderPage> {
                                   address:
                                       '${stateOrder.data['data']['result'][index]['deliveryAddress'] ?? ''}',
                                   orderDate:
-                                      '${FormatDate.formatDate(stateOrder.data['data']['result'][index]['createdAt'] ?? '')}',
+                                      FormatDate.formatDate(stateOrder.data['data']['result'][index]['createdAt'] ?? ''),
                                   deliveryDate:
-                                      '${FormatDate.formatDate(stateOrder.data['data']['result'][index]['deliveryDate'] ?? '')}',
+                                      FormatDate.formatDate(stateOrder.data['data']['result'][index]['deliveryDate'] ?? ''),
                                 ),
                               ),
                               Divider(

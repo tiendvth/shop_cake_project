@@ -1,6 +1,5 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_cake/common/%20config/format_price.dart';
 import 'package:shop_cake/common/badge_widget.dart';
@@ -292,87 +291,55 @@ class _CartPageState extends State<CartPage> {
                                   // print(state.data[index]['quantity']);
                                   return Column(
                                     children: [
-                                      Slidable(
-                                        endActionPane: ActionPane(
-                                          motion: const ScrollMotion(),
-                                          extentRatio: 0.5,
-                                          children: [
-                                            SlidableAction(
-                                              onPressed:
-                                                  (BuildContext context) {
-                                                listCardCubit.removeFood(
-                                                    context,
-                                                    stateListCake.data[index]
-                                                        ['shoppingCartTmtId']);
-                                              },
-                                              backgroundColor: kMainRedColor
-                                                  .withOpacity(0.6),
-                                              foregroundColor: Colors.white,
-                                              icon:
-                                                  Icons.delete_forever_rounded,
-                                              label: 'Xóa',
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            SlidableAction(
-                                              onPressed: null,
-                                              backgroundColor:
-                                                  const Color(0xFF21B7CA),
-                                              foregroundColor: Colors.white,
-                                              icon: Icons.clear,
-                                              label: 'Đóng',
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                          ],
-                                        ),
-                                        child: CartItem(
-                                          quantity: stateListCake.data[index]
-                                              ['quantityShoppingCartTmt'],
-                                          name: stateListCake.data[index]
-                                              ['nameCake'],
-                                          price: FormatPrice.formatVND(
+                                      CartItem(
+                                        isShowButton: true,
+                                        onTapRemove: () {
+                                          listCardCubit.removeFood(
+                                              context,
                                               stateListCake.data[index]
-                                                  ['priceCake']),
-                                          imageUrl: ReadFile.readFile(
+                                                  ['shoppingCartTmtId']);
+                                        },
+                                        quantity: stateListCake.data[index]
+                                            ['quantityShoppingCartTmt'],
+                                        name: stateListCake.data[index]
+                                            ['nameCake'],
+                                        price: FormatPrice.formatVND(
+                                            stateListCake.data[index]
+                                                ['priceCake']),
+                                        imageUrl: ReadFile.readFile(
+                                            stateListCake.data[index]
+                                                ['imageCake']),
+                                        onTapAdd: () {
+                                          final count =
                                               stateListCake.data[index]
-                                                  ['imageCake']),
-                                          onTapAdd: () {
-                                            final count =
+                                                  ['quantityShoppingCartTmt'];
+                                          final quantity = count + 1;
+                                          listCardCubit.addFood(
+                                              context,
+                                              // state.data[index]['id'],
+                                              stateListCake.data[index]
+                                                  ['shoppingCartTmtId'],
+                                              quantity);
+                                        },
+                                        onTapMinus: () async {
+                                          final count =
+                                              stateListCake.data[index]
+                                                  ['quantityShoppingCartTmt'];
+                                          final quantity = count - 1;
+                                          if (quantity == 0) {
+                                            listCardCubit.removeFood(
+                                                context,
                                                 stateListCake.data[index]
-                                                    ['quantityShoppingCartTmt'];
-                                            final quantity = count + 1;
+                                                    ['shoppingCartTmtId']);
+                                          } else {
                                             listCardCubit.addFood(
                                                 context,
                                                 // state.data[index]['id'],
                                                 stateListCake.data[index]
                                                     ['shoppingCartTmtId'],
                                                 quantity);
-                                          },
-                                          onTapMinus: () async {
-                                            updateCartItemQuantity(
-                                                stateListCake.data[index]
-                                                    ['shoppingCartTmtId'],
-                                                stateListCake.data[index][
-                                                    'quantityShoppingCartTmt']);
-                                            // final count = stateListCake.data[index]['quantityShoppingCartTmt'];
-                                            // final quantity = count - 1;
-                                            // if (quantity == 0) {
-                                            //   listCardCubit.addFood(
-                                            //       context,
-                                            //       // state.data[index]['id']
-                                            //       stateListCake.data[index]['shoppingCartTmtId'],
-                                            //       quantity
-                                            //       );
-                                            // } else {
-                                            //   listCardCubit.addFood(
-                                            //       context,
-                                            //       stateListCake.data[index]
-                                            //           ['shoppingCartTmtId'],
-                                            //       quantity);
-                                            // }
-                                          },
-                                        ),
+                                          }
+                                        },
                                       ),
                                       const SizedBox(
                                         height: 12,
@@ -422,7 +389,8 @@ class _CartPageState extends State<CartPage> {
               color: Colors.white,
             ),
             onPressed: () {
-              if (listCardCubit.datas.length > 0) {
+              if (listCardCubit.datas.length > 0 && listCardCubit.datas != null &&
+                  listCardCubit.datas.isNotEmpty) {
                 NavigatorManager.pushFullScreen(context, PaymentPage(
                   callback: () async {
                     await listCardCubit.getListCart();
