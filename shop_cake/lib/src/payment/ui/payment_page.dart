@@ -32,6 +32,7 @@ class _PaymentPageState extends State<PaymentPage> {
   final paymentCubit = PaymentCubit(
       PaymentRepositoryImpl(apiProvider), CartRepositoryImpl(apiProvider));
   final TextEditingController dateController = TextEditingController();
+  final TextEditingController timeController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
   final TextEditingController reasonController = TextEditingController();
 
@@ -48,6 +49,7 @@ class _PaymentPageState extends State<PaymentPage> {
     dateController.dispose();
     noteController.dispose();
     reasonController.dispose();
+    timeController.dispose();
   }
 
   @override
@@ -321,81 +323,154 @@ class _PaymentPageState extends State<PaymentPage> {
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 16),
-                                    child: CTextFormField(
-                                      hintText: 'Ngày',
-                                      hintStyle: GoogleFonts.roboto(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color: k9B9B9B,
-                                      ),
-                                      style: GoogleFonts.roboto(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color: kMainBlackColor,
-                                      ),
-                                      contentPadding: const EdgeInsets.only(
-                                        top: 12,
-                                        bottom: 12,
-                                        left: 16,
-                                      ),
-                                      textInputType: TextInputType.datetime,
-                                      controller: dateController,
-                                      onComplete: () {
-                                        //FocusManager.instance.primaryFocus?.dispose();
-                                      },
-                                      onchanged: (value) {
-                                        print(value);
-                                      },
-                                      suffixIcon: IconButton(
-                                        icon: const Icon(
-                                          Icons.calendar_month_outlined,
-                                          color: k9B9B9B,
-                                        ),
-                                        onPressed: () async {
-                                          DateTime? pickedDate =
-                                              await showDatePicker(
-                                            context: context,
-                                            initialDate: DateTime.now(),
-                                            firstDate: DateTime.now(),
-                                            lastDate: DateTime(2100),
-                                            builder: (BuildContext context,
-                                                Widget? child) {
-                                              return Theme(
-                                                data:
-                                                    ThemeData.light().copyWith(
-                                                  colorScheme:
-                                                      const ColorScheme.light(
-                                                    primary: kMainDarkColor,
-                                                    onPrimary: Colors.white,
-                                                    surface: kMainDarkColor,
-                                                    onSurface: kMainDarkColor,
-                                                  ),
-                                                  dialogBackgroundColor:
-                                                      Colors.white,
-                                                ),
-                                                child: child!,
-                                              );
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: CTextFormField(
+                                            hintText: 'Ngày',
+                                            hintStyle: GoogleFonts.roboto(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: k9B9B9B,
+                                            ),
+                                            style: GoogleFonts.roboto(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: kMainBlackColor,
+                                            ),
+                                            contentPadding:
+                                                const EdgeInsets.only(
+                                              top: 12,
+                                              bottom: 12,
+                                              left: 16,
+                                            ),
+                                            textInputType:
+                                                TextInputType.datetime,
+                                            controller: dateController,
+                                            onComplete: () {
+                                              //FocusManager.instance.primaryFocus?.dispose();
                                             },
-                                          );
-                                          if (pickedDate != null) {
-                                            if (kDebugMode) {
-                                              print(pickedDate);
-                                            }
-                                            String formattedDate =
-                                                DateFormat('yyyy-MM-dd HH:mm')
-                                                    .format(pickedDate);
-                                            if (kDebugMode) {
-                                              print(formattedDate);
-                                            }
-                                            setState(() {
-                                              dateController.text =
-                                                  formattedDate; //set output date to TextField value.
-                                            });
-                                          } else {
-                                            print("Date is not selected");
-                                          }
-                                        },
-                                      ),
+                                            onchanged: (value) {
+                                              print(value);
+                                            },
+                                            suffixIcon: IconButton(
+                                              icon: const Icon(
+                                                Icons.calendar_month_outlined,
+                                                color: k9B9B9B,
+                                              ),
+                                              onPressed: () async {
+                                                DateTime? pickedDate =
+                                                    await showDatePicker(
+                                                  context: context,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime.now(),
+                                                  lastDate: DateTime(2100),
+                                                  builder:
+                                                      (BuildContext context,
+                                                          Widget? child) {
+                                                    return Theme(
+                                                      data: ThemeData.light()
+                                                          .copyWith(
+                                                        colorScheme:
+                                                            const ColorScheme
+                                                                .light(
+                                                          primary:
+                                                              kMainDarkColor,
+                                                          onPrimary:
+                                                              Colors.white,
+                                                          surface:
+                                                              kMainDarkColor,
+                                                          onSurface:
+                                                              kMainDarkColor,
+                                                        ),
+                                                        dialogBackgroundColor:
+                                                            Colors.white,
+                                                      ),
+                                                      child: child!,
+                                                    );
+                                                  },
+                                                );
+                                                if (pickedDate != null) {
+                                                  if (kDebugMode) {
+                                                    print(pickedDate);
+                                                  }
+                                                  String formattedDate =
+                                                      DateFormat('yyyy-MM-dd')
+                                                          .format(pickedDate);
+                                                  if (kDebugMode) {
+                                                    print(formattedDate);
+                                                  }
+                                                  setState(() {
+                                                    dateController.text =
+                                                        formattedDate; //set output date to TextField value.
+                                                  });
+                                                } else {
+                                                  print("Date is not selected");
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        Expanded(
+                                          child: CTextFormField(
+                                            hintText: 'Giờ',
+                                            hintStyle: GoogleFonts.roboto(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: k9B9B9B,
+                                            ),
+                                            style: GoogleFonts.roboto(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: kMainBlackColor,
+                                            ),
+                                            contentPadding:
+                                                const EdgeInsets.only(
+                                              top: 12,
+                                              bottom: 12,
+                                              left: 16,
+                                            ),
+                                            textInputType:
+                                                TextInputType.datetime,
+                                            controller: timeController,
+                                            suffixIcon: IconButton(
+                                              icon: const Icon(
+                                                Icons.calendar_month_outlined,
+                                                color: k9B9B9B,
+                                              ),
+                                              onPressed: () {
+                                                showTimePicker(
+                                                  context: context,
+                                                  initialTime: const TimeOfDay(
+                                                      hour: 10, minute: 47),
+                                                  builder:
+                                                      (BuildContext context,
+                                                          Widget? child) {
+                                                    return MediaQuery(
+                                                      data: MediaQuery.of(
+                                                              context)
+                                                          .copyWith(
+                                                              alwaysUse24HourFormat:
+                                                                  true),
+                                                      child: child!,
+                                                    );
+                                                  },
+                                                ).then((value) => {
+                                                      if (value != null)
+                                                        {
+                                                          timeController.text =
+                                                              value.format(
+                                                                  context)
+                                                        }
+                                                    });
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                   16.spaceHeight,
@@ -579,9 +654,10 @@ class _PaymentPageState extends State<PaymentPage> {
                                     //      MaterialPageRoute(
                                     //          builder: (context) =>
                                     //               VnPayPaymentPage()));
+                                    final date = '${dateController.text} ${timeController.text}';
                                     await paymentCubit.callApiPayment(
                                         context,
-                                        dateController.text,
+                                        date,
                                         state.datas,
                                         noteController.text,
                                         reasonController.text,

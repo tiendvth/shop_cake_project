@@ -40,8 +40,8 @@ class CartRepositoryImpl implements CartRepository {
 
   @override
   Future<Map<String, dynamic>> removeFoodToCart(shoppingCartTmtId) async {
-    final result = await _dio.delete(
-      "/api/shoppongCartTmt/delete/${shoppingCartTmtId}",
+    final result = await _dio.get(
+      "/api/shoppingCartTmt/delete/${shoppingCartTmtId}",
     );
     return result.data as Map<String, dynamic>;
   }

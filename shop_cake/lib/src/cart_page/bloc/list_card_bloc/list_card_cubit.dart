@@ -47,6 +47,8 @@ class ListCardCubit extends Cubit<ListCardState> {
         emit(ListCardSuccess(data['data']['result'], datas, totalPrice));
       }
       // emit(ListCardSuccess(data['totalPrice'],datas));
+      getListCart();
+      closeLoading(context);
       emit(ListCardSuccess(data['data']['result'], datas, totalPrice));
       closeLoading(context);
     } on DioError {
@@ -61,6 +63,7 @@ class ListCardCubit extends Cubit<ListCardState> {
       final data = await _cartRepository.removeFoodToCart(foodId);
       datas.clear();
       datas.addAll(data['data']['result']);
+      getListCart();
       emit(ListCardSuccess(data['data']['result'], datas, totalPrice));
       closeLoading(context);
     } on DioError {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_cake/common/%20config/format_text_to_number.dart';
+import 'package:shop_cake/common/config_read_file.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/constants/font_size/font_size.dart';
@@ -478,8 +479,10 @@ class DetailMyOrder extends StatelessWidget {
                                   name: state.data[index]['nameCake'],
                                   price: FormatPrice.formatVND(
                                       state.data[index]['price']),
-                                  imageUrl: state.data[index]
-                                  ['image'],
+                                  imageUrl: ReadFile.readFile(
+                                      state.data[index]
+                                      ['image']),
+
                                   // onTapAdd: () {
                                     // final count =
                                     // stateListCake.data[index]['quantity'];
