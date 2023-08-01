@@ -14,6 +14,8 @@ class ListFoodCubit extends Cubit<ListFoodState> {
   TextEditingController searchController = TextEditingController();
   List cartCakeList = [];
 
+  double discount = 0;
+
   ListFoodCubit() : super(ListFoodInitial());
 
   Future<void> getListFood(search, priceFrom, priceTo) async {
@@ -21,9 +23,12 @@ class ListFoodCubit extends Cubit<ListFoodState> {
       emit(ListFoodLoading());
       var data = await _foodRepository.listFood(search, priceFrom, priceTo);
       if (data != null && data.isNotEmpty && data['data'] != null && data['data'].isNotEmpty) {
-        emit(ListFoodSuccess(data['data']));
+        // if (data['data']['result']){
+        //
+        // }
+        emit(ListFoodSuccess(data['data'], discount));
       } else if (data != null && data['code'] == 204 && data['data'] == null) {
-        emit(ListFoodSuccess(data));
+        emit(ListFoodSuccess(data, discount));
       } else {
         emit(ListFoodFailure('Backend error 403'));
       }
@@ -48,12 +53,13 @@ class ListFoodCubit extends Cubit<ListFoodState> {
     // });
   }
 
-  addFoodToOrder(BuildContext context, {cakeId, quantity}) {
+  addFoodToOrder(BuildContext context, {cakeId, price, quantity}) {
     cartCakeList.add({
       "cakeId": cakeId,
+      "price": price,
       "quantity": quantity,
     });
-    _foodRepository.addFoodToOrder(cakeId, quantity).then((value) {
+    _foodRepository.addFoodToOrder(cakeId, price, quantity).then((value) {
       cartCakeList.clear();
       cartCakeList.addAll(value['data']);
       // showToast('Add to cart success');
@@ -62,8 +68,8 @@ class ListFoodCubit extends Cubit<ListFoodState> {
     });
   }
 
-  addFood(BuildContext context, cakeId, quantity) {
-    _foodRepository.addFoodToOrder(cakeId, quantity).then((value) {
+  addFood(BuildContext context, cakeId, price,quantity) {
+    _foodRepository.addFoodToOrder(cakeId, price, quantity).then((value) {
       showToast('Add to cart success');
     }).catchError((onError) {
       showToast((onError as DioError).message);

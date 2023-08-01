@@ -24,8 +24,7 @@ class ListCardCubit extends Cubit<ListCardState> {
         emit(ListCardSuccess(data, datas, totalPrice = 0));
       } else {
         datas.clear();
-        totalPrice = data['data']['result'].fold(
-            0, (previousValue, element) => previousValue + element['priceCake'] * element['quantityShoppingCartTmt']);
+        totalPrice = data['data']['result'].fold(0, (previousValue, element) => previousValue + element['priceCake'] * element['quantityShoppingCartTmt']);
         datas.addAll(data['data']['result'],);
         print('ListCardSuccess $totalPrice');
         emit(ListCardSuccess(data['data']['result'], datas, totalPrice));
@@ -62,8 +61,9 @@ class ListCardCubit extends Cubit<ListCardState> {
     try {
       final data = await _cartRepository.removeFoodToCart(foodId);
       datas.clear();
-      datas.addAll(data['data']['result']);
+      // datas.addAll(data['data']['result']);
       getListCart();
+      closeLoading(context);
       emit(ListCardSuccess(data['data']['result'], datas, totalPrice));
       closeLoading(context);
     } on DioError {

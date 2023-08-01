@@ -9,7 +9,8 @@ class ListFoodLoading extends ListFoodState {}
 
 class ListFoodSuccess extends ListFoodState {
   final data;
-  ListFoodSuccess(this.data);
+  final discount;
+  ListFoodSuccess(this.data, this.discount);
 }
 
 class ListFoodFailure extends ListFoodState {

@@ -5,7 +5,7 @@ abstract class DetailFoodRepository {
 
   Future creatNew(data);
 
-  Future addFoodToOrder(foodId, quantity);
+  Future addFoodToOrder(foodId, price, quantity);
 }
 
 class DetailFoodRepositoryImpl implements DetailFoodRepository {
@@ -29,10 +29,12 @@ class DetailFoodRepositoryImpl implements DetailFoodRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> addFoodToOrder(cakeId, quantity) async {
+  Future<Map<String, dynamic>> addFoodToOrder(cakeId, price, quantity) async {
     final respone = await _dio
         .post('/api/shoppingCartTmt/create', data: {
-          "cakeId": cakeId, "quantity": quantity.toString()
+          "cakeId": cakeId,
+          "price": price,
+          "quantity": quantity.toString()
         });
     return respone.data as Map<String, dynamic>;
   }

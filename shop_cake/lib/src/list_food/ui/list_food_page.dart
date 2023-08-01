@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:common/common.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -324,45 +326,101 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                             crossAxisSpacing: 12,
                                             childAspectRatio: 0.7,
                                           ),
-                                          childrenDelegate:
-                                              SliverChildBuilderDelegate(
-                                            (context, index) => ItemCard(
-                                              // isPromotion: true,
-                                              imageUrl: ReadFile.readFile(stateListCake.data['result'][index]['image']),
-                                              // '${ReadFile.url}'
-                                              //     '${stateListCake.data['result'][index]['image']}',
-                                              title:
-                                                  stateListCake.data['result']
-                                                      [index]['name'],
-                                              price: FormatPrice.formatVND(
-                                                  stateListCake.data['result']
-                                                      [index]['price']),
-                                              onTap: () {
-                                                NavigatorManager.pushFullScreen(
-                                                    context,
-                                                    DetailFood(
-                                                      id: stateListCake.data[
-                                                                  'result']
-                                                              [index]['id'] ??
-                                                          '',
-                                                      detail: stateListCake
+                                          childrenDelegate: SliverChildBuilderDelegate(
+                                            (context, index){
+                                              if (stateListCake.data['result'][index]['discount'] == null){
+                                                return ItemCard(
+                                                  // isPromotion: true,
+                                                  imageUrl: ReadFile.readFile(stateListCake.data['result'][index]['image']),
+                                                  // '${ReadFile.url}'
+                                                  //     '${stateListCake.data['result'][index]['image']}',
+                                                  title: stateListCake.data['result'][index]['name'],
+                                                  // price: FormatPrice.formatVND(
+                                                  //     stateListCake.data['result']
+                                                  //         [index]['price']),
+                                                  price: FormatPrice.formatVND(
+                                                      DiscountCake.discountCake(0.0, stateListCake.data['result'][index]['price'])),
+                                                  onTap: () {
+                                                    NavigatorManager.pushFullScreen(
+                                                        context,
+                                                        DetailFood(
+                                                          id: stateListCake.data[
+                                                          'result']
+                                                          [index]['id'] ??
+                                                              '',
+                                                          detail: stateListCake
                                                               .data['result']
                                                           [index],
-                                                    ));
-                                              },
-                                              addToCart: () {
-                                                listFoodCubit.addFoodToOrder(
-                                                  context,
-                                                  cakeId: stateListCake
-                                                          .data['result'][index]
-                                                      ['cakeId'],
-                                                  quantity: stateListCake
-                                                              .data['result']
-                                                          [index]['quantity'] ??
-                                                      1,
+                                                        ));
+                                                  },
+                                                  addToCart: () {
+                                                    final price = FormatPrice.formatVND(
+                                                        DiscountCake.discountCake(0.0, stateListCake.data['result'][index]['price']));
+                                                    listFoodCubit.addFood(
+                                                        context, stateListCake.data['result']
+                                                    [index]['id'], price, 1);
+                                                    // listFoodCubit.addFoodToOrder(
+                                                    //   context,
+                                                    //   cakeId: stateListCake
+                                                    //           .data['result'][index]
+                                                    //       ['cakeId'],
+                                                    //   quantity: stateListCake
+                                                    //               .data['result']
+                                                    //           [index]['quantity'] ??
+                                                    //       1,
+                                                    // );
+                                                  },
                                                 );
-                                              },
-                                            ),
+                                              }else {
+                                                return ItemCard(
+                                                  isPromotion: true,
+                                                  promotionSale: 'Sale ${stateListCake.data['result'][index]['discount']}%',
+                                                  imageUrl: ReadFile.readFile(stateListCake.data['result'][index]['image']),
+                                                  // '${ReadFile.url}'
+                                                  //     '${stateListCake.data['result'][index]['image']}',
+                                                  title:
+                                                  stateListCake.data['result']
+                                                  [index]['name'],
+                                                  // price: FormatPrice.formatVND(
+                                                  //     stateListCake.data['result']
+                                                  //         [index]['price']),
+                                                  price: FormatPrice.formatVND(
+                                                      DiscountCake.discountCake(stateListCake.data['result'][index]['discount'],
+                                                          stateListCake.data['result'][index]['price'])),
+                                                  onTap: () {
+                                                    NavigatorManager.pushFullScreen(
+                                                        context,
+                                                        DetailFood(
+                                                          id: stateListCake.data[
+                                                          'result']
+                                                          [index]['id'] ??
+                                                              '',
+                                                          detail: stateListCake
+                                                              .data['result']
+                                                          [index],
+                                                        ));
+                                                  },
+                                                  addToCart: () {
+                                                    final price = DiscountCake.discountCake(stateListCake.data['result'][index]['discount'],
+                                                            stateListCake.data['result'][index]['price']);
+                                                    listFoodCubit.addFood(
+                                                        context, stateListCake.data['result']
+                                                    [index]['id'], price, 1);
+                                                    // listFoodCubit.addFoodToOrder(
+                                                    //   context,
+                                                    //   cakeId: stateListCake
+                                                    //           .data['result'][index]
+                                                    //       ['cakeId'],
+                                                    //   quantity: stateListCake
+                                                    //               .data['result']
+                                                    //           [index]['quantity'] ??
+                                                    //       1,
+                                                    // );
+                                                  },
+                                                );
+                                              }
+                                            },
+
                                             childCount: stateListCake
                                                 .data['result'].length,
                                           ),
