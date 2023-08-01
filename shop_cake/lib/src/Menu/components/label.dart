@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/constants.dart';
-import 'package:shop_cake/widgets/c_image.dart';
 
 class CLabel extends StatelessWidget {
   final String? image;
@@ -67,22 +65,22 @@ class CLabel extends StatelessWidget {
                 ],
               ),
             ),
-            icNext == true
-                ? Row(
-                    children: [
-                      const SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: CImage(
-                          assetsPath: Assets.icArrowRight,
-                        ),
-                      ),
-                      SizedBox(
-                        width: width ?? 0,
-                      )
-                    ],
-                  )
-                : const SizedBox()
+            // icNext == true
+            //     ? Row(
+            //         children: [
+            //           const SizedBox(
+            //             width: 16,
+            //             height: 16,
+            //             child: CImage(
+            //               assetsPath: Assets.icArrowRight,
+            //             ),
+            //           ),
+            //           SizedBox(
+            //             width: width ?? 0,
+            //           )
+            //         ],
+            //       )
+            //     : const SizedBox()
           ],
         ),
       ),

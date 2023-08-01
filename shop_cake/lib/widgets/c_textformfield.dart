@@ -29,6 +29,7 @@ class CTextFormField extends StatefulWidget {
   final TextStyle? hintStyle;
   final int? maxLines;
   final TextStyle? style;
+  final TextStyle? labelStyle;
 
   // ignore: use_key_in_widget_constructors
   const CTextFormField(
@@ -55,7 +56,7 @@ class CTextFormField extends StatefulWidget {
       this.backgroundColor,
       this.hintStyle,
       this.maxLines,
-      this.style});
+      this.style, this.labelStyle});
 
   // factory CTextFormField.telephone({
   //   TextEditingController? controller,
@@ -168,6 +169,7 @@ class _CTextFormFieldState extends State<CTextFormField> {
           hintStyle: widget.hintStyle,
           contentPadding: widget.contentPadding,
           labelText: widget.labelText,
+          labelStyle: widget.labelStyle,
           border: InputBorder.none,
           focusedBorder: InputBorder.none,
           enabledBorder: InputBorder.none,
