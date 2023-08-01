@@ -32,6 +32,7 @@ class Assets {
   static const String icName = 'assets/icon/icon_name.png';
   static const String icDelete = 'assets/icon/icon_delete.png';
   static const String icPayment = 'assets/icon/icons_payment.png';
+  static const String icEdit = 'assets/icon/icon_edit.png';
   static const String imgDefault = 'assets/images/default_thumbnail.png';
   ///Font
   static const String fontPlusJakartaSans = 'PlusJakartaSans';
