@@ -15,6 +15,9 @@ class HomeLoading extends HomeState {
 }
 
 class HomeLoaded extends HomeState {
+  final data;
+  HomeLoaded(this.data);
+
   @override
   // TODO: implement props
   List<Object?> get props => [];
@@ -23,7 +26,8 @@ class HomeLoaded extends HomeState {
 class HomeFailure extends HomeState {
   final String message;
 
-  HomeFailure({required this.message});
+  HomeFailure(this.message);
+  // HomeFailure({required this.message});
   @override
   // TODO: implement props
   List<Object?> get props => [message];

@@ -7,8 +7,14 @@ part 'my_order_state.dart';
 
 class MyOrderCubit extends Cubit<MyOrderState> {
   final MyOderRepository _myOderRepository;
-  final List<String> items = ["PENDING", "PROCESSING", "CANCEL", "DONE"];
-  String selectedValue = "PENDING";
+  // final List<String> items = ["PENDING", "PROCESSING", "CANCEL", "DONE"];
+  final List<String> items = ['Order được tạo mới',
+                              'Order được xác nhận',
+                              'Order đang được giao',
+                              'Order hoàn thành',
+                              'Order bị từ chối'];
+  String selectedValue = "Order được tạo mới";
+  int selectIndex = 1;
 
   MyOrderCubit(this._myOderRepository) : super(MyOrderInitial()) {
     getListOrder();
@@ -17,9 +23,9 @@ class MyOrderCubit extends Cubit<MyOrderState> {
   Future<void> getListOrder() async {
     try {
       emit(MyOrderLoading());
-      final response = await _myOderRepository.listOrder(selectedValue);
+      final response = await _myOderRepository.listOrder(selectIndex);
       if (response['code'] == 200 && response['data'] != null && response['data']['result'] != null) {
-        emit(MyOrderSuccess(response, selectedValue));
+        emit(MyOrderSuccess(response, selectIndex));
       } else {
         emit(MyOrderFailure('Backend error'));
       }

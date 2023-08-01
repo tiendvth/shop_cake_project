@@ -115,8 +115,9 @@ class _MyOrderPageState extends State<MyOrderPage> {
                             .toList(),
                         value: context.read<MyOrderCubit>().selectedValue,
                         onChanged: (value) {
-                          context.read<MyOrderCubit>().selectedValue =
-                              value as String;
+                          context.read<MyOrderCubit>().selectedValue = value as String;
+                          context.read<MyOrderCubit>().selectIndex = context.read<MyOrderCubit>().items.indexOf(value as String) + 1;
+                          print(context.read<MyOrderCubit>().selectIndex + 1);
                           context.read<MyOrderCubit>().getListOrder();
                         },
                         buttonHeight: 40,
@@ -192,12 +193,69 @@ class _MyOrderPageState extends State<MyOrderPage> {
               //   // );
               // }
             } else {
-              return Center(
-                child: Text(
-                  'Bạn chưa có đơn hàng nào',
-                  style: GoogleFonts.roboto(
-                      fontSize: 16, color: FontColor.colorText514D56),
-                ),
+              return Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 15),
+                    padding:
+                    const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 0.5, color: kMainRedColor),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton2(
+                        alignment: Alignment.centerLeft,
+                        buttonPadding: EdgeInsets.zero,
+                        dropdownDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.white,
+                        ),
+                        hint: Text(
+                          'Select Item',
+                          style: GoogleFonts.roboto(
+                            fontSize: 14,
+                            color: kMainRedColor,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        items: context
+                            .read<MyOrderCubit>()
+                            .items
+                            .map((item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: GoogleFonts.roboto(
+                              fontSize: 14,
+                              color: kMainRedColor,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ))
+                            .toList(),
+                        value: context.read<MyOrderCubit>().selectedValue,
+                        onChanged: (value) {
+                          context.read<MyOrderCubit>().selectedValue = value as String;
+                          context.read<MyOrderCubit>().selectIndex = context.read<MyOrderCubit>().items.indexOf(value as String) + 1;
+                          print(context.read<MyOrderCubit>().selectIndex + 1);
+                          context.read<MyOrderCubit>().getListOrder();
+                        },
+                        buttonHeight: 40,
+                        buttonWidth: double.infinity,
+                        itemHeight: 40,
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      'Bạn không có đơn hàng nào',
+                      style: GoogleFonts.roboto(
+                          fontSize: 16, color: FontColor.colorText514D56),
+                      ),
+                  ),
+                ]
               );
             }
           },

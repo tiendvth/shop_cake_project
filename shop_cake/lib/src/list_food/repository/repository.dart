@@ -4,7 +4,7 @@ import 'package:shop_cake/auth/AuthServiceImpl.dart';
 abstract class ListFoodRepository {
   Future listFood(search, priceFrom, priceTo);
 
-  Future addFoodToOrder(foodId, quantity);
+  Future addFoodToOrder(cakeId, price, quantity);
 
   Future listCategory(search);
 }
@@ -44,9 +44,12 @@ class ListFoodRepositoryImpl implements ListFoodRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> addFoodToOrder(cakeId, quantity) async {
+  Future<Map<String, dynamic>> addFoodToOrder(cakeId, price, quantity) async {
     final respone = await _dio.post('/api/shoppingCartTmt/create',
-        data: {"cakeId": cakeId, "quantity": quantity});
+        data: {"cakeId": cakeId,
+              "price": price,
+              "quantity": quantity
+              });
     return respone.data as Map<String, dynamic>;
   }
 

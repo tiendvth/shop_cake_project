@@ -28,8 +28,8 @@ class DetailFoodCubit extends Cubit<DetailFoodState> {
     }
   }
 
-  addFoodToOrder(BuildContext context, foodId) {
-    _detailFoodRepository.addFoodToOrder(foodId, quantity).then((value) {
+  addFoodToOrder(BuildContext context, foodId, price) {
+    _detailFoodRepository.addFoodToOrder(foodId, price,quantity).then((value) {
       showDialogMessageConfirm(context, checkBack: false, const ConfirmDialog());
     }).catchError((onError) {
       showToast((onError as DioError).message);
