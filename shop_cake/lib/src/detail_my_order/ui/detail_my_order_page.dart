@@ -35,7 +35,7 @@ class DetailMyOrder extends StatelessWidget {
                   Stack(children: [
                     Container(
                       width: double.infinity,
-                      height: 230,
+                      height: 180,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(16),
@@ -55,7 +55,7 @@ class DetailMyOrder extends StatelessWidget {
                                 text: 'Chi tiết đơn hàng',
                                 textColor: kMainDarkColor,
                                 fontWeight: FontWeight.w600,
-                                fontSize: FontSize.fontSize_22,
+                                fontSize: FontSize.fontSize_20,
                               ),
                               TextButton(
                                 onPressed: () {

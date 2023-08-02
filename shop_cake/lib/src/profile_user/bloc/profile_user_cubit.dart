@@ -26,6 +26,17 @@ class ProfileUserCubit extends Cubit<ProfileUserState> {
   Future<void> removeDeviceToken() async {
     try {
       await _profileUserRepository.removeDeviceToken(device_token);
-    } on DioError {}
+    } on DioError {
+      emit(ProfileUserFailure("Is the device online?"));
+    }
+  }
+  Future<void> updateUser(address, telephone, fullName, birthday) async  {
+    try {
+      emit(ProfileUserLoading());
+      final data = await _profileUserRepository.updateUser(address, telephone, fullName, birthday);
+      emit(ProfileUserSuccess(data));
+    } on DioError {
+      emit(ProfileUserFailure("Is the device online?"));
+    }
   }
 }

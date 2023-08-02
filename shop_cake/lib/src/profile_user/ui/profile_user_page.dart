@@ -133,6 +133,9 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
                                         builder: (context) =>
                                             UpdateProfilePage(
                                           data: state.data,
+                                              onBack: () {
+                                                _profileUserCubit.getProfile();
+                                              },
                                         ),
                                       ),
                                     );

@@ -108,6 +108,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                       ),
                                       TextButton(
                                         onPressed: () {
+                                          widget.callback!();
                                           Navigator.pop(context);
                                         },
                                         child: Text(
