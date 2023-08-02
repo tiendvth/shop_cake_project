@@ -11,20 +11,25 @@ import 'package:shop_cake/widgets/c_textformfield.dart';
 
 class UpdateProfilePage extends StatefulWidget {
   final data;
+  final VoidCallback onBack;
 
-  const UpdateProfilePage({Key? key, this.data}) : super(key: key);
+  const UpdateProfilePage({Key? key, this.data, required this.onBack})
+      : super(key: key);
 
   @override
   State<UpdateProfilePage> createState() => _UpdateProfilePageState();
 }
 
 class _UpdateProfilePageState extends State<UpdateProfilePage> {
+  final _profileUserCubit =
+      ProfileUserCubit(ProfileUserRepositoryImpl(apiProvider));
   late final TextEditingController _nameController;
   late final TextEditingController _phoneController;
   late final TextEditingController _emailController;
 
   late final TextEditingController _addressController;
   late final TextEditingController _birthdayController;
+
 
   String? nameEdt;
   String? phoneEdt;
@@ -34,6 +39,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
 
   @override
   void initState() {
+    _profileUserCubit.getProfile();
     _nameController = TextEditingController(text: widget.data['fullName']);
     _phoneController = TextEditingController(text: widget.data['telephone']);
     _emailController = TextEditingController(text: widget.data['email']);
@@ -55,8 +61,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          ProfileUserCubit(ProfileUserRepositoryImpl(apiProvider)),
+      create: (context) => _profileUserCubit,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: kMainWhiteColor,
@@ -303,14 +308,12 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                                 fontWeight: FontWeight.w400,
                                 color: kMainBlackColor,
                               ),
-                              contentPadding:
-                              const EdgeInsets.only(
+                              contentPadding: const EdgeInsets.only(
                                 top: 12,
                                 bottom: 12,
                                 left: 16,
                               ),
-                              textInputType:
-                              TextInputType.datetime,
+                              textInputType: TextInputType.datetime,
                               controller: _birthdayController,
                               onComplete: () {
                                 //FocusManager.instance.primaryFocus?.dispose();
@@ -324,32 +327,22 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                                   color: k9B9B9B,
                                 ),
                                 onPressed: () async {
-                                  DateTime? pickedDate =
-                                  await showDatePicker(
+                                  DateTime? pickedDate = await showDatePicker(
                                     context: context,
                                     initialDate: DateTime.now(),
                                     firstDate: DateTime.now(),
                                     lastDate: DateTime(2100),
                                     builder:
-                                        (BuildContext context,
-                                        Widget? child) {
+                                        (BuildContext context, Widget? child) {
                                       return Theme(
-                                        data: ThemeData.light()
-                                            .copyWith(
-                                          colorScheme:
-                                          const ColorScheme
-                                              .light(
-                                            primary:
-                                            kMainDarkColor,
-                                            onPrimary:
-                                            Colors.white,
-                                            surface:
-                                            kMainDarkColor,
-                                            onSurface:
-                                            kMainDarkColor,
+                                        data: ThemeData.light().copyWith(
+                                          colorScheme: const ColorScheme.light(
+                                            primary: kMainDarkColor,
+                                            onPrimary: Colors.white,
+                                            surface: kMainDarkColor,
+                                            onSurface: kMainDarkColor,
                                           ),
-                                          dialogBackgroundColor:
-                                          Colors.white,
+                                          dialogBackgroundColor: Colors.white,
                                         ),
                                         child: child!,
                                       );
@@ -360,8 +353,8 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                                       print(pickedDate);
                                     }
                                     String formattedDate =
-                                    DateFormat('yyyy-MM-dd')
-                                        .format(pickedDate);
+                                        DateFormat('dd-MM-yyyy')
+                                            .format(pickedDate);
                                     if (kDebugMode) {
                                       print(formattedDate);
                                     }
@@ -379,11 +372,23 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                               height: 32,
                             ),
                             InkWell(
-                              onTap: () {
-
+                              onTap: () async {
+                                await _profileUserCubit.updateUser(
+                                  _addressController.text,
+                                  _phoneController.text,
+                                  _nameController.text,
+                                  _birthdayController.text,
+                                );
+                                Future.delayed(
+                                  const Duration(milliseconds: 500),
+                                  () {
+                                    Navigator.pop(context);
+                                  },
+                                );
+                                widget.onBack();
                               },
                               child: Container(
-                               decoration: BoxDecoration(
+                                decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: kMainRedColor.withOpacity(0.5),
                                 ),

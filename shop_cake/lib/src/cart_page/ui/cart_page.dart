@@ -14,6 +14,7 @@ import 'package:shop_cake/src/cart_page/componenst/cart_item.dart';
 import 'package:shop_cake/src/cart_page/repository/cart_repository.dart';
 import 'package:shop_cake/src/detail_food/bloc/counter_bloc/count_dish_cubit.dart';
 import 'package:shop_cake/src/payment/ui/payment_page.dart';
+import 'package:shop_cake/utils/utils.dart';
 import 'package:shop_cake/widgets/c_image.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
 
@@ -74,8 +75,8 @@ class _CartPageState extends State<CartPage> {
                           height: 180,
                           decoration: const BoxDecoration(
                             borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(20),
-                              bottomRight: Radius.circular(20),
+                              bottomLeft: Radius.circular(16),
+                              bottomRight: Radius.circular(16),
                             ),
                             gradient: kBgMenu,
                           ),
@@ -366,6 +367,48 @@ class _CartPageState extends State<CartPage> {
                               ),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 16),
+                      child: InkWell(
+                        onTap: () {
+                          if (listCardCubit.datas.length > 0 &&
+                              listCardCubit.datas != null &&
+                              listCardCubit.datas.isNotEmpty) {
+                            NavigatorManager.pushFullScreen(context,
+                                PaymentPage(
+                              callback: () async {
+                                await listCardCubit.getListCart();
+                                // listCardCubit.datas.clear();
+                              },
+                            )).then((value) {
+                              listCardCubit.datas.clear();
+                            });
+                          } else {
+                            showToast(
+                              'Không có sản phẩm nào trong giỏ hàng',
+                            );
+                          }
+                        },
+                        child: Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: kMainRedColor.withOpacity(0.6),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Mua hàng',
+                              style: GoogleFonts.roboto(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 );
               } else if (stateListCake is ListCardLoading) {
@@ -380,30 +423,30 @@ class _CartPageState extends State<CartPage> {
             },
           ),
         ),
-        floatingActionButton: Container(
-          margin: const EdgeInsets.only(bottom: 15),
-          child: FloatingActionButton(
-            backgroundColor: Colors.pink,
-            child: const Icon(
-              Icons.add_shopping_cart,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              if (listCardCubit.datas.length > 0 && listCardCubit.datas != null &&
-                  listCardCubit.datas.isNotEmpty) {
-                NavigatorManager.pushFullScreen(context, PaymentPage(
-                  callback: () async {
-                    await listCardCubit.getListCart();
-                    listCardCubit.datas.clear();
-                  },
-                )).then((value) {
-                  listCardCubit.datas.clear();
-                });
-              }
-            },
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        // floatingActionButton: Container(
+        //   margin: const EdgeInsets.only(bottom: 15),
+        //   child: FloatingActionButton(
+        //     backgroundColor: Colors.pink,
+        //     child: const Icon(
+        //       Icons.add_shopping_cart,
+        //       color: Colors.white,
+        //     ),
+        //     onPressed: () {
+        //       if (listCardCubit.datas.length > 0 && listCardCubit.datas != null &&
+        //           listCardCubit.datas.isNotEmpty) {
+        //         NavigatorManager.pushFullScreen(context, PaymentPage(
+        //           callback: () async {
+        //             await listCardCubit.getListCart();
+        //             listCardCubit.datas.clear();
+        //           },
+        //         )).then((value) {
+        //           listCardCubit.datas.clear();
+        //         });
+        //       }
+        //     },
+        //   ),
+        // ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       ),
     );
   }
