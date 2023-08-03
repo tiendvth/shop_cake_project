@@ -120,7 +120,7 @@ class _CartPageState extends State<CartPage> {
                                         style: GoogleFonts.roboto(
                                           textStyle: const TextStyle(
                                             fontWeight: FontWeight.w700,
-                                            fontSize: 20,
+                                            fontSize: 18,
                                             color: kMainDarkColor,
                                           ),
                                         ),
