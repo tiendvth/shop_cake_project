@@ -1,31 +1,20 @@
-import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:group_button/group_button.dart';
 import 'package:shop_cake/common/badge_widget.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/widgets/c_image.dart';
 
-import '../../../common/ config/format_price.dart';
-import '../../list_food/bloc/list_food_cubit.dart';
-import '../../list_food/bloc/list_price_filter_cubit.dart';
-import '../../list_food/components/dialog_filter.dart';
 
 class UpperBody extends StatefulWidget {
-  const UpperBody({Key? key, this.priceFrom, this.priceTo, this.onTap}) : super(key: key);
-  final int? priceFrom;
-  final int? priceTo;
+  const UpperBody({Key? key, this.onTap, this.onChanged}) : super(key: key);
   final GestureTapCallback? onTap;
+  final ValueChanged<String>? onChanged;
   @override
   State<UpperBody> createState() => _UpperBodyState();
 }
 
 class _UpperBodyState extends State<UpperBody> {
-
-  final listFoodCubit = ListFoodCubit();
-  int? priceFrom = 0;
-  int? priceTo = 0;
 
   @override
   void initState() {
@@ -101,13 +90,14 @@ class _UpperBodyState extends State<UpperBody> {
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
                           cursorColor: kTextColor,
-                          onChanged: (value) {
-                            listFoodCubit.getListFood(
-                              value,
-                              priceFrom,
-                              priceTo,
-                            );
-                          },
+                          // onChanged: (value) {
+                          //   listFoodCubit.getListFood(
+                          //     value,
+                          //     priceFrom,
+                          //     priceTo,
+                          //   );
+                          // },
+                          onChanged: widget.onChanged,
                           decoration: InputDecoration(
                             hintText: 'Tìm kiếm sản phẩm',
                             hintStyle: GoogleFonts.roboto(
@@ -129,90 +119,90 @@ class _UpperBodyState extends State<UpperBody> {
                       )),
                 ),
               ),
-              InkWell(
-                child: Container(
-                  height: 35,
-                  width: 35,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(6.0),
-                    child: Icon(
-                      Icons.filter_list_rounded,
-                      color: kTextColor,
-                    ),
-                  ),
-                ),
-                onTap: widget.onTap,
-                // onTap: (){
-                //   print('Tap icon fillter');
-                //   showDialog(
-                //     context: context,
-                //     builder: (context) {
-                //       return DialogFilter(
-                //         child: Container(
-                //           height: 380,
-                //           decoration: const BoxDecoration(
-                //             color: Colors.white,
-                //           ),
-                //           child: GroupButton(
-                //             controller: controller,
-                //             buttons: statePrice.data
-                //                 .map((e) =>
-                //             '${FormatPrice.formatPriceToInt(e.priceFrom)} - ${FormatPrice.formatPriceToInt(e.priceTo)}')
-                //                 .toList(),
-                //             onSelected: (index, value, isSelected) {
-                //               widget.priceFrom =
-                //                   statePrice.data[value].priceFrom;
-                //               widget.priceTo =
-                //                   statePrice.data[value].priceTo;
-                //             },
-                //             options: GroupButtonOptions(
-                //               spacing: 8,
-                //               unselectedTextStyle:
-                //               GoogleFonts.roboto(
-                //                 fontSize: 14,
-                //                 fontWeight: FontWeight.w400,
-                //                 color: Colors.black,
-                //               ),
-                //               groupRunAlignment:
-                //               GroupRunAlignment.start,
-                //               unselectedColor: Colors.white,
-                //               selectedColor: kMainDarkColor,
-                //               selectedTextStyle: GoogleFonts.roboto(
-                //                 fontSize: 14,
-                //                 fontWeight: FontWeight.w400,
-                //                 color: Colors.white,
-                //               ),
-                //               borderRadius:
-                //               BorderRadius.circular(8),
-                //               textAlign: TextAlign.center,
-                //               buttonWidth: MediaQuery.of(context)
-                //                   .size
-                //                   .width /
-                //                   2 -
-                //                   56,
-                //               runSpacing: 8,
-                //               direction: Axis.horizontal,
-                //             ),
-                //           ),
-                //         ),
-                //         onTap: () {
-                //           print('tap popup');
-                //           // listFoodCubit.getListFood(
-                //           //   searchController.text,
-                //           //   priceFrom,
-                //           //   priceTo,
-                //           // );
-                //           // Navigator.pop(context);
-                //         },
-                //       );
-                //     },
-                //   );
-                // },
-              ),
+              // InkWell(
+              //   child: Container(
+              //     height: 35,
+              //     width: 35,
+              //     decoration: const BoxDecoration(
+              //       color: Colors.white,
+              //       shape: BoxShape.circle,
+              //     ),
+              //     child: const Padding(
+              //       padding: EdgeInsets.all(6.0),
+              //       child: Icon(
+              //         Icons.filter_list_rounded,
+              //         color: kTextColor,
+              //       ),
+              //     ),
+              //   ),
+              //   onTap: widget.onTap,
+              //   // onTap: (){
+              //   //   print('Tap icon fillter');
+              //   //   showDialog(
+              //   //     context: context,
+              //   //     builder: (context) {
+              //   //       return DialogFilter(
+              //   //         child: Container(
+              //   //           height: 380,
+              //   //           decoration: const BoxDecoration(
+              //   //             color: Colors.white,
+              //   //           ),
+              //   //           child: GroupButton(
+              //   //             controller: controller,
+              //   //             buttons: statePrice.data
+              //   //                 .map((e) =>
+              //   //             '${FormatPrice.formatPriceToInt(e.priceFrom)} - ${FormatPrice.formatPriceToInt(e.priceTo)}')
+              //   //                 .toList(),
+              //   //             onSelected: (index, value, isSelected) {
+              //   //               widget.priceFrom =
+              //   //                   statePrice.data[value].priceFrom;
+              //   //               widget.priceTo =
+              //   //                   statePrice.data[value].priceTo;
+              //   //             },
+              //   //             options: GroupButtonOptions(
+              //   //               spacing: 8,
+              //   //               unselectedTextStyle:
+              //   //               GoogleFonts.roboto(
+              //   //                 fontSize: 14,
+              //   //                 fontWeight: FontWeight.w400,
+              //   //                 color: Colors.black,
+              //   //               ),
+              //   //               groupRunAlignment:
+              //   //               GroupRunAlignment.start,
+              //   //               unselectedColor: Colors.white,
+              //   //               selectedColor: kMainDarkColor,
+              //   //               selectedTextStyle: GoogleFonts.roboto(
+              //   //                 fontSize: 14,
+              //   //                 fontWeight: FontWeight.w400,
+              //   //                 color: Colors.white,
+              //   //               ),
+              //   //               borderRadius:
+              //   //               BorderRadius.circular(8),
+              //   //               textAlign: TextAlign.center,
+              //   //               buttonWidth: MediaQuery.of(context)
+              //   //                   .size
+              //   //                   .width /
+              //   //                   2 -
+              //   //                   56,
+              //   //               runSpacing: 8,
+              //   //               direction: Axis.horizontal,
+              //   //             ),
+              //   //           ),
+              //   //         ),
+              //   //         onTap: () {
+              //   //           print('tap popup');
+              //   //           // listFoodCubit.getListFood(
+              //   //           //   searchController.text,
+              //   //           //   priceFrom,
+              //   //           //   priceTo,
+              //   //           // );
+              //   //           // Navigator.pop(context);
+              //   //         },
+              //   //       );
+              //   //     },
+              //   //   );
+              //   // },
+              // ),
             ],
           ),
           ],

@@ -6,4 +6,9 @@ class FormatDate {
     final dateFormated = DateFormat('dd/MM/yyyy').format(dateParse);
     return dateFormated;
   }
+  static String dateFormat(String date) {
+    final dateParse = DateTime.parse(date);
+    final dateFormated = DateFormat('dd-MM-yyyy').format(dateParse);
+    return dateFormated;
+  }
 }

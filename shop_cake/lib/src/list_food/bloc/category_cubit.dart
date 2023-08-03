@@ -22,7 +22,7 @@ class CategoryCubit extends Cubit<CategoryState> {
       emit(CategoryLoading());
       var data = await _foodRepository.listCategory(search);
       if (data != null){
-        emit(CategorySuccess(data['data']['result']));
+        emit(CategorySuccess(data['data']));
       } else {
         emit(CategoryError('Backend error 403'));
       }
