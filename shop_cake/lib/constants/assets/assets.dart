@@ -33,6 +33,9 @@ class Assets {
   static const String icDelete = 'assets/icon/icon_delete.png';
   static const String icPayment = 'assets/icon/icons_payment.png';
   static const String icEdit = 'assets/icon/icon_edit.png';
+  static const String icVisa = 'assets/icon/icon_visa.png';
+  static const String icPayShip = 'assets/icon/icon_payment.png';
+  static const String icCard = 'assets/icon/icon_card.png';
   static const String imgDefault = 'assets/images/default_thumbnail.png';
   ///Font
   static const String fontPlusJakartaSans = 'PlusJakartaSans';

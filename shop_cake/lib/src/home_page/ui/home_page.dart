@@ -194,15 +194,37 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 16),
-                    Text(
-                      "Sản phẩm hot nhất",
-                      style: GoogleFonts.roboto(
-                        textStyle: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: Colors.black,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "Sản phẩm hot nhất",
+                            style: GoogleFonts.roboto(
+                              textStyle: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        Text(
+                          "Xem thêm",
+                          style: GoogleFonts.roboto(
+                            textStyle: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 14,
+                          color: Colors.grey,
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 12),
                     BlocBuilder<ListFoodCubit, ListFoodState>(
@@ -281,15 +303,37 @@ class _HomePageState extends State<HomePage> {
                       },
                     ),
                     const SizedBox(height: 32),
-                    Text(
-                      "Sản phẩm Đặc biệt",
-                      style: GoogleFonts.roboto(
-                        textStyle: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: Colors.black,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "Sản phẩm Đặc biệt",
+                            style: GoogleFonts.roboto(
+                              textStyle: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        Text(
+                          "Xem thêm",
+                          style: GoogleFonts.roboto(
+                            textStyle: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 14,
+                          color: Colors.grey,
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 12),
                     BlocBuilder<ListSpecialCubit, ListSpecialState>(
@@ -353,6 +397,7 @@ class _HomePageState extends State<HomePage> {
                         }
                       },
                     ),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),

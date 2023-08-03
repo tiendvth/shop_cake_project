@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:shop_cake/auth/AuthServiceImpl.dart';
 import 'package:shop_cake/firebase/default_firebase_config.dart';
 import 'package:shop_cake/firebase/setup_firebase.dart';
@@ -17,6 +18,7 @@ SharedPreferences? shared;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = 'pk_test_51Nb3HNGftO8KZyrxzpt3dL1VDbIhaksy7T05kDGgp7eftLIAusqfl0xOylPt8zECHFccGrUE0w4CzHlXsIySU2nU00B5E2N79S';
   BuildConfig(FlavorConfig.release);
   configure();
   shared = await SharedPreferences.getInstance();

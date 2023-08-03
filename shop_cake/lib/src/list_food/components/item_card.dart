@@ -33,16 +33,15 @@ class ItemCard extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: kMainGreyColor.withOpacity(0.2)),
+          color: kMainWhiteColor,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: kMainGreyColor.withOpacity(0.8)),
           boxShadow: [
             BoxShadow(
-              color: kMainGreyColor.withOpacity(0.2),
+              color: k9B9B9B.withOpacity(0.2),
               spreadRadius: 1,
-              blurRadius: 5,
+              blurRadius: 8,
               offset: const Offset(0, 4),
             ),
           ],
@@ -54,7 +53,10 @@ class ItemCard extends StatelessWidget {
                 Stack(
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        topRight: Radius.circular(12),
+                      ),
                       child: Image.network(
                         imageUrl ?? "",
                         height: 150,
