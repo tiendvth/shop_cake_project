@@ -5,6 +5,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/font_size/font_size.dart';
@@ -77,22 +78,24 @@ showDialogMessage(BuildContext context, String? mess, {checkBack = true}) {
                 Padding(
                     padding: EdgeInsets.only(top: 8), child: Text(mess ?? '')),
                 GestureDetector(
-                    onTap: () {
-                      if (checkBack) {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      } else {
-                        Navigator.pop(context);
-                      }
-                    },
-                    child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.only(top: 8),
-                        child: Text(
-                          'Xác nhận',
-                          textAlign: TextAlign.end,
-                          style: TextStyle(color: FontColor.colorEC222D),
-                        ))),
+                  onTap: () {
+                    if (checkBack) {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    } else {
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.only(top: 8),
+                    child: Text(
+                      'Xác nhận',
+                      textAlign: TextAlign.end,
+                      style: TextStyle(color: FontColor.colorEC222D),
+                    ),
+                  ),
+                ),
               ],
             )),
       );
@@ -100,7 +103,129 @@ showDialogMessage(BuildContext context, String? mess, {checkBack = true}) {
   );
 }
 
-showDialogMessageConfirm(BuildContext context,  Widget? child,
+showDialogNote(BuildContext context, {checkBack = true}) {
+  showDialog(
+    context: context,
+    barrierDismissible: !checkBack,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        alignment: Alignment.center,
+        backgroundColor: FontColor.colorFFFFFF,
+        insetPadding: const EdgeInsets.only(
+          left: 36,
+          right: 36,
+        ),
+        child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: FontColor.colorFFFFFF,
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Lý do hủy',
+                  style: GoogleFonts.roboto(
+                      fontSize: FontSize.fontSize_18,
+                      fontWeight: FontWeight.w500),
+                ),
+                const SizedBox(height: 8),
+                TextFormField(
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    hintText: 'Nhập lý do hủy đơn hàng',
+                    hintStyle: TextStyle(
+                      fontSize: FontSize.fontSize_14,
+                      color: FontColor.color979797,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          if (checkBack) {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          } else {
+                            Navigator.pop(context);
+                          }
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: FontColor.colorFFFFFF,
+                            border: Border.all(
+                              color: FontColor.color979797,
+                            ),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 6, horizontal: 12),
+                          child: Text(
+                            'Hủy bỏ',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.roboto(
+                              color: FontColor.colorEC222D,
+                              fontSize: FontSize.fontSize_14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          if (checkBack) {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          } else {
+                            Navigator.pop(context);
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: FontColor.colorEC222D.withOpacity(0.6),
+                          ),
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 6, horizontal: 12),
+                          child: Text(
+                            'Xác nhận',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.roboto(
+                              color: FontColor.colorFFFFFF,
+                              fontSize: FontSize.fontSize_14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            )),
+      );
+    },
+  );
+}
+
+showDialogMessageConfirm(BuildContext context, Widget? child,
     {checkBack = true}) {
   showDialog(
     context: context,

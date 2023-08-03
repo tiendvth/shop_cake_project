@@ -5,7 +5,18 @@ import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/widgets/c_image.dart';
 
 class UserAvatar extends StatelessWidget {
-  const UserAvatar({Key? key}) : super(key: key);
+  final String? imageUrl;
+  final String? name;
+  final String? address;
+  final String? phone;
+
+  const UserAvatar({
+    Key? key,
+    this.imageUrl,
+    this.name,
+    this.address,
+    this.phone,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +34,7 @@ class UserAvatar extends StatelessWidget {
                   height: 65,
                   width: 65,
                   child: ClipOval(
-                    child: Image.network(
+                    child: Image.network(imageUrl ??
                         'https://img.freepik.com/premium-vector/man-avatar-profile-round-icon_24640-14044.jpg?w=2000'),
                   ),
                 ),
@@ -56,9 +67,9 @@ class UserAvatar extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Nguyễn Văn A",
-                  style: TextStyle(
+                Text(
+                  name ?? "Nguyễn Văn A",
+                  style: GoogleFonts.roboto(
                       fontWeight: FontWeight.w600,
                       fontSize: 18,
                       color: kMainDarkColor),
@@ -67,7 +78,7 @@ class UserAvatar extends StatelessWidget {
                   height: 4,
                 ),
                 RichText(
-                  text:  TextSpan(
+                  text: TextSpan(
                     children: [
                       TextSpan(
                         text: "Địa chỉ: ",
@@ -77,7 +88,7 @@ class UserAvatar extends StatelessWidget {
                             color: kMainDarkColor),
                       ),
                       TextSpan(
-                        text:
+                        text: address ??
                             "Đường 1, Phường Trung Liệt, Quận Đống Đa, TP.Hà Nội",
                         style: GoogleFonts.roboto(
                             fontWeight: FontWeight.w400,
@@ -92,18 +103,18 @@ class UserAvatar extends StatelessWidget {
                   height: 4,
                 ),
                 RichText(
-                  text: const TextSpan(
+                  text: TextSpan(
                     children: [
                       TextSpan(
                         text: "Số điện thoại: ",
-                        style: TextStyle(
+                        style: GoogleFonts.roboto(
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
                             color: kMainDarkColor),
                       ),
                       TextSpan(
-                        text: "0123456789",
-                        style: TextStyle(
+                        text: phone ?? "0123456789",
+                        style: GoogleFonts.roboto(
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
                             color: kMainDarkColor),
@@ -114,12 +125,6 @@ class UserAvatar extends StatelessWidget {
               ],
             ),
           ),
-          const CImage(
-            assetsPath: Assets.icArrowRight,
-            height: 24,
-            width: 24,
-            color: kMainDarkColor,
-          )
         ],
       ),
     );

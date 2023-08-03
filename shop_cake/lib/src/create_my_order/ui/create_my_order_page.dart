@@ -111,7 +111,7 @@ class _CreateMyOrderPageState extends State<CreateMyOrderPage> {
                           style: GoogleFonts.roboto(
                             textStyle: const TextStyle(
                               fontWeight: FontWeight.w700,
-                              fontSize: 20,
+                              fontSize: 18,
                               color: kMainDarkColor,
                             ),
                           ),

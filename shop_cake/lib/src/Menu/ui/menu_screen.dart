@@ -13,14 +13,34 @@ import 'package:shop_cake/src/profile_user/repository/repository.dart';
 import 'package:shop_cake/src/profile_user/ui/profile_user_page.dart';
 import 'package:shop_cake/widgets/c_image.dart';
 
-class MenuScreen extends StatelessWidget {
+class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key}) : super(key: key);
 
   @override
+  State<MenuScreen> createState() => _MenuScreenState();
+}
+
+class _MenuScreenState extends State<MenuScreen> {
+  final getProfile = ProfileUserCubit(ProfileUserRepositoryImpl(apiProvider));
+
+  @override
+  void initState() {
+    super.initState();
+    getProfile.getProfile();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) =>
-          ProfileUserCubit(ProfileUserRepositoryImpl(apiProvider)),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (BuildContext context) =>
+              ProfileUserCubit(ProfileUserRepositoryImpl(apiProvider)),
+        ),
+        BlocProvider(
+          create: (context) => getProfile,
+        ),
+      ],
       child: Scaffold(
         body: SafeArea(
           top: false,
@@ -59,7 +79,7 @@ class MenuScreen extends StatelessWidget {
                               style: GoogleFonts.roboto(
                                 textStyle: const TextStyle(
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 22,
+                                    fontSize: 18,
                                     color: kMainDarkColor),
                               ),
                             ),
@@ -84,7 +104,26 @@ class MenuScreen extends StatelessWidget {
                     const SizedBox(
                       height: 16,
                     ),
-                    const UserAvatar(),
+                    BlocBuilder<ProfileUserCubit, ProfileUserState>(
+                      builder: (context, stateUser) {
+                        if (stateUser is ProfileUserLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (stateUser is ProfileUserSuccess) {
+                          return UserAvatar(
+                            name: stateUser.data['fullName'],
+                            address: stateUser.data['address'],
+                            phone: stateUser.data['telephone'],
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -116,7 +155,7 @@ class MenuScreen extends StatelessWidget {
                       const SizedBox(
                         height: 8,
                       ),
-                       CLabel(
+                      CLabel(
                         title: "Đơn hàng",
                         image: Assets.icOrderMenu,
                         onTab: () {
