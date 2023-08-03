@@ -14,6 +14,8 @@ import 'package:shop_cake/src/cart_page/componenst/cart_item.dart';
 import 'package:shop_cake/src/cart_page/repository/cart_repository.dart';
 import 'package:shop_cake/src/payment/bloc/payment_cubit.dart';
 import 'package:shop_cake/src/payment/repository/repository.dart';
+import 'package:shop_cake/src/payment/ui/payment_methods_page.dart';
+import 'package:shop_cake/utils/utils.dart';
 import 'package:shop_cake/widgets/c_button.dart';
 import 'package:shop_cake/widgets/c_textformfield.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
@@ -84,8 +86,8 @@ class _PaymentPageState extends State<PaymentPage> {
                               height: 180,
                               decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
+                                  bottomLeft: Radius.circular(16),
+                                  bottomRight: Radius.circular(16),
                                 ),
                                 gradient: kBgMenu,
                               ),
@@ -127,7 +129,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             ),
                             Padding(
                               padding: EdgeInsets.fromLTRB(24,
-                                  AppBar().preferredSize.height + 65, 24, 0),
+                                  AppBar().preferredSize.height + 55, 24, 0),
                               child: Container(
                                 height: 120,
                                 width: double.infinity,
@@ -513,6 +515,85 @@ class _PaymentPageState extends State<PaymentPage> {
                                     ),
                                   ),
                                   20.spaceHeight,
+                                  // chọn phương thức thanh toán
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
+                                    child: Text(
+                                      'Phương thức thanh toán',
+                                      style: GoogleFonts.roboto(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                        color: kMainBlackColor,
+                                      ),
+                                    ),
+                                  ),
+                                  8.spaceHeight,
+                                  InkWell(
+                                    onTap: () async {
+                                      NavigatorManager.pushFullScreen(context, const PaymentMethodPage());
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      child: Container(
+                                        width: double.infinity,
+                                        padding: const EdgeInsets.only(
+                                            top: 12,
+                                            bottom: 12,
+                                            right: 8),
+                                        decoration: const BoxDecoration(
+                                            border: Border.symmetric(
+                                                horizontal: BorderSide(
+                                                  color: kMainGreyColor, width: 1),
+                                            )
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const Icon(
+                                              Icons.payment,
+                                              color: kMainDarkGreyColor,
+                                              size: 16,
+                                            ),
+                                            const SizedBox(
+                                              width: 8,
+                                            ),
+                                            Text(
+                                              'Chọn Phương thức thanh toán',
+                                              style: GoogleFonts.roboto(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                                color: kMainBlackColor,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 8,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                'Thanh toán khi nhận hàng',
+                                                style: GoogleFonts.roboto(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: kMainDarkGreyColor,
+                                                ),
+                                                textAlign: TextAlign.right,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 4,),
+                                            const Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: k9B9B9B,
+                                              size: 16,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                   // Container(
                                   //   padding: const EdgeInsets.symmetric(
                                   //       horizontal: 16, vertical: 4),
@@ -630,6 +711,9 @@ class _PaymentPageState extends State<PaymentPage> {
                                   // const SizedBox(
                                   //   height: 16,
                                   // ),
+                                  const SizedBox(
+                                    height: 32,
+                                  ),
                                 ],
                               ),
                             ),
@@ -642,8 +726,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                 CButton(
                                   width: double.infinity,
                                   height: 44,
-                                  radius: 16,
-                                  bgColor: kMainRedColor.withOpacity(0.5),
+                                  radius: 12,
+                                  bgColor: kMainRedColor.withOpacity(0.6),
                                   borderColor: kMainRedColor,
                                   title: 'Thanh toán',
                                   fontSize: FontSize.fontSize_16,
@@ -655,19 +739,28 @@ class _PaymentPageState extends State<PaymentPage> {
                                     //      MaterialPageRoute(
                                     //          builder: (context) =>
                                     //               VnPayPaymentPage()));
-                                    final date = '${dateController.text} ${timeController.text}';
-                                    await paymentCubit.callApiPayment(
-                                        context,
-                                        date,
-                                        state.datas,
-                                        noteController.text,
-                                        reasonController.text,
-                                        stateAddress.address![0].id!);
-                                    Future.delayed(
-                                        const Duration(milliseconds: 500), () {
-                                      Navigator.pop(context);
-                                      widget.callback!();
-                                    });
+                                    if (dateController.text.isEmpty) {
+                                      showToast('Vui lòng chọn ngày');
+                                    } else if (timeController.text.isEmpty) {
+                                      showToast('Vui lòng chọn giờ');
+                                    } else {
+                                      final date =
+                                          '${dateController.text} ${timeController.text}';
+                                      await paymentCubit.callApiPayment(
+                                          context,
+                                          date,
+                                          state.datas,
+                                          noteController.text,
+                                          reasonController.text,
+                                          stateAddress.address![0].id!);
+                                      Future.delayed(
+                                          const Duration(milliseconds: 500),
+                                          () {
+                                        Navigator.pop(context);
+                                        widget.callback!();
+                                      });
+                                    }
+
                                     // Navigator.pop(context);
                                     // widget.callback!();
                                   },

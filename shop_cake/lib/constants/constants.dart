@@ -35,9 +35,8 @@ const kF8F8F8 = Color(0xFFF8F8F8);
 const k514D56 = Color(0xFF514D56);
 const k666666 = Color(0xFF666666);
 const kD16BA5 = Color(0xFFD16BA5);
-const kB993D6 =Color(0xFFB993D6);
-const k8CA6DB =Color(0xFF8CA6DB);
-
+const kB993D6 = Color(0xFFB993D6);
+const k8CA6DB = Color(0xFF8CA6DB);
 
 const Gradient kMainGradient = LinearGradient(
   colors: [
@@ -48,10 +47,7 @@ const Gradient kMainGradient = LinearGradient(
   end: Alignment.bottomCenter,
 );
 const Gradient kBgMenu = LinearGradient(
-  colors: [
-    kFFA6BD,
-    kMainLightColor
-  ],
+  colors: [kFFA6BD, kMainLightColor],
   begin: Alignment.centerLeft,
   end: Alignment.centerRight,
 );
@@ -63,7 +59,7 @@ const Gradient kButtonGradient = LinearGradient(
   begin: Alignment.centerRight,
   end: Alignment.centerLeft,
 );
- Gradient kGradientAppBar = const LinearGradient(
+Gradient kGradientAppBar = const LinearGradient(
   colors: [
     kMainRedColor,
     kMainOrangeColor,
@@ -71,5 +67,6 @@ const Gradient kButtonGradient = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
 );
-
-
+const Gradient kGradientAppBar2 = LinearGradient(
+  colors: [Color(0xFFD9AFD9), Color(0xFF97D9E1)],
+);
