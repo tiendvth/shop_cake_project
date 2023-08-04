@@ -7,7 +7,9 @@ import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/Menu/components/label.dart';
 import 'package:shop_cake/src/Menu/components/user_avatar.dart';
+import 'package:shop_cake/src/contact_Info/ui/contact_Info_page.dart';
 import 'package:shop_cake/src/my_order/ui/my_order_page.dart';
+import 'package:shop_cake/src/payment/ui/payment_methods_page.dart';
 import 'package:shop_cake/src/profile_user/bloc/profile_user_cubit.dart';
 import 'package:shop_cake/src/profile_user/repository/repository.dart';
 import 'package:shop_cake/src/profile_user/ui/profile_user_page.dart';
@@ -190,10 +192,15 @@ class _MenuScreenState extends State<MenuScreen> {
                       const SizedBox(
                         height: 8,
                       ),
-                      const CLabel(
+                      CLabel(
                         title: "Thanh toán",
                         image: Assets.icPaymentCard,
-                        onTab: null,
+                        onTab: () {
+                          NavigatorManager.push(
+                            context,
+                            const PaymentMethodPage(),
+                          );
+                        },
                       ),
                       const SizedBox(
                         height: 8,
@@ -205,10 +212,15 @@ class _MenuScreenState extends State<MenuScreen> {
                       const SizedBox(
                         height: 8,
                       ),
-                      const CLabel(
+                       CLabel(
                         title: "Liên hệ",
                         image: Assets.icCall,
-                        onTab: null,
+                        onTab: () {
+                          NavigatorManager.push(
+                            context,
+                            const ContactInfoPage(),
+                          );
+                        },
                       ),
                       const SizedBox(
                         height: 8,

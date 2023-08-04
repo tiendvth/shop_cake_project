@@ -45,7 +45,7 @@ class _CategoriesState extends State<Categories> {
                   style: GoogleFonts.roboto(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
-                    color: kF2F4B4E,
+                    color: kMainDarkColor,
                   ),
                 ),
               ),

@@ -146,7 +146,7 @@ class _CartPageState extends State<CartPage> {
                         ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(
-                              24, AppBar().preferredSize.height + 65, 24, 0),
+                              24, AppBar().preferredSize.height + 55, 24, 0),
                           child: Container(
                             // height: 125,
                             padding: const EdgeInsets.symmetric(
@@ -157,7 +157,7 @@ class _CartPageState extends State<CartPage> {
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
+                                  color: kMainDarkGreyColor.withOpacity(0.2),
                                   spreadRadius: 1,
                                   blurRadius: 5,
                                   offset: const Offset(
@@ -293,6 +293,7 @@ class _CartPageState extends State<CartPage> {
                                   return Column(
                                     children: [
                                       CartItem(
+                                        isShowQuantity: true,
                                         isShowButton: true,
                                         onTapRemove: () {
                                           listCardCubit.removeFood(

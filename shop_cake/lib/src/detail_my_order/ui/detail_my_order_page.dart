@@ -1,6 +1,5 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_cake/common/%20config/format_text_to_number.dart';
 import 'package:shop_cake/common/config_read_file.dart';
@@ -9,9 +8,7 @@ import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/constants/font_size/font_size.dart';
 import 'package:shop_cake/src/detail_my_order/bloc/detail_my_order_cubit.dart';
 import 'package:shop_cake/utils/utils.dart';
-import 'package:shop_cake/widgets/c_text.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
-
 import '../../../common/ config/format_price.dart';
 import '../../cart_page/componenst/cart_item.dart';
 
@@ -88,7 +85,7 @@ class DetailMyOrder extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
+                                color: kMainDarkGreyColor.withOpacity(0.2),
                                 spreadRadius: 2,
                                 blurRadius: 7,
                                 offset: const Offset(
