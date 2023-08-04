@@ -33,8 +33,16 @@ class CartItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
+        color: kMainWhiteColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: kMainDarkGreyColor.withOpacity(0.3)),
+        boxShadow: [
+          BoxShadow(
+            color: k666666.withOpacity(0.1),
+            blurRadius: 8,
+            offset: const Offset(0, 1),
+          ),
+        ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

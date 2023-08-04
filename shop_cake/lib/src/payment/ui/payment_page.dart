@@ -138,7 +138,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
+                                      color: kMainDarkGreyColor.withOpacity(0.2),
                                       spreadRadius: 2,
                                       blurRadius: 7,
                                       offset: const Offset(
