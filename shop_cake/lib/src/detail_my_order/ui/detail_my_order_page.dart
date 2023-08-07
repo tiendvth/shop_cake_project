@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +35,7 @@ class _DetailMyOrderState extends State<DetailMyOrder> {
         child: BlocBuilder<DetailMyOrderCubit, DetailMyOrderState>(
           builder: (context, state) {
             if (state is DetailMyOrderSuccess) {
-              print('order: ${state.data}');
+              print('order: ${state.status}');
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -251,12 +250,12 @@ class _DetailMyOrderState extends State<DetailMyOrder> {
                                 return Column(
                                   children: [
                                     CartItem(
-                                      quantity: state.data['detailDtoList'][index]['quantity'],
-                                      name: state.data['detailDtoList'][index]['nameCake'],
+                                      quantity: state.data[index]['quantity'],
+                                      name: state.data[index]['nameCake'],
                                       price: FormatPrice.formatVND(
-                                          state.data['detailDtoList'][index]['price']),
+                                          state.data[index]['price']),
                                       imageUrl: ReadFile.readFile(
-                                          state.data['detailDtoList'][index]['image']),
+                                          state.data[index]['image']),
                                     ),
                                     const SizedBox(
                                       height: 12,
@@ -304,7 +303,7 @@ class _DetailMyOrderState extends State<DetailMyOrder> {
                       const SizedBox(
                         height: 20,
                       ),
-                      if (state.data['status'] == 1)
+                      if (state.status == 1)
                         Column(
                           children: [
                             Padding(
@@ -377,7 +376,7 @@ class _DetailMyOrderState extends State<DetailMyOrder> {
                             ),
                           ],
                         ),
-                      if (state.data['status'] == 2)
+                      if (state.status == 4)
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: MaterialButton(

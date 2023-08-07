@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/constants.dart';
-import 'package:shop_cake/widgets/c_image.dart';
 
 class UserAvatar extends StatelessWidget {
   final String? imageUrl;
@@ -68,7 +66,7 @@ class UserAvatar extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  name ?? "Nguyễn Văn A",
+                  name ?? "Chưa cập nhật...",
                   style: GoogleFonts.roboto(
                       fontWeight: FontWeight.w600,
                       fontSize: 18,
@@ -89,7 +87,7 @@ class UserAvatar extends StatelessWidget {
                       ),
                       TextSpan(
                         text: address ??
-                            "Đường 1, Phường Trung Liệt, Quận Đống Đa, TP.Hà Nội",
+                            "Chưa cập nhật địa chỉ giao hàng...",
                         style: GoogleFonts.roboto(
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
@@ -113,7 +111,7 @@ class UserAvatar extends StatelessWidget {
                             color: kMainDarkColor),
                       ),
                       TextSpan(
-                        text: phone ?? "0123456789",
+                        text: phone ?? "Chưa cập nhật...",
                         style: GoogleFonts.roboto(
                             fontWeight: FontWeight.w400,
                             fontSize: 14,

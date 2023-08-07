@@ -1,4 +1,3 @@
-
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -42,13 +41,16 @@ class _RegisterState extends State<Register> {
   // ignore: avoid_void_async
   bool validateEmail(String email) {
     // Regular expression pattern for email validation
-    const pattern =
-        r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$';
+    const pattern = r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$';
     final regExp = RegExp(pattern);
     return regExp.hasMatch(email);
   }
 
-
+  bool isPasswordValid(String password) {
+    // Sử dụng biểu thức chính quy để kiểm tra mật khẩu
+    RegExp regex = RegExp(r'^(?=.*[a-zA-Z]).{6,}$');
+    return regex.hasMatch(password);
+  }
 
   @override
   void initState() {
@@ -111,7 +113,8 @@ class _RegisterState extends State<Register> {
                     ),
                     50.spaceHeight,
                     CTextFormField(
-                      backgroundColor: FontColor.colorText231F20.withOpacity(0.8),
+                      backgroundColor:
+                          FontColor.colorText231F20.withOpacity(0.8),
                       height: 60,
                       hintText: 'Tên đăng nhập',
                       hintStyle: GoogleFonts.roboto(
@@ -122,21 +125,23 @@ class _RegisterState extends State<Register> {
                       onComplete: () {
                         //FocusManager.instance.primaryFocus?.dispose();
                       },
-                      contentPadding: const EdgeInsets.only(top: 21, bottom: 21, left: 24),
+                      contentPadding: const EdgeInsets.only(top: 12, left: 24),
                     ),
                     16.spaceHeight,
                     Form(
                       key: _formKeyEmail,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       onChanged: () {
-                        if (emailController.text.isNotEmpty && !validateEmail(emailController.text)) {
+                        if (emailController.text.isNotEmpty &&
+                            !validateEmail(emailController.text)) {
                           _formKeyEmail.currentState?.validate();
                         } else {
                           _formKeyEmail.currentState?.validate();
                         }
                       },
                       child: CTextFormField(
-                        backgroundColor: FontColor.colorText231F20.withOpacity(0.8),
+                        backgroundColor:
+                            FontColor.colorText231F20.withOpacity(0.8),
                         height: 60,
                         hintText: 'Địa chỉ email',
                         hintStyle: GoogleFonts.roboto(
@@ -144,11 +149,12 @@ class _RegisterState extends State<Register> {
                           fontSize: 16,
                         ),
                         controller: emailController,
-                        textInputType:  TextInputType.emailAddress,
+                        textInputType: TextInputType.emailAddress,
                         onComplete: () {
                           FocusManager.instance.primaryFocus?.dispose();
                         },
-                        contentPadding: const EdgeInsets.only(top: 21, bottom: 21, left: 24),
+                        contentPadding:
+                            const EdgeInsets.only(top: 12, left: 24),
                       ),
                     ),
                     16.spaceHeight,
@@ -157,7 +163,8 @@ class _RegisterState extends State<Register> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       onChanged: () {
                         if (passwordController.text.isNotEmpty) {
-                          if (passwordController.text != confirmPasswordController.text) {
+                          if (passwordController.text !=
+                              confirmPasswordController.text) {
                             _formKeyPassword.currentState?.validate();
                           } else {
                             _formKeyPassword.currentState?.validate();
@@ -166,7 +173,8 @@ class _RegisterState extends State<Register> {
                       },
                       child: CTextFormField(
                         obscureText: true,
-                        backgroundColor: FontColor.colorText231F20.withOpacity(0.8),
+                        backgroundColor:
+                            FontColor.colorText231F20.withOpacity(0.8),
                         height: 60,
                         hintText: 'Mật khẩu',
                         hintStyle: GoogleFonts.roboto(
@@ -179,7 +187,8 @@ class _RegisterState extends State<Register> {
                           FocusManager.instance.primaryFocus?.dispose();
                         },
                         maxLines: 1,
-                        contentPadding: const EdgeInsets.only(top: 21, bottom: 21, left: 24),
+                        contentPadding:
+                            const EdgeInsets.only(top: 12, left: 24),
                       ),
                     ),
                     16.spaceHeight,
@@ -188,7 +197,8 @@ class _RegisterState extends State<Register> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       onChanged: () {
                         if (confirmPasswordController.text.isNotEmpty) {
-                          if (confirmPasswordController.text != passwordController.text) {
+                          if (confirmPasswordController.text !=
+                              passwordController.text) {
                             _formKeyConfirmPassword.currentState?.validate();
                           } else {
                             _formKeyConfirmPassword.currentState?.validate();
@@ -197,7 +207,8 @@ class _RegisterState extends State<Register> {
                       },
                       child: CTextFormField(
                         obscureText: true,
-                        backgroundColor: FontColor.colorText231F20.withOpacity(0.8),
+                        backgroundColor:
+                            FontColor.colorText231F20.withOpacity(0.8),
                         height: 60,
                         hintText: 'Nhập lại mật khẩu',
                         hintStyle: GoogleFonts.roboto(
@@ -210,7 +221,8 @@ class _RegisterState extends State<Register> {
                           FocusManager.instance.primaryFocus?.dispose();
                         },
                         maxLines: 1,
-                        contentPadding: const EdgeInsets.only(top: 21, bottom: 21, left: 24),
+                        contentPadding:
+                            const EdgeInsets.only(top: 12, left: 24),
                       ),
                     ),
                     40.spaceHeight,
@@ -240,50 +252,98 @@ class _RegisterState extends State<Register> {
                             borderColor: kMainRedColor.withOpacity(0.5),
                             checkLoading: effectLoading,
                             onPressed: () async {
-                              // _authenticationCubit.login(emailController.text, pwdController.text, context);
-                              if (usernameController.text.isEmpty) {
-                                showDialogMessage(context, 'Vui lòng nhập tên đăng nhập', checkBack: false);
-                              } else if (passwordController.text.isEmpty) {
-                                showDialogMessage(context, 'Vui lòng nhập mật khẩu', checkBack: false);
-                              } else if (emailController.text.isEmpty) {
-                                if (emailController.text.isNotEmpty && !validateEmail(emailController.text)) {
-                                  showDialogMessage(context, 'Vui lòng nhập đúng định dạng email', checkBack: false);
-                                } else {
-                                  showDialogMessage(context, 'Vui lòng nhập email', checkBack: false);
-                                }
-                              } else if (confirmPasswordController.text.isEmpty) {
-                                showDialogMessage(context, 'Vui lòng nhập lại mật khẩu', checkBack: false);
-                              } else if (passwordController.text != confirmPasswordController.text) {
-                                showDialogMessage(context, 'Mật khẩu không trùng khớp', checkBack: false);
-                              }
-                              // else if (phoneController.text.split(' ').length >
-                              //         9 &&
-                              //     phoneController.text.split(' ').length < 11) {
-                              //   showDialogMessage(context,
-                              //       'Vui lòng nhập đúng định dạng số điện thoại',
-                              //       checkBack: false);
-                              // }
-                              else {
+                              if (usernameController.text.isEmpty ||
+                                  emailController.text.isEmpty ||
+                                  passwordController.text.isEmpty ||
+                                  confirmPasswordController.text.isEmpty) {
+                                showDialogMessage(
+                                    context, 'Vui lòng nhập đầy đủ thông tin',
+                                    checkBack: false);
+                              } else if (emailController.text.isNotEmpty &&
+                                  !validateEmail(emailController.text)) {
+                                showDialogMessage(context,
+                                    'Vui lòng nhập đúng định dạng email',
+                                    checkBack: false);
+                              } else if (passwordController.text !=
+                                  confirmPasswordController.text) {
+                                showDialogMessage(
+                                    context, 'Mật khẩu không trùng khớp',
+                                    checkBack: false);
+                              } else {
                                 final usernameString = usernameController.text;
                                 final passwordString = passwordController.text;
                                 final emailString = emailController.text;
                                 try {
                                   showLoading(context);
-                                  final result = await userRepository.register(usernameString,emailString,passwordString,);
+                                  final result = await userRepository.register(
+                                    usernameString,
+                                    emailString,
+                                    passwordString,
+                                  );
                                   closeLoading(context);
                                   if ((result as Response).statusCode == 200) {
                                     // ignore: use_build_context_synchronously
-                                    showDialogMessage(context, "Đăng ký thành công", checkBack: false);
+                                    showDialogMessage(
+                                        context, "Đăng ký thành công",
+                                        checkBack: false);
                                     // ignore: use_build_context_synchronously
-                                    NavigatorManager.push(context, const Login());
+                                    NavigatorManager.push(
+                                        context, const Login());
                                   }
                                 } catch (error) {
                                   print('error: $error');
                                   closeLoading(context);
-                                  showDialogMessage(context, "Đã có sự cố xảy ra vui lòng thử lại", checkBack: false);
+                                  showDialogMessage(context,
+                                      "Đã có sự cố xảy ra vui lòng thử lại",
+                                      checkBack: false);
                                 }
                               }
                             },
+                            // onPressed: () async {
+                            //   // _authenticationCubit.login(emailController.text, pwdController.text, context);
+                            //   if (usernameController.text.isEmpty) {
+                            //     showDialogMessage(context, 'Vui lòng nhập tên đăng nhập', checkBack: false);
+                            //   } else if (passwordController.text.isEmpty) {
+                            //     showDialogMessage(context, 'Vui lòng nhập mật khẩu', checkBack: false);
+                            //   }  if (emailController.text.isEmpty) {
+                            //     if (emailController.text.isNotEmpty && !validateEmail(emailController.text)) {
+                            //       showDialogMessage(context, 'Vui lòng nhập đúng định dạng email', checkBack: false);
+                            //     } else {
+                            //       showDialogMessage(context, 'Vui lòng nhập email', checkBack: false);
+                            //     }
+                            //   }  if (confirmPasswordController.text.isEmpty) {
+                            //     showDialogMessage(context, 'Vui lòng nhập lại mật khẩu', checkBack: false);
+                            //   }  if (passwordController.text != confirmPasswordController.text) {
+                            //     showDialogMessage(context, 'Mật khẩu không trùng khớp', checkBack: false);
+                            //   }
+                            //   // else if (phoneController.text.split(' ').length >
+                            //   //         9 &&
+                            //   //     phoneController.text.split(' ').length < 11) {
+                            //   //   showDialogMessage(context,
+                            //   //       'Vui lòng nhập đúng định dạng số điện thoại',
+                            //   //       checkBack: false);
+                            //   // }
+                            //   else {
+                            //     final usernameString = usernameController.text;
+                            //     final passwordString = passwordController.text;
+                            //     final emailString = emailController.text;
+                            //     try {
+                            //       showLoading(context);
+                            //       final result = await userRepository.register(usernameString,emailString,passwordString,);
+                            //       closeLoading(context);
+                            //       if ((result as Response).statusCode == 200) {
+                            //         // ignore: use_build_context_synchronously
+                            //         showDialogMessage(context, "Đăng ký thành công", checkBack: false);
+                            //         // ignore: use_build_context_synchronously
+                            //         NavigatorManager.push(context, const Login());
+                            //       }
+                            //     } catch (error) {
+                            //       print('error: $error');
+                            //       closeLoading(context);
+                            //       showDialogMessage(context, "Đã có sự cố xảy ra vui lòng thử lại", checkBack: false);
+                            //     }
+                            //   }
+                            // },
                           );
                         }),
                     40.spaceHeight,
@@ -300,8 +360,12 @@ class _RegisterState extends State<Register> {
                               color: FontColor.colorFFFFFF,
                             ),
                             children: [
-                              TextSpan(text: Translate.of(context).dont_have_an_account),
-                              TextSpan(text: '  ${Translate.of(context).sign_in.toUpperCase()}'),
+                              TextSpan(
+                                  text: Translate.of(context)
+                                      .dont_have_an_account),
+                              TextSpan(
+                                  text:
+                                      '  ${Translate.of(context).sign_in.toUpperCase()}'),
                             ],
                           ),
                         ),
