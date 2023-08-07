@@ -1,7 +1,7 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_cake/common/%20config/format_price.dart';
+import 'package:shop_cake/common/config/format_price.dart';
 import 'package:shop_cake/common/config_read_file.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/src/detail_food/ui/detail_food_page.dart';

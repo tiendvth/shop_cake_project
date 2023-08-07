@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
 
@@ -10,6 +11,8 @@ class AddressItem extends StatelessWidget {
   final int? value;
   final int? groupValue;
   final Function(int?)? onChanged;
+  final GestureTapCallback? onTapEdit;
+  final GestureTapCallback? onTapDelete;
 
   const AddressItem({
     Key? key,
@@ -19,6 +22,8 @@ class AddressItem extends StatelessWidget {
     this.value,
     this.groupValue,
     this.onChanged,
+    this.onTapEdit,
+    this.onTapDelete,
   }) : super(key: key);
 
   @override
@@ -65,9 +70,22 @@ class AddressItem extends StatelessWidget {
             ],
           ),
         ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.edit),
+        InkWell(
+          onTap: onTapEdit,
+          child: Image.asset(
+            Assets.icEdits,
+            width: 24,
+            height: 24,
+          ),
+        ),
+        12.spaceWidth,
+        InkWell(
+          onTap: onTapDelete,
+          child: Image.asset(
+            Assets.icTrash,
+            width: 24,
+            height: 24,
+          ),
         ),
       ],
     );

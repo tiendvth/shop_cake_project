@@ -48,12 +48,35 @@ class AddressImpl implements AddressRepository {
   }
 
   @override
-  Future<bool> updateAddress(Result address) async {
-    return true;
+  Future<bool> updateAddress(String? name, String? phone, String? address, int? id) async {
+    final addressRequest = AddressRequest(
+      name: name,
+      address: address,
+      phone: phone,
+    );
+    try {
+      final response = await _dio.post('/api/deliveryAddress/update/$id', data: addressRequest);
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw Exception('Failed to create address');
+      }
+    } catch (e) {
+      throw e;
+    }
   }
 
   @override
   Future<bool> deleteAddress(int id) async {
-    return true;
+    try {
+      final response = await _dio.get('/api/deliveryAddress/delete/$id');
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw Exception('Failed to delete address');
+      }
+    } catch (e) {
+      throw e;
+    }
   }
 }

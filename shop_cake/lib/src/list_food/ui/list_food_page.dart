@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:common/common.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -6,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:group_button/group_button.dart';
-import 'package:shop_cake/common/%20config/format_price.dart';
+import 'package:shop_cake/common/config/format_price.dart';
 import 'package:shop_cake/common/badge_widget.dart';
 import 'package:shop_cake/common/config_read_file.dart';
 import 'package:shop_cake/constants/assets/assets.dart';

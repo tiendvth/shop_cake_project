@@ -16,7 +16,7 @@ import 'package:shop_cake/src/list_food/bloc/list_food_cubit.dart';
 import 'package:shop_cake/src/list_food/bloc/list_price_filter_cubit.dart';
 import 'package:shop_cake/src/list_food/components/item_card.dart';
 
-import '../../../common/ config/format_price.dart';
+import '../../../common/config/format_price.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

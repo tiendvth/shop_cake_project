@@ -17,7 +17,7 @@ class _ContactInfoPageState extends State<ContactInfoPage> {
       Completer<GoogleMapController>();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(20.523669991517455, 105.50684148619452),
+    target: LatLng(21.0288687237567, 105.78181093986845),
     zoom: 16,
   );
 

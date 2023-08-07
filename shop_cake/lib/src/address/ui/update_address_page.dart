@@ -2,28 +2,47 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_cake/constants/constants.dart';
+import 'package:shop_cake/src/address/address_request/address_request.dart';
 import 'package:shop_cake/src/address/bloc/get_address_cubit.dart';
 import 'package:shop_cake/src/address/bloc/get_location_cubit.dart';
 import 'package:shop_cake/src/address/model/viet_nam_model.dart';
 import 'package:shop_cake/utils/utils.dart';
 import 'package:shop_cake/widgets/c_textformfield.dart';
 
-class CreateNewAddressPage extends StatefulWidget {
-  final VoidCallback? callback;
+class UpdateAddressPage extends StatefulWidget {
+  final String? fullName;
+  final String? phone;
+  final String? address;
+  final String? location;
+  final String? district;
+  final String? ward;
 
-  const CreateNewAddressPage({Key? key, this.callback}) : super(key: key);
+  const UpdateAddressPage({
+    Key? key,
+    this.fullName,
+    this.phone,
+    this.address,
+    this.location,
+    this.district,
+    this.ward,
+  }) : super(key: key);
 
   @override
-  State<CreateNewAddressPage> createState() => _CreateNewAddressPageState();
+  State<UpdateAddressPage> createState() => _UpdateAddressPageState();
 }
 
-class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
+class _UpdateAddressPageState extends State<UpdateAddressPage> {
   late final GetLocationCubit getLocationCubit = GetLocationCubit();
-  final GetAddressCubit getAddressCubit = GetAddressCubit();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _noteController = TextEditingController();
+  late final GetAddressCubit getAddressCubit = GetAddressCubit();
+  late final TextEditingController _nameController;
+  late final TextEditingController _phoneController;
+  late final TextEditingController _addressController;
+
+  // late final TextEditingController _noteController;
+  String? provinceValue;
+  String? districtValue;
+  String? wardValue;
+
   Locations? selectedLocations;
   Districts? selectedDistricts;
   Wards? selectedWards;
@@ -33,6 +52,16 @@ class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
   @override
   void initState() {
     super.initState();
+    _nameController = TextEditingController(text: widget.fullName);
+    _phoneController = TextEditingController(text: widget.phone);
+    _addressController = TextEditingController(text: widget.address);
+    provinceValue = widget.location;
+    districtValue = widget.district;
+    wardValue = widget.ward;
+    // _noteController = TextEditingController(text: widget.data);
+    // selectedLocations = Locations(province: widget.location);
+    // selectedDistricts = Districts(district: widget.district);
+    // selectedWards = Wards(ward: widget.ward);
     getLocationCubit.loadLocationData();
   }
 
@@ -41,7 +70,7 @@ class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
     _nameController.dispose();
     _phoneController.dispose();
     _addressController.dispose();
-    _noteController.dispose();
+    // _noteController.dispose();
     super.dispose();
   }
 
@@ -207,11 +236,17 @@ class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
                                   ),
                                 ),
                               ),
-                              hint: Text('Tỉnh/Thành phố',
-                                  style: GoogleFonts.roboto(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: k9B9B9B)),
+                              hint: provinceValue != null
+                                  ? Text(provinceValue!,
+                                      style: GoogleFonts.roboto(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: k9B9B9B))
+                                  : Text('Tỉnh/Thành phố',
+                                      style: GoogleFonts.roboto(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: k9B9B9B)),
                               value: selectedLocations,
                               items: locations.map((location) {
                                 return DropdownMenuItem<Locations>(
@@ -276,11 +311,17 @@ class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
                                 ),
                               ),
                               borderRadius: BorderRadius.circular(8),
-                              hint: Text('Quận/Huyện',
-                                  style: GoogleFonts.roboto(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: k9B9B9B)),
+                              hint: districtValue != null
+                                  ? Text(districtValue!,
+                                      style: GoogleFonts.roboto(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: k9B9B9B))
+                                  : Text('Quận/Huyện',
+                                      style: GoogleFonts.roboto(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: k9B9B9B)),
                               value: selectedDistricts,
                               items:
                                   selectedLocations?.districts?.map((district) {
@@ -343,13 +384,21 @@ class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
                                 ),
                               ),
                               borderRadius: BorderRadius.circular(8),
-                              hint: Text(
-                                'Chọn phường/xã',
-                                style: GoogleFonts.roboto(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: k9B9B9B),
-                              ),
+                              hint: wardValue != null
+                                  ? Text(
+                                      wardValue!,
+                                      style: GoogleFonts.roboto(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: k9B9B9B),
+                                    )
+                                  : Text(
+                                      'Chọn phường/xã',
+                                      style: GoogleFonts.roboto(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: k9B9B9B),
+                                    ),
                               value: selectedWards,
                               items: selectedDistricts?.wards?.map((ward) {
                                     return DropdownMenuItem<Wards>(
@@ -416,28 +465,23 @@ class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
                     height: 32,
                   ),
                   InkWell(
-                    onTap: () async {
+                    onTap: () {
                       if (selectedLocations != null &&
                           selectedDistricts != null &&
                           selectedWards != null &&
                           _addressController.text.isNotEmpty) {
                         var address =
                             '${_addressController.text},${selectedWards!.ward!}, ${selectedDistricts!.district!},${selectedLocations!.province!}';
-                        // final data = AddressRequest(
-                        //   address: address,
-                        //   phone: _phoneController.text,
-                        // );
-                        await getAddressCubit.createAddress(
+                        final data = AddressRequest(
+                          address: address,
+                          phone: _phoneController.text,
+                        );
+                        getAddressCubit.createAddress(
                           phone: _phoneController.text,
                           name: _nameController.text,
                           address: address,
                         );
-                        Future.delayed(const Duration(milliseconds: 500), () {
-                          showToast('Thêm địa chỉ thành công');
-                          Navigator.pop(context);
-                        });
-                        widget.callback!();
-                        // Navigator.pop(context, data);
+                        Navigator.pop(context, data);
                       } else {
                         showToast('Vui lòng nhập đầy đủ thông tin');
                       }

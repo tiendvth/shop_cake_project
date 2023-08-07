@@ -7,6 +7,7 @@ import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/Menu/components/label.dart';
 import 'package:shop_cake/src/Menu/components/user_avatar.dart';
+import 'package:shop_cake/src/address/ui/address_page.dart';
 import 'package:shop_cake/src/contact_Info/ui/contact_Info_page.dart';
 import 'package:shop_cake/src/my_order/ui/my_order_page.dart';
 import 'package:shop_cake/src/payment/ui/payment_methods_page.dart';
@@ -132,139 +133,161 @@ class _MenuScreenState extends State<MenuScreen> {
               const SizedBox(
                 height: 16,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+              Expanded(
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      CLabel(
-                        title: "Tài khoản",
-                        image: Assets.icUser,
-                        onTab: () {
-                          NavigatorManager.push(
-                            context,
-                            const ProfileUserPage(),
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Divider(
-                        thickness: 0.1,
-                        color: kF2F4B4E,
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      CLabel(
-                        title: "Đơn hàng",
-                        image: Assets.icOrderMenu,
-                        onTab: () {
-                          NavigatorManager.push(
-                            context,
-                            const MyOrderPage(),
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Divider(
-                        thickness: 0.1,
-                        color: kF2F4B4E,
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const CLabel(
-                        title: "Yêu thích",
-                        image: Assets.icLike,
-                        onTab: null,
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Divider(
-                        thickness: 0.1,
-                        color: kF2F4B4E,
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      CLabel(
-                        title: "Thanh toán",
-                        image: Assets.icPaymentCard,
-                        onTab: () {
-                          NavigatorManager.push(
-                            context,
-                            const PaymentMethodPage(),
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Divider(
-                        thickness: 0.1,
-                        color: kF2F4B4E,
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                       CLabel(
-                        title: "Liên hệ",
-                        image: Assets.icCall,
-                        onTab: () {
-                          NavigatorManager.push(
-                            context,
-                            const ContactInfoPage(),
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Divider(
-                        thickness: 0.1,
-                        color: kF2F4B4E,
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const CLabel(
-                        title: "Cài đặt",
-                        image: Assets.icSetting,
-                        onTab: null,
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Divider(
-                        thickness: 0.1,
-                        color: kF2F4B4E,
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      BlocBuilder<ProfileUserCubit, ProfileUserState>(
-                        builder: (context, state) {
-                          return CLabel(
-                            title: "Đăng xuất",
-                            image: Assets.icLogout,
-                            onTab: () async {
-                              // await context
-                              //     .read<ProfileUserCubit>()
-                              //     .removeDeviceToken();
-                              // ignore: use_build_context_synchronously
-                              context
-                                  .read<AuthenticationBloc>()
-                                  .add(AppLogoutEvent());
-                            },
-                          );
-                        },
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: [
+                        CLabel(
+                          title: "Tài khoản",
+                          image: Assets.icUser,
+                          onTab: () {
+                            NavigatorManager.push(
+                              context,
+                              const ProfileUserPage(),
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Divider(
+                          thickness: 0.1,
+                          color: kF2F4B4E,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        CLabel(
+                          title: "Đơn hàng",
+                          image: Assets.icOrderMenu,
+                          onTab: () {
+                            NavigatorManager.push(
+                              context,
+                              const MyOrderPage(),
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Divider(
+                          thickness: 0.1,
+                          color: kF2F4B4E,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const CLabel(
+                          title: "Yêu thích",
+                          image: Assets.icLike,
+                          onTab: null,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Divider(
+                          thickness: 0.1,
+                          color: kF2F4B4E,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        CLabel(
+                          title: "Thanh toán",
+                          image: Assets.icPaymentCard,
+                          onTab: () {
+                            NavigatorManager.push(
+                              context,
+                              const PaymentMethodPage(),
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Divider(
+                          thickness: 0.1,
+                          color: kF2F4B4E,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        CLabel(
+                          title: "Địa chỉ",
+                          image: Assets.icLocation,
+                          onTab: () {
+                            NavigatorManager.push(
+                              context,
+                              const AddressPage(),
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Divider(
+                          thickness: 0.1,
+                          color: kF2F4B4E,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                         CLabel(
+                          title: "Liên hệ",
+                          image: Assets.icCall,
+                          onTab: () {
+                            NavigatorManager.push(
+                              context,
+                              const ContactInfoPage(),
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Divider(
+                          thickness: 0.1,
+                          color: kF2F4B4E,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const CLabel(
+                          title: "Cài đặt",
+                          image: Assets.icSetting,
+                          onTab: null,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Divider(
+                          thickness: 0.1,
+                          color: kF2F4B4E,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        BlocBuilder<ProfileUserCubit, ProfileUserState>(
+                          builder: (context, state) {
+                            return CLabel(
+                              title: "Đăng xuất",
+                              image: Assets.icLogout,
+                              onTab: () async {
+                                // await context
+                                //     .read<ProfileUserCubit>()
+                                //     .removeDeviceToken();
+                                // ignore: use_build_context_synchronously
+                                context
+                                    .read<AuthenticationBloc>()
+                                    .add(AppLogoutEvent());
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )

@@ -36,7 +36,11 @@ class Assets {
   static const String icVisa = 'assets/icon/icon_visa.png';
   static const String icPayShip = 'assets/icon/icon_payment.png';
   static const String icCard = 'assets/icon/icon_card.png';
+  static const String icLocation = 'assets/icon/icon_location.png';
+  static const String icEdits = 'assets/icon/icons_edit.png';
+  static const String icTrash = 'assets/icon/icons_trash.png';
   static const String imgDefault = 'assets/images/default_thumbnail.png';
+  static const String imgLogin = 'assets/images/bg_login3.png';
   ///Font
   static const String fontPlusJakartaSans = 'PlusJakartaSans';
 }
