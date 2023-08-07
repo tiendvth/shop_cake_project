@@ -24,19 +24,29 @@ class DetailMyOrderCubit extends Cubit<DetailMyOrderState> {
       // emit(DetailMyOrderSuccess(data['data']['totalPrice'],data['data']['status'],data['data']['orderDetails']));
       totalPrice = data['data']['detailDtoList'].fold(
           0, (previousValue, element) => previousValue + element['price'] * element['quantity']);
-      emit(DetailMyOrderSuccess(data['data']['detailDtoList'], totalPrice));
+      emit(DetailMyOrderSuccess(data['data'], totalPrice));
     } on DioError {
       emit(DetailMyOrderFailure('$DioError'));
     }
   }
+
   callApiCanCel(BuildContext context) {
     _detailMyOrderRepositoryImpl.canCel(id, cenCelController.text,).then((value) {
       Navigator.pop(context);
       showDialogMessage(context, "Hủy đơn thành công", checkBack: false);
     },
     ).catchError((onError) {
-      showDialogMessage(context, (onError as DioError).message,
-          checkBack: false);
+      showDialogMessage(context, (onError as DioError).message, checkBack: false);
+    });
+  }
+
+  callApiConfirm(BuildContext context) {
+    _detailMyOrderRepositoryImpl.procedure(id).then((value) {
+      Navigator.pop(context);
+      showDialogMessage(context, "Nhận hàng thành công", checkBack: false);
+    },
+    ).catchError((onError) {
+      showDialogMessage(context, (onError as DioError).message, checkBack: false);
     });
   }
 }
