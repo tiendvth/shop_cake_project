@@ -11,8 +11,9 @@ class DetailMyOrderSuccess extends DetailMyOrderState {
   // final status;
   final totalPrice;
   final data;
+  final status;
   // DetailMyOrderSuccess(this.totalPrice,this.status,this.data);
-  DetailMyOrderSuccess(this.data, this.totalPrice);
+  DetailMyOrderSuccess(this.data, this.totalPrice, this.status);
 }
 
 class DetailMyOrderFailure extends DetailMyOrderState {

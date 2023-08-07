@@ -221,37 +221,40 @@ class _LoginState extends State<Login> {
                           );
                         }),
                     40.spaceHeight,
-                    GestureDetector(
-                      onTap: () {
-                        NavigatorManager.push(context, const Register());
-                      },
-                      child: Center(
-                        child: Text(
-                          "Tạo tài khoản",
-                          style: TextStyle(
-                            fontSize: FontSize.fontSize_16,
-                            color: FontColor.colorFFFFFF,
-                          ),
+                    Center(
+                      child: Text(
+                        "Tạo tài khoản",
+                        style: TextStyle(
+                          fontSize: FontSize.fontSize_16,
+                          color: FontColor.colorFFFFFF,
                         ),
                       ),
                     ),
                     20.spaceHeight,
                     Center(
-                      child: RichText(
-                        text: TextSpan(
-                          style: TextStyle(
-                            fontSize: FontSize.fontSize_16,
-                            fontWeight: FontWeight.w400,
-                            color: FontColor.colorFFFFFF,
+                      child: GestureDetector(
+                        onTap: () {
+                          NavigatorManager.push(
+                            context,
+                            const Register(),
+                          );
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              fontSize: FontSize.fontSize_16,
+                              fontWeight: FontWeight.w400,
+                              color: FontColor.colorFFFFFF,
+                            ),
+                            children: [
+                              TextSpan(
+                                  text:
+                                      Translate.of(context).dont_have_an_account),
+                              TextSpan(
+                                  text:
+                                      '  ${Translate.of(context).sign_up.toUpperCase()}'),
+                            ],
                           ),
-                          children: [
-                            TextSpan(
-                                text:
-                                    Translate.of(context).dont_have_an_account),
-                            TextSpan(
-                                text:
-                                    '  ${Translate.of(context).sign_up.toUpperCase()}'),
-                          ],
                         ),
                       ),
                     ),

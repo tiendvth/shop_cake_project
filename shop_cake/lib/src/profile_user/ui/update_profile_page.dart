@@ -34,11 +34,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
   @override
   void initState() {
     _profileUserCubit.getProfile();
-    _nameController = TextEditingController(text: widget.data['fullName']);
-    _phoneController = TextEditingController(text: widget.data['telephone']);
-    _emailController = TextEditingController(text: widget.data['email']);
-    _addressController = TextEditingController(text: widget.data['address']);
-    _birthdayController = TextEditingController(text: FormatDate.dateFormat(widget.data['birthday']));
+    _getProfile();
     super.initState();
   }
 
@@ -51,7 +47,33 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
     _birthdayController.dispose();
     super.dispose();
   }
-
+  void _getProfile() {
+    if(widget.data['fullName'] != null) {
+      _nameController = TextEditingController(text: widget.data['fullName']);
+    } else {
+      _nameController = TextEditingController(text: '');
+    }
+    if(widget.data['telephone'] != null) {
+      _phoneController = TextEditingController(text: widget.data['telephone']);
+    } else {
+      _phoneController = TextEditingController(text: '');
+    }
+    if(widget.data['email'] != null) {
+      _emailController = TextEditingController(text: widget.data['email']);
+    } else {
+      _emailController = TextEditingController(text: '');
+    }
+    if(widget.data['address'] != null) {
+      _addressController = TextEditingController(text: widget.data['address']);
+    } else {
+      _addressController = TextEditingController(text: '');
+    }
+    if(widget.data['birthday'] != null) {
+      _birthdayController = TextEditingController(text: FormatDate.dateFormat(widget.data['birthday']));
+    } else {
+      _birthdayController = TextEditingController(text: '');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
