@@ -3,6 +3,7 @@ import 'package:common/common.dart';
 abstract class DetailMyOrderRepository{
   Future detailMyOrder(int? id);
   Future canCel(int id, String canCelController,);
+  Future procedure(int id);
 }
 class DetailMyOrderRepositoryImpl implements DetailMyOrderRepository{
   final Dio _dio;
@@ -20,4 +21,14 @@ class DetailMyOrderRepositoryImpl implements DetailMyOrderRepository{
     });
     return result.data as Map<String, dynamic>;
   }
+
+  @override
+  Future procedure(int id) async{
+    final result = await _dio.post('/api/order/procedure/$id', data: {
+      "procedure": "hoàn thành"
+      }
+    );
+    return result.data as Map<String, dynamic>;
+  }
+
 }

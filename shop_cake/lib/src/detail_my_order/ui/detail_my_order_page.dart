@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,20 +14,29 @@ import 'package:shop_cake/utils/utils.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
 import '../../cart_page/componenst/cart_item.dart';
 
-class DetailMyOrder extends StatelessWidget {
+class DetailMyOrder extends StatefulWidget {
   final id;
 
   const DetailMyOrder({Key? key, this.id}) : super(key: key);
 
   @override
+  State<DetailMyOrder> createState() => _DetailMyOrderState();
+}
+
+class _DetailMyOrderState extends State<DetailMyOrder> {
+
+  bool isShowButton = true;
+
+  @override
   Widget build(BuildContext context) {
-    final detailMyOrderCubit = DetailMyOrderCubit(id);
+    final detailMyOrderCubit = DetailMyOrderCubit(widget.id);
     return Scaffold(
       body: BlocProvider(
         create: (BuildContext context) => detailMyOrderCubit,
         child: BlocBuilder<DetailMyOrderCubit, DetailMyOrderState>(
           builder: (context, state) {
             if (state is DetailMyOrderSuccess) {
+              print('order: ${state.data}');
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -240,12 +251,12 @@ class DetailMyOrder extends StatelessWidget {
                                 return Column(
                                   children: [
                                     CartItem(
-                                      quantity: state.data[index]['quantity'],
-                                      name: state.data[index]['nameCake'],
+                                      quantity: state.data['detailDtoList'][index]['quantity'],
+                                      name: state.data['detailDtoList'][index]['nameCake'],
                                       price: FormatPrice.formatVND(
-                                          state.data[index]['price']),
+                                          state.data['detailDtoList'][index]['price']),
                                       imageUrl: ReadFile.readFile(
-                                          state.data[index]['image']),
+                                          state.data['detailDtoList'][index]['image']),
                                     ),
                                     const SizedBox(
                                       height: 12,
@@ -293,74 +304,116 @@ class DetailMyOrder extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: MaterialButton(
-                          height: 40,
-                          minWidth: MediaQuery.of(context).size.width,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          color: kMainGreenColor,
-                          onPressed: () {
-                            if (detailMyOrderCubit
-                                .cenCelController.text.isEmpty) {
-                              showDialogMessage(
-                                  context, 'Lí do hủy không thể để trống',
-                                  checkBack: false);
-                              return;
-                            }
-                            // detailMyOrderCubit.callApiCanCel(context);
-                            showDialogConfirm(
-                                context, 'Bạn chắc chắnn muốn hủy đơn', () {
-                              detailMyOrderCubit.callApiCanCel(context);
-                            });
-                          },
-                          child: Text(
-                            'Đã nhận hàng',
-                            style: GoogleFonts.roboto(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: MaterialButton(
-                          height: 40,
-                          minWidth: MediaQuery.of(context).size.width,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          color: kMainRedColor.withOpacity(0.6),
-                          onPressed: () {
-                            showDialogNote(
-                                context,
-                                checkBack: false);
-                            // if (detailMyOrderCubit
-                            //     .cenCelController.text.isEmpty) {
-                            //   showDialogNote(
-                            //       context, 'Lí do hủy không thể để trống',
-                            //       checkBack: false);
-                            //   return;
-                            // }
-                            // detailMyOrderCubit.callApiCanCel(context);
+                      if (state.data['status'] == 1)
+                        Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              child: MaterialButton(
+                                height: 40,
+                                minWidth: MediaQuery.of(context).size.width,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                color: kMainGreenColor,
+                                onPressed: () {
+                                  // if (detailMyOrderCubit
+                                  //     .cenCelController.text.isEmpty) {
+                                  //   showDialogMessage(
+                                  //       context, 'Lí do hủy không thể để trống',
+                                  //       checkBack: false);
+                                  //   return;
+                                  // }
+                                  // detailMyOrderCubit.callApiCanCel(context);
+                                  showDialogConfirm(
+                                      context, 'Bạn đã nhận hàng?', () {
+                                    detailMyOrderCubit.callApiConfirm(context);
+                                  });
+                                },
+                                child: Text(
+                                  'Đã nhận hàng',
+                                  style: GoogleFonts.roboto(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              child: MaterialButton(
+                                height: 40,
+                                minWidth: MediaQuery.of(context).size.width,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                color: kMainRedColor.withOpacity(0.6),
+                                onPressed: () {
+                                  showDialogNote(
+                                      context,
+                                      checkBack: false);
+                                  // if (detailMyOrderCubit
+                                  //     .cenCelController.text.isEmpty) {
+                                  //   showDialogNote(
+                                  //       context, 'Lí do hủy không thể để trống',
+                                  //       checkBack: false);
+                                  //   return;
+                                  // }
+                                  // detailMyOrderCubit.callApiCanCel(context);
 
-                            // showDialogConfirm(
-                            //     context, 'Bạn chắc chắnn muốn hủy đơn', () {
-                            //   detailMyOrderCubit.callApiCanCel(context);
-                            // });
-                          },
-                          child: Text(
-                            'Huỷ đơn hàng',
-                            style: GoogleFonts.roboto(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white),
+                                  // showDialogConfirm(
+                                  //     context, 'Bạn chắc chắnn muốn hủy đơn', () {
+                                  //   detailMyOrderCubit.callApiCanCel(context);
+                                  // });
+                                },
+                                child: Text(
+                                  'Huỷ đơn hàng',
+                                  style: GoogleFonts.roboto(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      if (state.data['status'] == 2)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: MaterialButton(
+                            height: 40,
+                            minWidth: MediaQuery.of(context).size.width,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            color: kMainRedColor.withOpacity(0.6),
+                            onPressed: () {
+                              showDialogNote(
+                                  context,
+                                  checkBack: false);
+                              // if (detailMyOrderCubit
+                              //     .cenCelController.text.isEmpty) {
+                              //   showDialogNote(
+                              //       context, 'Lí do hủy không thể để trống',
+                              //       checkBack: false);
+                              //   return;
+                              // }
+                              // detailMyOrderCubit.callApiCanCel(context);
+
+                              // showDialogConfirm(
+                              //     context, 'Bạn chắc chắnn muốn hủy đơn', () {
+                              //   detailMyOrderCubit.callApiCanCel(context);
+                              // });
+                            },
+                            child: Text(
+                              'Đánh giá',
+                              style: GoogleFonts.roboto(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white),
+                            ),
                           ),
                         ),
-                      ),
                       const SizedBox(
                         height: 16,
                       ),
