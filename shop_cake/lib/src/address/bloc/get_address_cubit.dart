@@ -10,12 +10,19 @@ part 'get_address_state.dart';
 class GetAddressCubit extends Cubit<GetAddressState> {
   final AddressRepository addressRepository = AddressImpl(apiProvider);
   GetAddressCubit() : super(GetAddressInitial());
+  String? province;
+  String? district;
+  String? ward;
+  String? detailAddress;
 
   Future<void> getAddress() async {
     emit(GetAddressLoading());
     try {
       final data = await addressRepository.getAddressList();
       if (data != null && data.isNotEmpty) {
+        print('GetAddressSuccess: ${data.length}');
+        // List<String> parts = StringService.splitStringAfterComma();
+        // data.forEach((element) { });
         emit(GetAddressSuccess(data));
       } else {
         emit(GetAddressFailure(''));
@@ -28,6 +35,33 @@ class GetAddressCubit extends Cubit<GetAddressState> {
     emit(GetAddressLoading());
     try {
       final data = await addressRepository.createAddress(name, phone, address);
+      if (data) {
+        emit(GetAddressSuccess([]));
+      } else {
+        emit(GetAddressFailure(''));
+      }
+    } catch (exception) {
+      emit(GetAddressFailure(exception.toString()));
+    }
+  }
+  Future<void> updateAddress({String? name, String? phone, String? address, int? id }) async {
+    emit(GetAddressLoading());
+    try {
+      final data = await addressRepository.updateAddress(name, phone, address, id!);
+      if (data) {
+        emit(GetAddressSuccess([]));
+      } else {
+        emit(GetAddressFailure(''));
+      }
+    } catch (exception) {
+      emit(GetAddressFailure(exception.toString()));
+    }
+  }
+
+  Future<void> deleteAddress({int? id}) async {
+    emit(GetAddressLoading());
+    try {
+      final data = await addressRepository.deleteAddress(id!);
       if (data) {
         emit(GetAddressSuccess([]));
       } else {

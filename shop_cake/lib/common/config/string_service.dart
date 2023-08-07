@@ -40,4 +40,10 @@ class StringService {
       ),
     );
   }
+  static List<String> splitStringAfterComma(String inputString) {
+    List<String> parts = inputString.split(','); // Tách chuỗi sau dấu ","
+    List<String> trimmedParts = parts.map((part) => part.trim()).toList(); // Loại bỏ khoảng trắng
+
+    return trimmedParts;
+  }
 }

@@ -2,7 +2,7 @@ import 'package:common/common.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_cake/common/%20config/format_date.dart';
+import 'package:shop_cake/common/config/format_date.dart';
 import 'package:shop_cake/common/badge_widget.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/color/colors.dart';

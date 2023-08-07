@@ -4,12 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_cake/common/%20config/format_text_to_number.dart';
+import 'package:shop_cake/common/config/format_text_to_number.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/constants/font_size/font_size.dart';
 import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/address/bloc/get_address_cubit.dart';
+import 'package:shop_cake/src/address/ui/address_page.dart';
 import 'package:shop_cake/src/cart_page/componenst/cart_item.dart';
 import 'package:shop_cake/src/cart_page/repository/cart_repository.dart';
 import 'package:shop_cake/src/payment/bloc/payment_cubit.dart';
@@ -314,8 +315,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                     child: Text(
                                       'Ngày giao hàng',
                                       style: GoogleFonts.roboto(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
                                         color: kMainBlackColor,
                                       ),
                                     ),
@@ -483,8 +484,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                     child: Text(
                                       'Ghi chú',
                                       style: GoogleFonts.roboto(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
                                         color: kMainBlackColor,
                                       ),
                                     ),
@@ -515,6 +516,70 @@ class _PaymentPageState extends State<PaymentPage> {
                                     ),
                                   ),
                                   20.spaceHeight,
+                                  // chọn địa chỉ
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
+                                    child: Text(
+                                      'Địa chỉ nhận hàng',
+                                      style: GoogleFonts.roboto(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: kMainBlackColor,
+                                      ),
+                                    ),
+                                  ),
+                                  8.spaceHeight,
+                                  InkWell(
+                                    onTap: () async {
+                                      NavigatorManager.pushFullScreen(context, const AddressPage());
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      child: Container(
+                                        width: double.infinity,
+                                        padding: const EdgeInsets.only(
+                                            top: 12,
+                                            bottom: 12,
+                                            right: 8),
+                                        decoration: const BoxDecoration(
+                                            border: Border.symmetric(
+                                                horizontal: BorderSide(
+                                                  color: kMainGreyColor, width: 1))),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: stateAddress.address != null ?   Text(
+                                                stateAddress.address?[0].address ?? '',
+                                                style: GoogleFonts.roboto(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: k9B9B9B,
+                                                ),
+                                              ): Text(
+                                                'Chọn địa chỉ',
+                                                style: GoogleFonts.roboto(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: k9B9B9B,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 8,
+                                            ),
+                                            const Icon(
+                                              size: 16,
+                                              Icons.arrow_forward_ios,
+                                              color: k9B9B9B,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  20.spaceHeight,
                                   // chọn phương thức thanh toán
                                   Container(
                                     padding: const EdgeInsets.symmetric(
@@ -522,8 +587,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                     child: Text(
                                       'Phương thức thanh toán',
                                       style: GoogleFonts.roboto(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
                                         color: kMainBlackColor,
                                       ),
                                     ),

@@ -2,7 +2,7 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_cake/common/%20config/format_price.dart';
+import 'package:shop_cake/common/config/format_price.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/detail_food/bloc/counter_bloc/count_dish_cubit.dart';

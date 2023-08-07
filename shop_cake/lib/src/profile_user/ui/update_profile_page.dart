@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_cake/common/%20config/format_date.dart';
+import 'package:shop_cake/common/config/format_date.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/profile_user/bloc/profile_user_cubit.dart';
@@ -30,13 +30,6 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
 
   late final TextEditingController _addressController;
   late final TextEditingController _birthdayController;
-
-
-  String? nameEdt;
-  String? phoneEdt;
-  String? emailEdt;
-  String? addressEdt;
-  String? birthdayEdt;
 
   @override
   void initState() {

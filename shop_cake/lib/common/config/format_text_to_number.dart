@@ -1,5 +1,5 @@
 
-import 'package:shop_cake/common/%20config/string_service.dart';
+import 'package:shop_cake/common/config/string_service.dart';
 
 class FormatTextToNumber {
   static final FormatTextToNumber _formatTextToNumber = FormatTextToNumber();

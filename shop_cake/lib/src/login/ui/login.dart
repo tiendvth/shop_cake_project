@@ -64,14 +64,14 @@ class _LoginState extends State<Login> {
               Stack(
             children: [
               const CImage(
-                assetsPath: Assets.imBgLogin,
+                assetsPath: Assets.imgLogin,
                 height: double.infinity,
                 width: double.infinity,
               ),
               CContainer(
                 height: double.infinity,
                 width: double.infinity,
-                backgroundColor: FontColor.colorText231F20.withOpacity(0.8),
+                backgroundColor: FontColor.colorText231F20.withOpacity(0.5),
                 borderColor: FontColor.colorText231F20.withOpacity(0.8),
               ),
               Padding(
@@ -99,7 +99,7 @@ class _LoginState extends State<Login> {
                           FontColor.colorText231F20.withOpacity(0.8),
                       hintText: 'Tên đăng nhập',
                       hintStyle: GoogleFonts.roboto(
-                        color: kMainLightGreyColor.withOpacity(0.5),
+                        color: kMainLightGreyColor.withOpacity(0.8),
                         fontSize: 16,
                       ),
                       maxLines: 1,
@@ -118,7 +118,7 @@ class _LoginState extends State<Login> {
                           FontColor.colorText231F20.withOpacity(0.8),
                       hintText: 'Mật khẩu',
                       hintStyle: GoogleFonts.roboto(
-                        color: kMainLightGreyColor.withOpacity(0.5),
+                        color: kMainLightGreyColor.withOpacity(0.8),
                         fontSize: 16,
                       ),
                       controller: passwordController,

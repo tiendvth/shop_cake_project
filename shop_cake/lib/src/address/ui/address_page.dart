@@ -1,10 +1,12 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_cake/common/config/string_service.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/src/address/bloc/get_address_cubit.dart';
 import 'package:shop_cake/src/address/components/address_item.dart';
 import 'package:shop_cake/src/address/ui/create_new_address_page.dart';
+import 'package:shop_cake/src/address/ui/update_address_page.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
 
 class AddressPage extends StatefulWidget {
@@ -18,6 +20,10 @@ class _AddressPageState extends State<AddressPage> {
   final GetAddressCubit addressCubit = GetAddressCubit();
   int selectedValue = 0;
   int idAddress = 0;
+  String? province;
+  String? district = '';
+  String? ward = '';
+  String? detailAddress = '';
 
   @override
   void initState() {
@@ -43,8 +49,7 @@ class _AddressPageState extends State<AddressPage> {
             selectedValue != 0
                 ? TextButton(
                     onPressed: () {
-                      print('selectedValueButton $selectedValue');
-                      print('Value id Address ${idAddress.toString()}');
+                      // addressCubit.deleteAddress(idAddress);
                     },
                     child: Text(
                       'Lưu',
@@ -102,7 +107,31 @@ class _AddressPageState extends State<AddressPage> {
                         itemCount: state.address?.length,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          print(state.address?[index].address);
+                          List<String> parts =
+                              StringService.splitStringAfterComma(
+                                  state.address?[index].address as String);
+                          parts.forEach((element) {
+                            if (element.contains('Tỉnh') ||
+                                element.contains('Thành phố')) {
+                              print('province $element');
+                              // element = province! ;
+                              // print('province $element');
+                              province = element;
+                            } else if (element.contains('Huyện') ||
+                                element.contains('Quận')) {
+                              print('district ${element[index]}');
+                              district = element;
+                            } else if (element.contains('Xã') ||
+                                element.contains('Phường')) {
+                              print('ward $element');
+                              ward = element;
+                            } else {
+                              print('detailAddress $element');
+                              detailAddress = element;
+                            }
+                          });
+                          // state.address?[index].address = detailAddress;
+
                           return Column(
                             children: [
                               12.spaceHeight,
@@ -115,13 +144,26 @@ class _AddressPageState extends State<AddressPage> {
                                 onChanged: (value) {
                                   setState(() {
                                     selectedValue = value as int;
-                                    print(
-                                        'selectedValue $selectedValue');
-                                    print(
-                                        'IdAddress  ${state.address?[index].id}');
-                                    idAddress =
-                                        state.address?[index].id as int;
+                                    idAddress = state.address?[index].id as int;
                                   });
+                                },
+                                onTapEdit: () {
+                                  NavigatorManager.push(
+                                    context,
+                                    UpdateAddressPage(
+                                      address: state.address?[index].address,
+                                      phone: state.address?[index].phone,
+                                      fullName: 'Đặng Văn Tiến',
+                                      location: province,
+                                      district: district,
+                                      ward: ward,
+                                    ),
+                                  );
+                                },
+                                onTapDelete: () async {
+                                  await addressCubit.deleteAddress(
+                                      id: state.address?[index].id);
+                                  addressCubit.getAddress();
                                 },
                                 // child: Radio(
                                 //   value: index,
@@ -155,7 +197,11 @@ class _AddressPageState extends State<AddressPage> {
                         onTap: () {
                           NavigatorManager.push(
                             context,
-                            const CreateNewAddressPage(),
+                             CreateNewAddressPage(
+                              callback: () {
+                                addressCubit.getAddress();
+                              },
+                            ),
                           );
                         },
                         child: Container(
