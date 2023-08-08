@@ -1,7 +1,6 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_cake/common/config/string_service.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/src/address/bloc/get_address_cubit.dart';
 import 'package:shop_cake/src/address/components/address_item.dart';
@@ -107,31 +106,7 @@ class _AddressPageState extends State<AddressPage> {
                         itemCount: state.address?.length,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          List<String> parts =
-                              StringService.splitStringAfterComma(
-                                  state.address?[index].address as String);
-                          parts.forEach((element) {
-                            if (element.contains('Tỉnh') ||
-                                element.contains('Thành phố')) {
-                              print('province $element');
-                              // element = province! ;
-                              // print('province $element');
-                              province = element;
-                            } else if (element.contains('Huyện') ||
-                                element.contains('Quận')) {
-                              print('district ${element[index]}');
-                              district = element;
-                            } else if (element.contains('Xã') ||
-                                element.contains('Phường')) {
-                              print('ward $element');
-                              ward = element;
-                            } else {
-                              print('detailAddress $element');
-                              detailAddress = element;
-                            }
-                          });
                           // state.address?[index].address = detailAddress;
-
                           return Column(
                             children: [
                               12.spaceHeight,
@@ -154,9 +129,6 @@ class _AddressPageState extends State<AddressPage> {
                                       address: state.address?[index].address,
                                       phone: state.address?[index].phone,
                                       fullName: 'Đặng Văn Tiến',
-                                      location: province,
-                                      district: district,
-                                      ward: ward,
                                     ),
                                   );
                                 },
