@@ -1,6 +1,7 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_cake/common/config/string_service.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/src/address/address_request/address_request.dart';
 import 'package:shop_cake/src/address/bloc/get_address_cubit.dart';
@@ -54,15 +55,38 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
     super.initState();
     _nameController = TextEditingController(text: widget.fullName);
     _phoneController = TextEditingController(text: widget.phone);
-    _addressController = TextEditingController(text: widget.address);
-    provinceValue = widget.location;
-    districtValue = widget.district;
-    wardValue = widget.ward;
+    // _addressController = TextEditingController(text: widget.address);
+
     // _noteController = TextEditingController(text: widget.data);
     // selectedLocations = Locations(province: widget.location);
     // selectedDistricts = Districts(district: widget.district);
     // selectedWards = Wards(ward: widget.ward);
     getLocationCubit.loadLocationData();
+    _addressSeparation();
+  }
+
+  void _addressSeparation() {
+    List<String> parts =
+    StringService.splitStringAfterComma(
+        widget.address!);
+    parts.forEach((element) {
+      if (element.contains('Tỉnh') ||
+          element.contains('Thành phố')) {
+        print('province $element');
+        // element = province! ;
+        // print('province $element');
+        provinceValue = element;
+      } else if (element.contains('Huyện') ||
+          element.contains('Quận')) {
+        districtValue = element;
+      } else if (element.contains('Xã') ||
+          element.contains('Phường')) {
+        selectedWards = Wards(ward: element);
+      } else {
+        print('detailAddress $element');
+        _addressController = TextEditingController(text: element);
+      }
+    });
   }
 
   @override
