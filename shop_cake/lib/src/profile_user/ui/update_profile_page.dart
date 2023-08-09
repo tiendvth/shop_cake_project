@@ -346,19 +346,26 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                                   DateTime? pickedDate = await showDatePicker(
                                     context: context,
                                     initialDate: DateTime.now(),
-                                    firstDate: DateTime.now(),
+                                    firstDate: DateTime(1010),
                                     lastDate: DateTime(2100),
                                     builder:
                                         (BuildContext context, Widget? child) {
                                       return Theme(
                                         data: ThemeData.light().copyWith(
                                           colorScheme: const ColorScheme.light(
-                                            primary: kMainDarkColor,
-                                            onPrimary: Colors.white,
-                                            surface: kMainDarkColor,
+                                            // change the border color
+                                            primary: kFFA6BD,
+                                            // change the text color
                                             onSurface: kMainDarkColor,
                                           ),
-                                          dialogBackgroundColor: Colors.white,
+                                          // button colors
+                                          buttonTheme: const ButtonThemeData(
+                                            colorScheme: ColorScheme.light(
+                                              primary: Colors.green,
+                                            ),
+                                          ),
+                                          dialogBackgroundColor:
+                                          Colors.white,
                                         ),
                                         child: child!,
                                       );
