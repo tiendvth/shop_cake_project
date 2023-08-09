@@ -69,6 +69,7 @@ class Result {
   String? phone;
   int? status;
   int? isDeleted;
+  String? name;
 
   Result(
       {this.id,
@@ -76,7 +77,8 @@ class Result {
         this.address,
         this.phone,
         this.status,
-        this.isDeleted});
+        this.isDeleted,
+        this.name});
 
   Result.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -85,6 +87,7 @@ class Result {
     phone = json['phone'];
     status = json['status'];
     isDeleted = json['isDeleted'];
+    name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -95,6 +98,7 @@ class Result {
     data['phone'] = this.phone;
     data['status'] = this.status;
     data['isDeleted'] = this.isDeleted;
+    data['name'] = this.name;
     return data;
   }
 }

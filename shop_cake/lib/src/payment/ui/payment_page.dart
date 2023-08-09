@@ -532,7 +532,11 @@ class _PaymentPageState extends State<PaymentPage> {
                                   8.spaceHeight,
                                   InkWell(
                                     onTap: () async {
-                                      NavigatorManager.pushFullScreen(context, const AddressPage());
+                                      NavigatorManager.pushFullScreen(context,  AddressPage(
+                                        callback: () {
+                                          getAddressCubit.getAddress();
+                                        },
+                                      ));
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -551,7 +555,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                           children: [
                                             Expanded(
                                               child: stateAddress.address != null ?   Text(
-                                                stateAddress.address?[0].address ?? '',
+                                                // lấy ra địa chỉ có status = 1
+                                                stateAddress.address!.where((element) => element.status == 1).first.address ?? '',
                                                 style: GoogleFonts.roboto(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w400,
@@ -817,7 +822,10 @@ class _PaymentPageState extends State<PaymentPage> {
                                           state.datas,
                                           noteController.text,
                                           reasonController.text,
-                                          stateAddress.address![0].id!);
+                                        stateAddress.address!
+                                            .firstWhere((element) =>
+                                        element.status == 1)
+                                            .id!,);
                                       Future.delayed(
                                           const Duration(milliseconds: 500),
                                           () {
