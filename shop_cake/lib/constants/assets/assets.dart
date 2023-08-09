@@ -39,6 +39,8 @@ class Assets {
   static const String icLocation = 'assets/icon/icon_location.png';
   static const String icEdits = 'assets/icon/icons_edit.png';
   static const String icTrash = 'assets/icon/icons_trash.png';
+  static const String icCheck = 'assets/icon/icons_check.png';
+  static const String icBirthday = 'assets/icon/icons_birthday.png';
   static const String imgDefault = 'assets/images/default_thumbnail.png';
   static const String imgLogin = 'assets/images/bg_login3.png';
   ///Font

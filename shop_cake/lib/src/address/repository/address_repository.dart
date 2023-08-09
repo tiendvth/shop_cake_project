@@ -18,16 +18,19 @@ abstract class AddressRepository {
     );
   }
 
-  Future<bool> updateAddress(String? name, String? phone, String? address,int? id,) async {
+  Future<bool> updateAddress({String? name, String? phone, String? address,int? id,}) async {
     return await _addressProvider.updateAddress(
-      name,
-      phone,
-      address,
-      id,
+      name: name,
+      phone: phone,
+      address: address,
+      id: id,
     );
   }
 
   Future<bool> deleteAddress(int id) async {
     return await _addressProvider.deleteAddress(id);
+  }
+  Future<bool> changeDefaultAddress(int id) async {
+    return await _addressProvider.changeDefaultAddress(id);
   }
 }

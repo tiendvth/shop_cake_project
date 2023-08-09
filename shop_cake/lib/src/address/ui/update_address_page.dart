@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_cake/common/config/string_service.dart';
 import 'package:shop_cake/constants/constants.dart';
-import 'package:shop_cake/src/address/address_request/address_request.dart';
 import 'package:shop_cake/src/address/bloc/get_address_cubit.dart';
 import 'package:shop_cake/src/address/bloc/get_location_cubit.dart';
 import 'package:shop_cake/src/address/model/viet_nam_model.dart';
@@ -14,18 +13,16 @@ class UpdateAddressPage extends StatefulWidget {
   final String? fullName;
   final String? phone;
   final String? address;
-  final String? location;
-  final String? district;
-  final String? ward;
+  final int? id;
+  final VoidCallback? callback;
 
   const UpdateAddressPage({
     Key? key,
     this.fullName,
     this.phone,
     this.address,
-    this.location,
-    this.district,
-    this.ward,
+    this.id,
+    this.callback,
   }) : super(key: key);
 
   @override
@@ -43,6 +40,7 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
   String? provinceValue;
   String? districtValue;
   String? wardValue;
+  int? idAddress;
 
   Locations? selectedLocations;
   Districts? selectedDistricts;
@@ -55,6 +53,7 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
     super.initState();
     _nameController = TextEditingController(text: widget.fullName);
     _phoneController = TextEditingController(text: widget.phone);
+    idAddress = widget.id;
     // _addressController = TextEditingController(text: widget.address);
 
     // _noteController = TextEditingController(text: widget.data);
@@ -66,22 +65,17 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
   }
 
   void _addressSeparation() {
-    List<String> parts =
-    StringService.splitStringAfterComma(
-        widget.address!);
+    List<String> parts = StringService.splitStringAfterComma(widget.address!);
     parts.forEach((element) {
-      if (element.contains('Tỉnh') ||
-          element.contains('Thành phố')) {
+      if (element.contains('Tỉnh') || element.contains('Thành phố')) {
         print('province $element');
         // element = province! ;
         // print('province $element');
         provinceValue = element;
-      } else if (element.contains('Huyện') ||
-          element.contains('Quận')) {
+      } else if (element.contains('Huyện') || element.contains('Quận')) {
         districtValue = element;
-      } else if (element.contains('Xã') ||
-          element.contains('Phường')) {
-        selectedWards = Wards(ward: element);
+      } else if (element.contains('Xã') || element.contains('Phường')) {
+        wardValue = element;
       } else {
         print('detailAddress $element');
         _addressController = TextEditingController(text: element);
@@ -489,23 +483,49 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                     height: 32,
                   ),
                   InkWell(
-                    onTap: () {
+                    onTap: () async {
                       if (selectedLocations != null &&
                           selectedDistricts != null &&
                           selectedWards != null &&
                           _addressController.text.isNotEmpty) {
                         var address =
                             '${_addressController.text},${selectedWards!.ward!}, ${selectedDistricts!.district!},${selectedLocations!.province!}';
-                        final data = AddressRequest(
-                          address: address,
-                          phone: _phoneController.text,
-                        );
-                        getAddressCubit.createAddress(
+                        await getAddressCubit.updateAddress(
                           phone: _phoneController.text,
                           name: _nameController.text,
                           address: address,
+                          id: idAddress,
                         );
-                        Navigator.pop(context, data);
+                        Future.delayed(const Duration(milliseconds: 500), () {
+                          showToast('Thêm địa chỉ thành công');
+                          Navigator.pop(context);
+                        });
+                        widget.callback!();
+                      } else if (_nameController.text != null ||
+                          _nameController.text.isNotEmpty &&
+                              _addressController.text != null ||
+                          _addressController.text.isNotEmpty &&
+                              _phoneController.text != null ||
+                          _phoneController.text.isNotEmpty &&
+                              selectedLocations == null &&
+                              selectedDistricts == null &&
+                              selectedWards == null &&
+                              provinceValue != null &&
+                              districtValue != null &&
+                              wardValue != null) {
+                        var address =
+                            '${_addressController.text},${wardValue!}, ${districtValue!},${provinceValue!}';
+                        await getAddressCubit.updateAddress(
+                          phone: _phoneController.text,
+                          name: _nameController.text,
+                          address: address,
+                          id: idAddress,
+                        );
+                        Future.delayed(const Duration(milliseconds: 500), () {
+                          showToast('Thêm địa chỉ thành công');
+                          Navigator.pop(context);
+                        });
+                        widget.callback!();
                       } else {
                         showToast('Vui lòng nhập đầy đủ thông tin');
                       }

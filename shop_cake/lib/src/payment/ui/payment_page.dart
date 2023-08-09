@@ -139,7 +139,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: kMainDarkGreyColor.withOpacity(0.2),
+                                      color:
+                                          kMainDarkGreyColor.withOpacity(0.2),
                                       spreadRadius: 2,
                                       blurRadius: 7,
                                       offset: const Offset(
@@ -367,25 +368,24 @@ class _PaymentPageState extends State<PaymentPage> {
                                                     await showDatePicker(
                                                   context: context,
                                                   initialDate: DateTime.now(),
-                                                  firstDate: DateTime.now(),
+                                                  firstDate: DateTime(1900),
                                                   lastDate: DateTime(2100),
                                                   builder:
                                                       (BuildContext context,
                                                           Widget? child) {
                                                     return Theme(
-                                                      data: ThemeData.light()
-                                                          .copyWith(
-                                                        colorScheme:
-                                                            const ColorScheme
-                                                                .light(
-                                                          primary:
-                                                              kMainDarkColor,
-                                                          onPrimary:
-                                                              Colors.white,
-                                                          surface:
-                                                              kMainDarkColor,
-                                                          onSurface:
-                                                              kMainDarkColor,
+                                                      data: ThemeData.light().copyWith(
+                                                        colorScheme: const ColorScheme.light(
+                                                          // change the border color
+                                                          primary: kFFA6BD,
+                                                          // change the text color
+                                                          onSurface: kMainDarkColor,
+                                                        ),
+                                                        // button colors
+                                                        buttonTheme: const ButtonThemeData(
+                                                          colorScheme: ColorScheme.light(
+                                                            primary: Colors.green,
+                                                          ),
                                                         ),
                                                         dialogBackgroundColor:
                                                             Colors.white,
@@ -447,19 +447,36 @@ class _PaymentPageState extends State<PaymentPage> {
                                               ),
                                               onPressed: () {
                                                 showTimePicker(
+                                                  cancelText: 'Đóng',
+                                                  confirmText: 'Xác nhận',
+                                                  hourLabelText: 'Giờ',
+                                                  minuteLabelText: 'Phút',
+                                                  helpText: 'Chọn giờ',
                                                   context: context,
-                                                  initialTime: const TimeOfDay(
-                                                      hour: 10, minute: 47),
+                                                  initialEntryMode:
+                                                      TimePickerEntryMode.dial,
+                                                  initialTime: TimeOfDay.now(),
                                                   builder:
                                                       (BuildContext context,
                                                           Widget? child) {
-                                                    return MediaQuery(
-                                                      data: MediaQuery.of(
-                                                              context)
-                                                          .copyWith(
-                                                              alwaysUse24HourFormat:
-                                                                  true),
-                                                      child: child!,
+                                                    return Theme(
+                                                      data: ThemeData.light().copyWith(
+                                                        colorScheme: const ColorScheme.light(
+                                                          // change the border color
+                                                          primary: Colors.red,
+                                                          // change the text color
+                                                          onSurface: Colors.purple,
+                                                        ),
+                                                        // button colors
+                                                      ),
+                                                      child: MediaQuery(
+                                                        data: MediaQuery.of(
+                                                                context)
+                                                            .copyWith(
+                                                                alwaysUse24HourFormat:
+                                                                    false),
+                                                        child: child!,
+                                                      ),
                                                     );
                                                   },
                                                 ).then((value) => {
@@ -532,7 +549,12 @@ class _PaymentPageState extends State<PaymentPage> {
                                   8.spaceHeight,
                                   InkWell(
                                     onTap: () async {
-                                      NavigatorManager.pushFullScreen(context, const AddressPage());
+                                      NavigatorManager.pushFullScreen(context,
+                                          AddressPage(
+                                        callback: () {
+                                          getAddressCubit.getAddress();
+                                        },
+                                      ));
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -540,31 +562,43 @@ class _PaymentPageState extends State<PaymentPage> {
                                       child: Container(
                                         width: double.infinity,
                                         padding: const EdgeInsets.only(
-                                            top: 12,
-                                            bottom: 12,
-                                            right: 8),
+                                            top: 12, bottom: 12, right: 8),
                                         decoration: const BoxDecoration(
                                             border: Border.symmetric(
                                                 horizontal: BorderSide(
-                                                  color: kMainGreyColor, width: 1))),
+                                                    color: kMainGreyColor,
+                                                    width: 1))),
                                         child: Row(
                                           children: [
                                             Expanded(
-                                              child: stateAddress.address != null ?   Text(
-                                                stateAddress.address?[0].address ?? '',
-                                                style: GoogleFonts.roboto(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: k9B9B9B,
-                                                ),
-                                              ): Text(
-                                                'Chọn địa chỉ',
-                                                style: GoogleFonts.roboto(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: k9B9B9B,
-                                                ),
-                                              ),
+                                              child: stateAddress.address !=
+                                                      null
+                                                  ? Text(
+                                                      // lấy ra địa chỉ có status = 1
+                                                      stateAddress.address!
+                                                              .where((element) =>
+                                                                  element
+                                                                      .status ==
+                                                                  1)
+                                                              .first
+                                                              .address ??
+                                                          '',
+                                                      style: GoogleFonts.roboto(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: k9B9B9B,
+                                                      ),
+                                                    )
+                                                  : Text(
+                                                      'Chọn địa chỉ',
+                                                      style: GoogleFonts.roboto(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: k9B9B9B,
+                                                      ),
+                                                    ),
                                             ),
                                             const SizedBox(
                                               width: 8,
@@ -596,7 +630,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                   8.spaceHeight,
                                   InkWell(
                                     onTap: () async {
-                                      NavigatorManager.pushFullScreen(context, const PaymentMethodPage());
+                                      NavigatorManager.pushFullScreen(
+                                          context, const PaymentMethodPage());
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -604,15 +639,12 @@ class _PaymentPageState extends State<PaymentPage> {
                                       child: Container(
                                         width: double.infinity,
                                         padding: const EdgeInsets.only(
-                                            top: 12,
-                                            bottom: 12,
-                                            right: 8),
+                                            top: 12, bottom: 12, right: 8),
                                         decoration: const BoxDecoration(
                                             border: Border.symmetric(
-                                                horizontal: BorderSide(
-                                                  color: kMainGreyColor, width: 1),
-                                            )
-                                        ),
+                                          horizontal: BorderSide(
+                                              color: kMainGreyColor, width: 1),
+                                        )),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -648,7 +680,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                               ),
                                             ),
                                             const SizedBox(
-                                              width: 4,),
+                                              width: 4,
+                                            ),
                                             const Icon(
                                               Icons.arrow_forward_ios,
                                               color: k9B9B9B,
@@ -812,12 +845,16 @@ class _PaymentPageState extends State<PaymentPage> {
                                       final date =
                                           '${dateController.text} ${timeController.text}';
                                       await paymentCubit.callApiPayment(
-                                          context,
-                                          date,
-                                          state.datas,
-                                          noteController.text,
-                                          reasonController.text,
-                                          stateAddress.address![0].id!);
+                                        context,
+                                        date,
+                                        state.datas,
+                                        noteController.text,
+                                        reasonController.text,
+                                        stateAddress.address!
+                                            .firstWhere((element) =>
+                                                element.status == 1)
+                                            .id!,
+                                      );
                                       Future.delayed(
                                           const Duration(milliseconds: 500),
                                           () {

@@ -8,35 +8,56 @@ class AddressItem extends StatelessWidget {
   final String? name;
   final String? address;
   final String? phone;
-  final int? value;
-  final int? groupValue;
-  final Function(int?)? onChanged;
   final GestureTapCallback? onTapEdit;
   final GestureTapCallback? onTapDelete;
+  final int? isSelected;
+  final GestureTapCallback? onTapSelected;
 
   const AddressItem({
     Key? key,
     this.name,
     this.address,
     this.phone,
-    this.value,
-    this.groupValue,
-    this.onChanged,
     this.onTapEdit,
     this.onTapDelete,
+    this.isSelected,
+    this.onTapSelected,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Radio(
-          value: value ?? 0,
-          groupValue: groupValue,
-          onChanged: onChanged,
-          activeColor: kMainRedColor.withOpacity(0.5),
+        InkWell(
+          onTap: onTapSelected,
+          child: Container(
+            width: 22,
+            height: 22,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: k666666,
+                width: 1,
+              ),
+              color: isSelected == 1 ? Colors.white : Colors.transparent,
+            ),
+            child: isSelected == 1
+                ? Center(
+              child: Container(
+                width: 12,
+                height: 12,
+                decoration:  BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: kMainDarkColor.withOpacity(0.5),
+                ),
+              ),
+            )
+                : null,
+          ),
         ),
-        // child ?? const SizedBox(),
+        const SizedBox(
+          width: 20,
+        ),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,6 +90,9 @@ class AddressItem extends StatelessWidget {
               ),
             ],
           ),
+        ),
+        const SizedBox(
+          width: 8,
         ),
         InkWell(
           onTap: onTapEdit,

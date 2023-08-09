@@ -9,7 +9,8 @@ import 'package:shop_cake/src/address/ui/update_address_page.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
 
 class AddressPage extends StatefulWidget {
-  const AddressPage({Key? key}) : super(key: key);
+  final VoidCallback? callback;
+  const AddressPage({Key? key, this.callback}) : super(key: key);
 
   @override
   State<AddressPage> createState() => _AddressPageState();
@@ -17,12 +18,12 @@ class AddressPage extends StatefulWidget {
 
 class _AddressPageState extends State<AddressPage> {
   final GetAddressCubit addressCubit = GetAddressCubit();
-  int selectedValue = 0;
   int idAddress = 0;
   String? province;
   String? district = '';
   String? ward = '';
   String? detailAddress = '';
+  int selectedValue = 0;
 
   @override
   void initState() {
@@ -44,11 +45,24 @@ class _AddressPageState extends State<AddressPage> {
               color: kMainRedColor,
             ),
           ),
+          leading: IconButton(
+            onPressed: () async {
+              Future.delayed(const Duration(milliseconds: 200), () {
+                Navigator.pop(context);
+              });
+              widget.callback?.call();
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: kMainWhiteColor,
+            ),
+          ),
           actions: [
             selectedValue != 0
                 ? TextButton(
-                    onPressed: () {
-                      // addressCubit.deleteAddress(idAddress);
+                    onPressed: () async{
+                     await addressCubit.changeDefaultAddress(id: idAddress);
+                     addressCubit.getAddress();
                     },
                     child: Text(
                       'Lưu',
@@ -82,133 +96,191 @@ class _AddressPageState extends State<AddressPage> {
                     child: CircularProgressIndicator(),
                   );
                 } else if (state is GetAddressSuccess) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Text(
-                        'Tất cả địa chỉ',
-                        style: GoogleFonts.roboto(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
+                  if (state.address != null && state.address!.isNotEmpty) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 16,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: state.address?.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          // state.address?[index].address = detailAddress;
-                          return Column(
-                            children: [
-                              12.spaceHeight,
-                              AddressItem(
-                                name: 'Đặng Văn Tiến',
-                                address: state.address?[index].address,
-                                phone: state.address?[index].phone,
-                                value: index,
-                                groupValue: selectedValue,
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedValue = value as int;
-                                    idAddress = state.address?[index].id as int;
-                                  });
-                                },
-                                onTapEdit: () {
-                                  NavigatorManager.push(
-                                    context,
-                                    UpdateAddressPage(
-                                      address: state.address?[index].address,
-                                      phone: state.address?[index].phone,
-                                      fullName: 'Đặng Văn Tiến',
-                                    ),
-                                  );
-                                },
-                                onTapDelete: () async {
-                                  await addressCubit.deleteAddress(
-                                      id: state.address?[index].id);
+                        Text(
+                          'Tất cả địa chỉ',
+                          style: GoogleFonts.roboto(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: state.address?.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  12.spaceHeight,
+                                  AddressItem(
+                                    name: 'Đặng Văn Tiến',
+                                    address:
+                                        state.address?[index].address,
+                                    phone: state.address?[index].phone,
+                                    isSelected: state.address?[index].status == 1
+                                        ? 1
+                                        : 0,
+                                    onTapSelected: () {
+                                      setState(() {
+                                        for (int i = 0; i < state.address!.length; i++) {
+                                          if (state.address![i].id == state.address![index].id) {
+                                            state.address![i].status = 1; // Đánh dấu đối tượng được chọn (1)
+                                            idAddress = state.address![i].id!;
+                                            selectedValue = state.address![index].status!;
+                                          } else {
+                                            state.address![i].status = 0;// Đánh dấu các đối tượng khác không được chọn (0)
+                                            selectedValue = state.address![index].status!;
+                                          }
+                                        }
+                                      });
+                                    },
+                                    onTapEdit: () {
+                                      NavigatorManager.push(
+                                        context,
+                                        UpdateAddressPage(
+                                          address: state
+                                              .address?[index].address,
+                                          phone:
+                                              state.address?[index].phone,
+                                          fullName: 'Đặng Văn Tiến',
+                                          id: state.address?[index].id,
+                                        ),
+                                      );
+                                    },
+                                    onTapDelete: () async {
+                                      await addressCubit.deleteAddress(
+                                          id: state.address?[index].id);
+                                      addressCubit.getAddress();
+                                    },
+                                  ),
+                                ],
+                              );
+                            // } else {
+                            //   return const SizedBox(); // Trả về widget trống nếu danh sách rỗng hoặc vị trí index không hợp lệ
+                            // }
+                          },
+                        ),
+                        32.spaceHeight,
+                        InkWell(
+                          onTap: () {
+                            NavigatorManager.push(
+                              context,
+                              CreateNewAddressPage(
+                                callback: () {
                                   addressCubit.getAddress();
                                 },
-                                // child: Radio(
-                                //   value: index,
-                                //   groupValue: selectedValue,
-                                //   onChanged: (value) {
-                                //     setState(() {
-                                //       selectedValue = value as int;
-                                //       print('selectedValue $selectedValue');
-                                //       print(
-                                //           'Value Address ${state.address?[index].id.runtimeType}');
-                                //       idAddress =
-                                //           state.address?[index].id as int;
-                                //     });
-                                //   },
-                                //   activeColor: kMainRedColor,
-                                //   focusNode: FocusNode(),
-                                // ),
                               ),
-                              12.spaceHeight,
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 24),
-                                child: Divider(
-                                    thickness: 0.5, color: kMainDarkGreyColor),
-                              )
-                            ],
-                          );
-                        },
-                      ),
-                      32.spaceHeight,
-                      InkWell(
-                        onTap: () {
-                          NavigatorManager.push(
-                            context,
-                             CreateNewAddressPage(
-                              callback: () {
-                                addressCubit.getAddress();
-                              },
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 4, horizontal: 12),
+                            decoration: BoxDecoration(
+                              border:
+                                  Border.all(width: 0.5, color: kMainRedColor),
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                          );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 4, horizontal: 12),
-                          decoration: BoxDecoration(
-                            border:
-                                Border.all(width: 0.5, color: kMainRedColor),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Center(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                16.spaceWidth,
-                                const Icon(
-                                  Icons.add,
-                                  color: kMainRedColor,
-                                ),
-                                Text(
-                                  'Thêm địa chỉ mới',
-                                  style: GoogleFonts.roboto(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
+                            child: Center(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  16.spaceWidth,
+                                  const Icon(
+                                    Icons.add,
                                     color: kMainRedColor,
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    'Thêm địa chỉ mới',
+                                    style: GoogleFonts.roboto(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: kMainRedColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    );
+                  } else {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        Center(
+                          child: Text(
+                            'Chưa có địa chỉ nào',
+                            style: GoogleFonts.roboto(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: kMainGreyColor,
                             ),
                           ),
                         ),
-                      )
-                    ],
-                  );
+                        32.spaceHeight,
+                        InkWell(
+                          onTap: () {
+                            NavigatorManager.push(
+                              context,
+                              CreateNewAddressPage(
+                                callback: () {
+                                  addressCubit.getAddress();
+                                },
+                              ),
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 4, horizontal: 12),
+                            decoration: BoxDecoration(
+                              border:
+                                  Border.all(width: 0.5, color: kMainRedColor),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Center(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  16.spaceWidth,
+                                  const Icon(
+                                    Icons.add,
+                                    color: kMainRedColor,
+                                  ),
+                                  Text(
+                                    'Thêm địa chỉ mới',
+                                    style: GoogleFonts.roboto(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: kMainRedColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    );
+                  }
                 } else {
                   return const Center(
                     child: Text('Lỗi'),

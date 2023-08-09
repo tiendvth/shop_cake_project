@@ -1,6 +1,7 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_cake/common/config/format_date.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/network/network_manager.dart';
@@ -191,6 +192,23 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
                             CLabel(
                               image: Assets.icEmail,
                               title: '${state.data['email'] ?? ''}',
+                              // title: 'tiendv@gmail.com',
+                              color: true,
+                              colorText: false,
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            const Divider(
+                              thickness: 0.1,
+                              color: kF2F4B4E,
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            CLabel(
+                              image: Assets.icBirthday,
+                              title: FormatDate.dateFormat(state.data['birthday'] ?? ''),
                               // title: 'tiendv@gmail.com',
                               color: true,
                               colorText: false,

@@ -16,10 +16,13 @@ class AddressImpl implements AddressRepository {
       name: '',
     );
     try {
-      final response = await _dio.post('/api/deliveryAddress/getAll', data: addressRequest);
+      final response =
+          await _dio.post('/api/deliveryAddress/getAll', data: addressRequest);
       if (response.statusCode == 200) {
         final addressResponse = Address.fromJson(response.data);
         return addressResponse.data?.result ?? [];
+      } else if (response.statusCode == 200 && response.data['code'] == 204) {
+        return [];
       } else {
         throw Exception('Failed to load address');
       }
@@ -29,14 +32,16 @@ class AddressImpl implements AddressRepository {
   }
 
   @override
-  Future<bool> createAddress(String? name, String? phone, String? address) async {
+  Future<bool> createAddress(
+      String? name, String? phone, String? address) async {
     final addressRequest = AddressRequest(
       name: name,
       address: address,
       phone: phone,
     );
     try {
-      final response = await _dio.post('/api/deliveryAddress/create', data: addressRequest);
+      final response =
+          await _dio.post('/api/deliveryAddress/create', data: addressRequest);
       if (response.statusCode == 200) {
         return true;
       } else {
@@ -48,14 +53,16 @@ class AddressImpl implements AddressRepository {
   }
 
   @override
-  Future<bool> updateAddress(String? name, String? phone, String? address, int? id) async {
+  Future<bool> updateAddress(
+      {String? name, String? phone, String? address, int? id}) async {
     final addressRequest = AddressRequest(
       name: name,
       address: address,
       phone: phone,
     );
     try {
-      final response = await _dio.post('/api/deliveryAddress/update/$id', data: addressRequest);
+      final response = await _dio.post('/api/deliveryAddress/update/$id',
+          data: addressRequest);
       if (response.statusCode == 200) {
         return true;
       } else {
@@ -74,6 +81,23 @@ class AddressImpl implements AddressRepository {
         return true;
       } else {
         throw Exception('Failed to delete address');
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  @override
+  Future<bool> changeDefaultAddress(int id) async {
+    try {
+      final response = await _dio.post(
+        '/api/deliveryAddress/procedure/$id',
+        data: {'procedure': "hoạt động"},
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw Exception('Failed to change default address');
       }
     } catch (e) {
       throw e;
