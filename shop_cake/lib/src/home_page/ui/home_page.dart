@@ -1,7 +1,7 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:group_button/group_button.dart';
+import 'package:shop_cake/common/config/string_service.dart';
 import 'package:shop_cake/common/config_read_file.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/src/detail_food/ui/detail_food_page.dart';
@@ -15,6 +15,8 @@ import 'package:shop_cake/src/list_food/bloc/category_cubit.dart';
 import 'package:shop_cake/src/list_food/bloc/list_food_cubit.dart';
 import 'package:shop_cake/src/list_food/bloc/list_price_filter_cubit.dart';
 import 'package:shop_cake/src/list_food/components/item_card.dart';
+import 'package:shop_cake/src/list_food/ui/list_promotion_screen.dart';
+import 'package:shop_cake/src/special_product/ui/special_product_screen.dart';
 
 import '../../../common/config/format_price.dart';
 
@@ -31,7 +33,8 @@ class _HomePageState extends State<HomePage> {
   final HomeCubit homeCubit = HomeCubit();
   final ListSpecialCubit listSpecialCubit = ListSpecialCubit();
   final ListPriceFilterCubit listPriceFilterCubit = ListPriceFilterCubit();
-  final controller = GroupButtonController();
+
+  // final controller = GroupButtonController();
   final priceFilterCubit = ListPriceFilterCubit();
   int? priceFrom = 0;
   int? priceTo = 0;
@@ -156,40 +159,41 @@ class _HomePageState extends State<HomePage> {
             //     }
             //   },
             // ),
-            Body(
-              childCategories: BlocBuilder<CategoryCubit, CategoryState>(
-                builder: (context, state) {
-                  if (state is CategorySuccess) {
-                    return state.data['result'].length > 0
-                        ? SizedBox(
-                            height: 40,
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: state.data['result'].length,
-                              itemBuilder: (context, index) {
-                                return Categories(
-                                  title: state.data['result'][index]['name'],
-                                  onTap: () {
-                                    NavigatorManager.pushFullScreen(
-                                      context,
-                                       ListCakeCategoryDetailPage(
-                                        id: state.data['result'][index]['id'],
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          )
-                        : const SizedBox();
-                  } else {
-                    return const SizedBox();
-                  }
-                },
-              ),
-              child: RefreshIndicator(
-                onRefresh: _refresh,
+            RefreshIndicator(
+              color: kMainDarkColor,
+              onRefresh: _refresh,
+              child: Body(
+                childCategories: BlocBuilder<CategoryCubit, CategoryState>(
+                  builder: (context, state) {
+                    if (state is CategorySuccess) {
+                      return state.data['result'].length > 0
+                          ? SizedBox(
+                              height: 40,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: state.data['result'].length,
+                                itemBuilder: (context, index) {
+                                  return Categories(
+                                    title: state.data['result'][index]['name'],
+                                    onTap: () {
+                                      NavigatorManager.pushFullScreen(
+                                        context,
+                                        ListCakeCategoryDetailPage(
+                                          id: state.data['result'][index]['id'],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            )
+                          : const SizedBox();
+                    } else {
+                      return const SizedBox();
+                    }
+                  },
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -198,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Expanded(
                           child: Text(
-                            "Sản phẩm hot nhất",
+                            "Sản phẩm khuyến mãi",
                             style: GoogleFonts.roboto(
                               textStyle: const TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -208,13 +212,21 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        Text(
-                          "Xem thêm",
-                          style: GoogleFonts.roboto(
-                            textStyle: const TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 14,
-                              color: Colors.grey,
+                        InkWell(
+                          onTap: () {
+                            NavigatorManager.push(
+                              context,
+                              const ListPromotionScreen(),
+                            );
+                          },
+                          child: Text(
+                            "Xem thêm",
+                            style: GoogleFonts.roboto(
+                              textStyle: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 14,
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
                         ),
@@ -229,7 +241,7 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 12),
                     BlocBuilder<ListFoodCubit, ListFoodState>(
                       builder: (context, state) {
-                        if (state is ListSpecialLoading) {
+                        if (state is ListFoodLoading) {
                           return const Center(
                             child: CircularProgressIndicator(
                               color: kMainColor,
@@ -238,52 +250,74 @@ class _HomePageState extends State<HomePage> {
                         } else if (state is ListFoodSuccess &&
                             state.data['result'] != null &&
                             state.data['result'].length > 0) {
+                          // lọc ra toàn bộ sản phẩm có discount
+                          List<dynamic> listDiscount = [];
+                          for (int i = 0; i < state.data['result'].length; i++) {
+                            if (state.data['result'][i]['discount'] != null) {
+                              listDiscount.add(state.data['result'][i]);
+                            }
+                          }
                           return GridView.custom(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             padding: EdgeInsets.zero,
                             gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               mainAxisSpacing: 12,
                               crossAxisSpacing: 12,
                               childAspectRatio: 0.7,
                             ),
                             childrenDelegate: SliverChildBuilderDelegate(
-                              (context, index) => ItemCard(
-                                isPromotion: true,
-                                imageUrl: ReadFile.readFile(
-                                    state.data['result'][index]['image']),
-                                title: state.data['result'][index]['name'],
-                                price: FormatPrice.formatVND(
-                                    DiscountCake.discountCake(0.0,
-                                        state.data['result'][index]['price'])),
-                                addToCart: () {
-                                  listFoodCubit.addFoodToOrder(
-                                    context,
-                                    cakeId: state.data['result'][index]
-                                        ['cakeId'],
-                                    quantity: state.data['result'][index]
-                                            ['quantity'] ??
-                                        1,
-                                  );
-                                },
-                                onTap: () {
-                                  NavigatorManager.pushFullScreen(
+                                  (context, index) {
+                                // lấy ra các sản phẩm có discount
+                                return ItemCard(
+                                  title: listDiscount[index]['name'],
+                                  imageUrl: ReadFile.readFile(
+                                      listDiscount[index]['image']),
+                                  isPromotion: true,
+                                  promotionSale:
+                                  'Sale ${StringService.formatDiscount(
+                                    listDiscount[index]['discount'],)}%',
+                                  onTap: () {
+                                    NavigatorManager.push(
                                       context,
                                       DetailFood(
-                                        id: state.data['result'][index]['id'] ??
-                                            '',
-                                        detail: state.data['result'][index],
-                                      ));
-                                },
-                              ),
-                              childCount: state.data['result'].length > 4
+                                        id: listDiscount[index]['id'],
+                                        detail: listDiscount[index],
+                                      ),
+                                    );
+                                  },
+                                );
+                                // return ItemCard(
+                                //   // id: state.data['result'][i]['id'],
+                                //   // name: state.data['result'][i]['name'],
+                                //   // price: state.data['result'][i]['price'],
+                                //   // discount: state.data['result'][i]['discount'],
+                                //   // image: state.data['result'][i]['image'],
+                                //   title: state.data['result'][index]['name'],
+                                //   imageUrl: ReadFile.readFile(
+                                //       state.data['result'][index]['image']),
+                                //   isPromotion: true,
+                                //   promotionSale:
+                                //       'Sale ${StringService.formatDiscount(state.data['result'][index]['discount'])}%',
+                                //   onTap: () {
+                                //     NavigatorManager.push(
+                                //       context,
+                                //       DetailFood(
+                                //         id: state.data['result'][index]['id'],
+                                //         detail: state.data['result'][index],
+                                //       ),
+                                //     );
+                                //   },
+                                // );
+                              },
+                              childCount: listDiscount.length > 4
                                   ? 4
-                                  : state.data['result'].length ?? 0,
+                                  : listDiscount.length,
                             ),
                           );
-                        } else {
+                        }  else {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 32),
                             child: Center(
@@ -317,13 +351,21 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        Text(
-                          "Xem thêm",
-                          style: GoogleFonts.roboto(
-                            textStyle: const TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 14,
-                              color: Colors.grey,
+                        InkWell(
+                          onTap: () {
+                            NavigatorManager.push(
+                              context,
+                              const SpecialProductScreen(),
+                            );
+                          },
+                          child: Text(
+                            "Xem thêm",
+                            style: GoogleFonts.roboto(
+                              textStyle: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 14,
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
                         ),
@@ -352,7 +394,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             childrenDelegate: SliverChildBuilderDelegate(
                               (context, index) => ItemCard(
-                                isPromotion: true,
+                                // isPromotion: true,
                                 imageUrl: ReadFile.readFile(
                                     stateSpecial.data['data'][index]['image']),
                                 title: stateSpecial.data['data'][index]['name'],

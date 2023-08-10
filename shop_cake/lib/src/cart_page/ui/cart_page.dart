@@ -414,7 +414,9 @@ class _CartPageState extends State<CartPage> {
                 );
               } else if (stateListCake is ListCardLoading) {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    color: kMainColor,
+                  ),
                 );
               } else if (stateListCake is ListCardFailure) {
                 return const AppbarCartWidget();

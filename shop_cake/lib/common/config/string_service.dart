@@ -46,4 +46,12 @@ class StringService {
 
     return trimmedParts;
   }
+  static String formatDiscount(double discount) {
+    // format loại bỏ số 0 thừa
+    if (discount % 1 == 0) {
+      return discount.toStringAsFixed(0);
+    } else {
+      return discount.toStringAsFixed(1);
+    }
+  }
 }

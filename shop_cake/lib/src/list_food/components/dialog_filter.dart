@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_cake/constants/constants.dart';
 
-class DialogFilter extends StatefulWidget {
+class DialogFilter extends StatelessWidget {
   final String? priceFrom;
   final String? priceTo;
   final GestureTapCallback? onTap;
+  final GestureTapCallback? onTapClear;
   final Widget? child;
 
   const DialogFilter({
@@ -14,13 +15,9 @@ class DialogFilter extends StatefulWidget {
     this.priceTo,
     this.onTap,
     this.child,
+    this.onTapClear,
   }) : super(key: key);
 
-  @override
-  State<DialogFilter> createState() => _DialogFilterState();
-}
-
-class _DialogFilterState extends State<DialogFilter> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -59,7 +56,7 @@ class _DialogFilterState extends State<DialogFilter> {
               height: 16,
             ),
             Expanded(
-              child: widget.child!,
+              child: child!,
             ),
             const SizedBox(
               height: 16,
@@ -69,9 +66,7 @@ class _DialogFilterState extends State<DialogFilter> {
               children: [
                 Expanded(
                   child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
+                    onTap: onTapClear,
                     child: Container(
                       height: 40,
                       decoration: BoxDecoration(
@@ -99,7 +94,7 @@ class _DialogFilterState extends State<DialogFilter> {
                 ),
                 Expanded(
                   child: InkWell(
-                    onTap: widget.onTap,
+                    onTap: onTap,
                     child: Container(
                       height: 40,
                       decoration: BoxDecoration(

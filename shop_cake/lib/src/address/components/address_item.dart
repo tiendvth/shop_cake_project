@@ -63,7 +63,7 @@ class AddressItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Nguyễn Văn A',
+                name ?? 'Nguyễn Văn A',
                 style: GoogleFonts.roboto(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,

@@ -60,11 +60,12 @@ class _ListCakeCategoryDetailPageState
             ),
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          child: RefreshIndicator(
-            onRefresh: _refresh,
-            child: SingleChildScrollView(
+        body: RefreshIndicator(
+          color: kMainColor,
+          onRefresh: _refresh,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -103,37 +104,64 @@ class _ListCakeCategoryDetailPageState
                             childAspectRatio: 0.7,
                           ),
                           childrenDelegate: SliverChildBuilderDelegate(
-                                (context, index) =>
-                                ItemCard(
-                                  isPromotion: true,
-                                  imageUrl: ReadFile.readFile(
-                                      state.data['data'][index]['image']),
-                                  title: state.data['data'][index]['name'],
-                                  price: FormatPrice.formatVND(
-                                      DiscountCake.discountCake(
-                                          0.0,
-                                          state.data['data'][index]['price'])),
-                                  addToCart: () {
-                                    listFoodCubit.addFoodToOrder(
-                                      context,
-                                      cakeId: state.data['data'][index]['id'],
-                                      quantity:
-                                      state.data['data'][index]['quantity'] ?? 1,
+                                (context, index) {
+                                if (state.data['data'][index]['discount'] == null){
+                                 return ItemCard(
+                                      imageUrl: ReadFile.readFile(
+                                          state.data['data'][index]['image']),
+                                      title: state.data['data'][index]['name'],
+                                      price: FormatPrice.formatVND(
+                                          state.data['data'][index]['price']),
+                                      addToCart: () {
+                                        listFoodCubit.addFoodToOrder(
+                                          context,
+                                          cakeId: state.data['data'][index]['id'],
+                                          quantity:
+                                          state.data['data'][index]['quantity'] ?? 1,
+                                        );
+                                      },
+                                      onTap: () {
+                                        NavigatorManager.pushFullScreen(
+                                            context,
+                                            DetailFood(
+                                              id: state.data['data'][index]['id'] ??
+                                                  '',
+                                              detail: state.data['data'][index],
+                                            ));
+                                      },
                                     );
-                                  },
-                                  onTap: () {
-                                    NavigatorManager.pushFullScreen(
-                                        context,
-                                        DetailFood(
-                                          id: state.data['data'][index]['id'] ??
-                                              '',
-                                          detail: state.data['data'][index],
-                                        ));
-                                  },
-                                ),
-                            childCount: state.data['data'].length > 4
-                                ? 4
-                                : state.data['data'].length ?? 0,
+                                  } else {
+                                    return ItemCard(
+                                      isPromotion: true,
+                                      promotionSale: state.data['data'][index]['discount'] ?? 0.0,
+                                      imageUrl: ReadFile.readFile(
+                                          state.data['data'][index]['image']),
+                                      title: state.data['data'][index]['name'],
+                                      price: FormatPrice.formatVND(
+                                          DiscountCake.discountCake(
+                                              0.0,
+                                              state.data['data'][index]['price'])),
+                                      addToCart: () {
+                                        listFoodCubit.addFoodToOrder(
+                                          context,
+                                          cakeId: state.data['data'][index]['id'],
+                                          quantity:
+                                          state.data['data'][index]['quantity'] ?? 1,
+                                        );
+                                      },
+                                      onTap: () {
+                                        NavigatorManager.pushFullScreen(
+                                            context,
+                                            DetailFood(
+                                              id: state.data['data'][index]['id'] ??
+                                                  '',
+                                              detail: state.data['data'][index],
+                                            ));
+                                      },
+                                    );
+                                }
+                                },
+                            childCount: state.data['data'].length,
                           ),
                         );
                       } else {

@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:group_button/group_button.dart';
 import 'package:shop_cake/common/config/format_price.dart';
 import 'package:shop_cake/common/badge_widget.dart';
+import 'package:shop_cake/common/config/string_service.dart';
 import 'package:shop_cake/common/config_read_file.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/color/colors.dart';
@@ -228,11 +229,18 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                                 '${FormatPrice.formatPriceToInt(e.priceFrom)} - ${FormatPrice.formatPriceToInt(e.priceTo)}')
                                             .toList(),
                                         onSelected: (index, value, isSelected) {
-                                          priceFrom =
-                                              statePrice.data[value].priceFrom;
-                                          priceTo =
-                                              statePrice.data[value].priceTo;
+                                          if (isSelected) {
+                                            priceFrom =
+                                                statePrice.data[value]
+                                                    .priceFrom;
+                                            priceTo = statePrice.data[value]
+                                                .priceTo;
+                                          } else {
+                                            priceFrom = null;
+                                            priceTo = null;
+                                          }
                                         },
+                                        enableDeselect: true,
                                         options: GroupButtonOptions(
                                           spacing: 8,
                                           unselectedTextStyle:
@@ -271,6 +279,9 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                       );
                                       Navigator.pop(context);
                                     },
+                                    onTapClear: () {
+                                      Navigator.pop(context);
+                                    },
                                   );
                                 },
                               );
@@ -306,6 +317,7 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                 stateListCake.data != null &&
                                 stateListCake.data['result'] != null) {
                               return RefreshIndicator(
+                                color: kMainDarkColor,
                                 onRefresh: _refresh,
                                 child: SingleChildScrollView(
                                   child: Padding(
@@ -373,7 +385,7 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                               }else {
                                                 return ItemCard(
                                                   isPromotion: true,
-                                                  promotionSale: 'Sale ${stateListCake.data['result'][index]['discount']}%',
+                                                  promotionSale: 'Sale ${StringService.formatDiscount(stateListCake.data['result'][index]['discount'])}%',
                                                   imageUrl: ReadFile.readFile(stateListCake.data['result'][index]['image']),
                                                   // '${ReadFile.url}'
                                                   //     '${stateListCake.data['result'][index]['image']}',
