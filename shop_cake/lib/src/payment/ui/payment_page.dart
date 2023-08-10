@@ -4,7 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_cake/common/config/format_price.dart';
 import 'package:shop_cake/common/config/format_text_to_number.dart';
+import 'package:shop_cake/common/config_read_file.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/constants/font_size/font_size.dart';
@@ -294,12 +296,15 @@ class _PaymentPageState extends State<PaymentPage> {
                                       return Column(
                                         children: [
                                           CartItem(
-                                            name: state.datas[index]['name'],
-                                            price: state.datas[index]['price'],
+                                            name: state.datas[index]['nameCake'],
+                                            price: FormatPrice.formatVND(
+                                                state.datas[index]
+                                                ['priceCake']),
                                             quantity: state.datas[index]
                                                 ['quantityShoppingCartTmt'],
-                                            imageUrl: state.datas[index]
-                                                ['image'],
+                                            imageUrl: ReadFile.readFile(
+                                                state.datas[index]
+                                                ['imageCake']),
                                           ),
                                           const SizedBox(
                                             height: 12,

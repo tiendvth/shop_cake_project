@@ -41,6 +41,7 @@ class Assets {
   static const String icTrash = 'assets/icon/icons_trash.png';
   static const String icCheck = 'assets/icon/icons_check.png';
   static const String icBirthday = 'assets/icon/icons_birthday.png';
+  static const String icSaleFire = 'assets/icon/icons_fire.png';
   static const String imgDefault = 'assets/images/default_thumbnail.png';
   static const String imgLogin = 'assets/images/bg_login3.png';
   ///Font

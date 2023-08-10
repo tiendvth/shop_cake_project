@@ -71,67 +71,32 @@ class ItemCard extends StatelessWidget {
                         },
                       ),
                     ),
-                    if (isPromotion == true)
-                      Positioned(
-                        bottom: 8,
-                        right: 40,
-                        left: 40,
-                        child: Container(
-                          height: 24,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                          ),
-                          decoration:  BoxDecoration(
-                            gradient: kGradientAppBar,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(12),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              promotionSale ?? " Sale 20%",
-                              style: GoogleFonts.roboto(
-                                color: kMainWhiteColor,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.center,
-                              maxLines: 1,
-                            ),
-                          ),
-                        ),
-                      ),
                   ],
                 ),
+                isPromotion == true ?
                 Align(
                   alignment: Alignment.topLeft,
                   child: Container(
-                      height: 25,
-                      width: 60,
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            kMainColor,
-                            kMainDarkColor,
-                          ],
-                        ),
-                        borderRadius: BorderRadius.only(
+                    width: 86,
+                    height: 25,
+                      decoration:  BoxDecoration(
+                        gradient: kGradientAppBar,
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(10),
                           bottomRight: Radius.circular(10),
                         ),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(
-                            Icons.star,
-                            color: kMainYellowColor,
-                            size: 15,
+                        children: [
+                          Image.asset(
+                            Assets.icSaleFire,
+                            width: 20,
+                            height: 20,
                           ),
-                          Text(
-                            "4.8",
-                            style: TextStyle(
+                           Text(
+                             promotionSale ?? '',
+                            style:  GoogleFonts.roboto(
                               color: Colors.white,
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -139,7 +104,7 @@ class ItemCard extends StatelessWidget {
                           ),
                         ],
                       )),
-                )
+                ) : const SizedBox(),
               ],
             ),
             const SizedBox(

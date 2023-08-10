@@ -125,7 +125,7 @@ class _AddressPageState extends State<AddressPage> {
                                 children: [
                                   12.spaceHeight,
                                   AddressItem(
-                                    name: 'Đặng Văn Tiến',
+                                    name: state.address?[index].name,
                                     address:
                                         state.address?[index].address,
                                     phone: state.address?[index].phone,
@@ -154,7 +154,8 @@ class _AddressPageState extends State<AddressPage> {
                                               .address?[index].address,
                                           phone:
                                               state.address?[index].phone,
-                                          fullName: 'Đặng Văn Tiến',
+                                          fullName: state
+                                              .address?[index].name,
                                           id: state.address?[index].id,
                                         ),
                                       );

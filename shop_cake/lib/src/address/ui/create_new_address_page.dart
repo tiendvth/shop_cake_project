@@ -53,7 +53,7 @@ class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
         appBar: AppBar(
           title: Text('Thêm địa chỉ mới',
               style: GoogleFonts.roboto(
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: FontWeight.w700,
                 color: kMainRedColor,
               )),
@@ -163,7 +163,9 @@ class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
                     builder: (context, state) {
                       if (state is GetAddressLoading) {
                         return const Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            color: kMainRedColor,
+                          ),
                         );
                       } else if (state is GetLocationSuccess) {
                         List<Locations>? locations = state.locations!;
@@ -373,9 +375,15 @@ class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
                             ),
                           ],
                         );
-                      } else {
+                      } else if (state is GetLocationFailed) {
                         return const Center(
                           child: Text('Lỗi'),
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: kMainColor,
+                          ),
                         );
                       }
                     },
