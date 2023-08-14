@@ -8,12 +8,12 @@ part 'my_order_state.dart';
 class MyOrderCubit extends Cubit<MyOrderState> {
   final MyOderRepository _myOderRepository;
   // final List<String> items = ["PENDING", "PROCESSING", "CANCEL", "DONE"];
-  final List<String> items = ['Order được tạo mới',
-                              'Order được xác nhận',
-                              'Order đang được giao',
-                              'Order hoàn thành',
-                              'Order bị từ chối'];
-  String selectedValue = "Order được tạo mới";
+  final List<String> items = ['Chờ xác nhận',
+                              'Đã xác nhận',
+                              'Đang giao hàng',
+                              'Đã giao hàng',
+                              'Đã hủy'];
+  String selectedValue = "Chờ xác nhận";
   int selectIndex = 1;
 
   MyOrderCubit(this._myOderRepository) : super(MyOrderInitial()) {

@@ -90,6 +90,15 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
               ),
             ),
           ),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: kMainDarkColor,
+            ),
+          ),
           elevation: 0,
           title: Text(
             "Chỉnh sửa thông tin cá nhân",

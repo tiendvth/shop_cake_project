@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shop_cake/common/badge_widget.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/src/address/bloc/get_address_cubit.dart';
@@ -122,15 +121,12 @@ class _CreateMyOrderPageState extends State<CreateMyOrderPage> {
                             ),
                           ),
                         ),
-                        Badge(
-                          value: '3',
-                          child: InkWell(
-                            onTap: () {},
-                            child: const CImage(
-                              assetsPath: Assets.icNotification,
-                              height: 24,
-                              width: 24,
-                            ),
+                        InkWell(
+                          onTap: () {},
+                          child: const CImage(
+                            assetsPath: Assets.icNotification,
+                            height: 24,
+                            width: 24,
                           ),
                         ),
                         const SizedBox(

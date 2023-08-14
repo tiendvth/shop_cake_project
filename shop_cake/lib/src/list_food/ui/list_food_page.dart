@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:group_button/group_button.dart';
 import 'package:shop_cake/common/config/format_price.dart';
-import 'package:shop_cake/common/badge_widget.dart';
 import 'package:shop_cake/common/config/string_service.dart';
 import 'package:shop_cake/common/config_read_file.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
@@ -16,6 +15,7 @@ import 'package:shop_cake/firebase/setup_firebase.dart';
 import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/detail_food/ui/detail_food_page.dart';
 import 'package:shop_cake/src/detail_my_order/ui/detail_my_order_page.dart';
+import 'package:shop_cake/src/favourite/bloc/favourite_cubit.dart';
 import 'package:shop_cake/src/list_food/bloc/list_price_filter_cubit.dart';
 import 'package:shop_cake/src/list_food/components/dialog_filter.dart';
 import 'package:shop_cake/src/list_food/components/item_card.dart';
@@ -37,6 +37,7 @@ class ListFoodPage extends StatefulWidget {
 class _ListFoodPageState extends State<ListFoodPage> {
   final listFoodCubit = ListFoodCubit();
   final listCategoryCubit = CategoryCubit();
+  final favouriteCubit = FavouriteCubit();
   final homeRepository = HomeRepositoryImpl(apiProvider);
   final controller = GroupButtonController();
   final searchController = TextEditingController();
@@ -44,6 +45,7 @@ class _ListFoodPageState extends State<ListFoodPage> {
   final searchFocusNode = FocusNode();
   int? priceFrom = 0;
   int? priceTo = 0;
+  bool? isFavorite = false;
 
   get state => null;
 
@@ -163,15 +165,12 @@ class _ListFoodPageState extends State<ListFoodPage> {
                             ),
                           ),
                         ),
-                        Badge(
-                          value: '3',
-                          child: InkWell(
-                            onTap: () {},
-                            child: const CImage(
-                              assetsPath: Assets.icNotification,
-                              height: 24,
-                              width: 24,
-                            ),
+                        InkWell(
+                          onTap: () {},
+                          child: const CImage(
+                            assetsPath: Assets.icNotification,
+                            height: 24,
+                            width: 24,
                           ),
                         ),
                         const SizedBox(
@@ -203,7 +202,7 @@ class _ListFoodPageState extends State<ListFoodPage> {
                               Icons.search_outlined,
                               color: Colors.grey,
                             ),
-                            hintText: 'Tìm kiếm sản phẩm',
+                            hintText: 'Tìm kiếm sản phẩm...',
                             listFoodCubit: listFoodCubit,
                             onChanged: (value) {
                               listFoodCubit.getListFood(
@@ -350,7 +349,21 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                                   //     stateListCake.data['result']
                                                   //         [index]['price']),
                                                   price: FormatPrice.formatVND(
-                                                      DiscountCake.discountCake(0.0, stateListCake.data['result'][index]['price'])),
+                                                      stateListCake.data['result'][index]['price']),
+                                                  priceSale:  FormatPrice.formatVND(
+                                                      stateListCake.data['result'][index]['price']),
+                                                  isFav: stateListCake.data['result'][index]['isFav'],
+                                                  onTapFav: () {
+                                                    if (isFavorite!) {
+                                                      favouriteCubit.removeFavourite(id:
+                                                      stateListCake.data['result'][index]['id'],
+                                                      );
+                                                    } else {
+                                                      favouriteCubit.addFavourite(id:
+                                                      stateListCake.data['result'][index]['id'],
+                                                      );
+                                                    }
+                                                  },
                                                   onTap: () {
                                                     NavigatorManager.pushFullScreen(
                                                         context,
@@ -395,9 +408,24 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                                   // price: FormatPrice.formatVND(
                                                   //     stateListCake.data['result']
                                                   //         [index]['price']),
+                                                  isCheckShowPriceSale: stateListCake.data['result'][index]['discount'] != null ? true : false,
                                                   price: FormatPrice.formatVND(
+                                                          stateListCake.data['result'][index]['price']),
+                                                  priceSale: FormatPrice.formatVND(
                                                       DiscountCake.discountCake(stateListCake.data['result'][index]['discount'],
                                                           stateListCake.data['result'][index]['price'])),
+                                                  isFav: stateListCake.data['result'][index]['isFav'],
+                                                  onTapFav: () {
+                                                    if (isFavorite!) {
+                                                      favouriteCubit.removeFavourite(id:
+                                                      stateListCake.data['result'][index]['id'],
+                                                      );
+                                                    } else {
+                                                      favouriteCubit.addFavourite(id:
+                                                      stateListCake.data['result'][index]['id'],
+                                                      );
+                                                    }
+                                                  },
                                                   onTap: () {
                                                     NavigatorManager.pushFullScreen(
                                                         context,

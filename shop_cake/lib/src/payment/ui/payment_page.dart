@@ -373,7 +373,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                                     await showDatePicker(
                                                   context: context,
                                                   initialDate: DateTime.now(),
-                                                  firstDate: DateTime(1900),
+                                                  firstDate: DateTime.now(),
                                                   lastDate: DateTime(2100),
                                                   builder:
                                                       (BuildContext context,
@@ -577,7 +577,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                           children: [
                                             Expanded(
                                               child: stateAddress.address !=
-                                                      null
+                                                      null && stateAddress
+                                                              .address!.isNotEmpty
                                                   ? Text(
                                                       // lấy ra địa chỉ có status = 1
                                                       stateAddress.address!
@@ -821,9 +822,22 @@ class _PaymentPageState extends State<PaymentPage> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 4),
+                          Container(
+                            padding: const EdgeInsets.only(
+                              left: 16,
+                              right: 16,
+                              top: 16,
+                              bottom: 16,
+                            ),
+                            decoration:  BoxDecoration(
+                              color: Colors.transparent,
+                              border: Border(
+                                top: BorderSide(
+                                  color: k9B9B9B.withOpacity(0.2),
+                                  width: 0.5,
+                                ),
+                              ),
+                            ),
                             child: Column(
                               children: [
                                 CButton(
@@ -846,7 +860,11 @@ class _PaymentPageState extends State<PaymentPage> {
                                       showToast('Vui lòng chọn ngày');
                                     } else if (timeController.text.isEmpty) {
                                       showToast('Vui lòng chọn giờ');
-                                    } else {
+                                    } else if (stateAddress.address!
+                                        .where((element) => element.status == 1).isEmpty || stateAddress.address!.isEmpty || stateAddress.address == null) {
+                                      showToast('Vui lòng chọn địa chỉ');
+                                    }
+                                    else {
                                       final date =
                                           '${dateController.text} ${timeController.text}';
                                       await paymentCubit.callApiPayment(
@@ -867,7 +885,6 @@ class _PaymentPageState extends State<PaymentPage> {
                                         widget.callback!();
                                       });
                                     }
-
                                     // Navigator.pop(context);
                                     // widget.callback!();
                                   },

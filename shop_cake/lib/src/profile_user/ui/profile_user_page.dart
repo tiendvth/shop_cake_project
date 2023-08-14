@@ -11,7 +11,8 @@ import 'package:shop_cake/src/profile_user/repository/repository.dart';
 import 'package:shop_cake/src/profile_user/ui/update_profile_page.dart';
 
 class ProfileUserPage extends StatefulWidget {
-  const ProfileUserPage({Key? key}) : super(key: key);
+  final VoidCallback? onPopCallback;
+  const ProfileUserPage({Key? key, this.onPopCallback}) : super(key: key);
 
   @override
   State<ProfileUserPage> createState() => _ProfileUserPageState();
@@ -43,6 +44,16 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
             ),
           ),
         ),
+          leading: IconButton(
+            onPressed: () {
+              widget.onPopCallback?.call();
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: kMainDarkColor,
+            ),
+          ),
         elevation: 0,
         title: Text(
           "Thông tin cá nhân",
@@ -73,7 +84,7 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(bottom: 10),
+                              padding: const EdgeInsets.only(bottom: 10),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -85,7 +96,7 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
                                         width: 84,
                                         child: ClipOval(
                                           child: Image.network(
-                                              'https://img.freepik.com/premium-vector/man-avatar-profile-round-icon_24640-14044.jpg?w=2000'),
+                                              'https://inanh.net/wp-content/uploads/2020/07/chup-anh-chan-dung-dep-4.png'),
                                         ),
                                       ),
                                       Positioned(
@@ -208,7 +219,7 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
                             ),
                             CLabel(
                               image: Assets.icBirthday,
-                              title: FormatDate.dateFormat(state.data['birthday'] ?? ''),
+                              title: FormatDate.dateFormat(state.data['birthday'] ?? 'Chưa cập nhật'),
                               // title: 'tiendv@gmail.com',
                               color: true,
                               colorText: false,

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/src/list_food/bloc/list_food_cubit.dart';
@@ -7,6 +8,7 @@ import 'package:shop_cake/src/list_food/bloc/list_food_cubit.dart';
 class InputSearch extends StatefulWidget {
   final TextEditingController? controller;
   final String? hintText;
+
   final bool fieldPassword;
   final String? labelText;
   final Widget? prefixIcon;
@@ -57,24 +59,39 @@ class _InputSearchState extends State<InputSearch> {
       child: TextField(
         controller: widget.controller,
         obscureText: _obscureText ?? false,
-        style: const TextStyle(fontSize: 15),
+        style: GoogleFonts.roboto(
+          fontWeight: FontWeight.w400,
+          fontSize: 14,
+          color: FontColor.colorText231F20,
+        ),
         decoration: InputDecoration(
           labelText: widget.labelText,
-          labelStyle: const TextStyle(color: Colors.black, fontSize: 15),
+          labelStyle: const TextStyle(color: Colors.black, fontSize: 16),
           floatingLabelBehavior: FloatingLabelBehavior.always,
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           border: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.black),
+              borderSide: BorderSide(color: kMainColor, width: 1),
               borderRadius: BorderRadius.all(Radius.circular(16))),
           focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: kMainDarkColor),
+              borderRadius: BorderRadius.all(Radius.circular(16))),
+          disabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: kMainColor),
+              borderRadius: BorderRadius.all(Radius.circular(16))),
+          enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: kFFA6BD),
               borderRadius: BorderRadius.all(Radius.circular(16))),
           filled: true,
           prefixIcon: widget.prefixIcon,
           fillColor: Colors.white,
           iconColor: FontColor.color212121,
           hintText: widget.hintText,
+          hintStyle: GoogleFonts.roboto(
+            fontWeight: FontWeight.w400,
+            fontSize: 14,
+            color: FontColor.color979797,
+          ),
           suffixIcon: widget.fieldPassword
               ? _obscureText == true
                   ? InkWell(

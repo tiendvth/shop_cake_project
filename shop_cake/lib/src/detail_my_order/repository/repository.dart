@@ -15,8 +15,8 @@ class DetailMyOrderRepositoryImpl implements DetailMyOrderRepository{
   }
   @override
   Future<Map<String, dynamic>> canCel(int id, String canCelController,) async {
-    final result = await _dio.put('/api/v1/orders/$id', data: {
-      'id':id,
+    final result = await _dio.post('/api/order/procedure/$id', data: {
+      'procedure':'hủy',
       "reason": canCelController,
     });
     return result.data as Map<String, dynamic>;

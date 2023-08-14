@@ -41,6 +41,15 @@
 		<string>This app needs your location to test the location feature of the Google Maps location picker plugin.</string>
 		<key>io.flutter.embedded_views_preview</key>
 		<true/>
+		<key>LSApplicationQueriesSchemes</key>
+        <array>
+          <string>sms</string>
+          <string>tel</string>
+        </array>
+        <key>LSApplicationQueriesSchemes</key>
+        <array>
+          <string>comgooglemaps</string>
+        </array>
 		<key>NSAppTransportSecurity</key>
 		<dict>
 			<key>NSAllowsArbitraryLoads</key>

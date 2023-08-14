@@ -33,7 +33,7 @@ class UserAvatar extends StatelessWidget {
                   width: 65,
                   child: ClipOval(
                     child: Image.network(imageUrl ??
-                        'https://img.freepik.com/premium-vector/man-avatar-profile-round-icon_24640-14044.jpg?w=2000'),
+                        'https://inanh.net/wp-content/uploads/2020/07/chup-anh-chan-dung-dep-4.png'),
                   ),
                 ),
                 Positioned(

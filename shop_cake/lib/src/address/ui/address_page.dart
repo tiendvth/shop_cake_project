@@ -54,7 +54,7 @@ class _AddressPageState extends State<AddressPage> {
             },
             icon: const Icon(
               Icons.arrow_back_ios,
-              color: kMainWhiteColor,
+              color: kMainDarkColor,
             ),
           ),
           actions: [

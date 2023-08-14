@@ -1,7 +1,6 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_cake/common/badge_widget.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/network/network_manager.dart';
@@ -9,6 +8,7 @@ import 'package:shop_cake/src/Menu/components/label.dart';
 import 'package:shop_cake/src/Menu/components/user_avatar.dart';
 import 'package:shop_cake/src/address/ui/address_page.dart';
 import 'package:shop_cake/src/contact_Info/ui/contact_Info_page.dart';
+import 'package:shop_cake/src/favourite/ui/favourite_screen.dart';
 import 'package:shop_cake/src/my_order/ui/my_order_page.dart';
 import 'package:shop_cake/src/payment/ui/payment_methods_page.dart';
 import 'package:shop_cake/src/profile_user/bloc/profile_user_cubit.dart';
@@ -87,15 +87,12 @@ class _MenuScreenState extends State<MenuScreen> {
                               ),
                             ),
                           ),
-                          Badge(
-                            value: '3',
-                            child: InkWell(
-                              onTap: () {},
-                              child: const CImage(
-                                assetsPath: Assets.icNotification,
-                                height: 24,
-                                width: 24,
-                              ),
+                          InkWell(
+                            onTap: () {},
+                            child: const CImage(
+                              assetsPath: Assets.icNotification,
+                              height: 24,
+                              width: 24,
                             ),
                           ),
                           const SizedBox(
@@ -145,7 +142,11 @@ class _MenuScreenState extends State<MenuScreen> {
                           onTab: () {
                             NavigatorManager.push(
                               context,
-                              const ProfileUserPage(),
+                               ProfileUserPage(
+                                onPopCallback: () {
+                                  getProfile.getProfile();
+                                },
+                              ),
                             );
                           },
                         ),
@@ -179,10 +180,15 @@ class _MenuScreenState extends State<MenuScreen> {
                         const SizedBox(
                           height: 8,
                         ),
-                        const CLabel(
+                         CLabel(
                           title: "Yêu thích",
                           image: Assets.icLike,
-                          onTab: null,
+                          onTab: () {
+                            NavigatorManager.push(
+                              context,
+                              const FavouriteScreen(),
+                            );
+                          },
                         ),
                         const SizedBox(
                           height: 8,

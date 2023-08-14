@@ -54,6 +54,7 @@ dependencies:
   geolocator: ^9.0.2
   google_maps_flutter: ^2.0.9
   location: ^4.2.3
+  url_launcher: ^6.0.12
 
   common:
     path: ../

@@ -20,6 +20,15 @@ class PaymentMethodPage extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: kMainDarkColor,
+          ),
+        ),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
@@ -46,191 +55,189 @@ class PaymentMethodPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            Container(
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: kMainWhiteColor,
-                      border:
-                          Border.all(color: kMainGreyColor.withOpacity(0.8)),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 16),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16),
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                Assets.icCard,
-                                width: 40,
-                                height: 40,
-                              ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Thanh toán bằng thẻ ngân hàng',
-                                      style: GoogleFonts.roboto(
-                                        color: kMainDarkColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      'Thanh toán bằng thẻ ngân hàng',
-                                      style: GoogleFonts.roboto(
-                                        color: kMainGreyColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                              const Icon(
-                                Icons.check_circle,
+            Column(
+              children: [
+                // Container(
+                //   decoration: BoxDecoration(
+                //     color: kMainWhiteColor,
+                //     border:
+                //         Border.all(color: kMainGreyColor.withOpacity(0.8)),
+                //   ),
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       const SizedBox(height: 16),
+                //       Padding(
+                //         padding: const EdgeInsets.symmetric(
+                //             horizontal: 16),
+                //         child: Row(
+                //           children: [
+                //             Image.asset(
+                //               Assets.icCard,
+                //               width: 40,
+                //               height: 40,
+                //             ),
+                //             const SizedBox(width: 16),
+                //             Expanded(
+                //               child: Column(
+                //                 crossAxisAlignment: CrossAxisAlignment.start,
+                //                 children: [
+                //                   Text(
+                //                     'Thanh toán bằng thẻ ngân hàng',
+                //                     style: GoogleFonts.roboto(
+                //                       color: kMainDarkColor,
+                //                       fontSize: 14,
+                //                       fontWeight: FontWeight.w600,
+                //                     ),
+                //                   ),
+                //                   const SizedBox(height: 4),
+                //                   Text(
+                //                     'Thanh toán bằng thẻ ngân hàng',
+                //                     style: GoogleFonts.roboto(
+                //                       color: kMainGreyColor,
+                //                       fontSize: 12,
+                //                       fontWeight: FontWeight.w400,
+                //                     ),
+                //                   ),
+                //                 ],
+                //               ),
+                //             ),
+                //             const SizedBox(width: 16),
+                //             const Icon(
+                //               Icons.radio_button_unchecked_outlined,
+                //               color: kMainDarkColor,
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //       const SizedBox(height: 16),
+                //       const Padding(
+                //         padding: EdgeInsets.symmetric(
+                //             horizontal: 32),
+                //         child: Divider(
+                //           height: 1,
+                //           color: kMainGreyColor,
+                //         ),
+                //       ),
+                //       const SizedBox(height: 16),
+                //       // Padding(
+                //       //   padding: const EdgeInsets.symmetric(
+                //       //       horizontal: 16),
+                //       //   child: Row(
+                //       //     children: [
+                //       //       Text(
+                //       //         'Vietcombank',
+                //       //         style: GoogleFonts.roboto(
+                //       //           color: kMainDarkColor,
+                //       //           fontSize: 14,
+                //       //           fontWeight: FontWeight.w600,
+                //       //         ),
+                //       //       ),
+                //       //       const Spacer(),
+                //       //       Text(
+                //       //         '**** **** **** 1234',
+                //       //         style: GoogleFonts.roboto(
+                //       //           color: kMainDarkColor,
+                //       //           fontSize: 14,
+                //       //           fontWeight: FontWeight.w600,
+                //       //         ),
+                //       //       ),
+                //       //     ],
+                //       //   ),
+                //       // ),
+                //       Center(
+                //         child: Text(
+                //           'Chưa có thẻ nào được thêm',
+                //           style: GoogleFonts.roboto(
+                //             color: kMainDarkGreyColor,
+                //             fontSize: 14,
+                //             fontWeight: FontWeight.w400,
+                //           ),
+                //           textAlign: TextAlign.center,
+                //         ),
+                //       ),
+                //       const SizedBox(height: 16),
+                //       const Divider(
+                //         height: 1,
+                //         color: kMainGreyColor,
+                //       ),
+                //       const SizedBox(height: 16),
+                //       Center(
+                //         child: InkWell(
+                //           onTap: () {},
+                //           child: Row(
+                //             crossAxisAlignment: CrossAxisAlignment.center,
+                //             mainAxisAlignment: MainAxisAlignment.center,
+                //             children: [
+                //               Text(
+                //                 'Thêm thẻ',
+                //                 style: GoogleFonts.roboto(
+                //                   color: kMainDarkColor,
+                //                   fontSize: 14,
+                //                   fontWeight: FontWeight.w600,
+                //                 ),
+                //                 textAlign: TextAlign.center,
+                //               ),
+                //               const SizedBox(width: 4),
+                //               const Icon(
+                //                 Icons.add_circle_outline,
+                //                 color: kMainDarkColor,
+                //                 size: 16,
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //       ),
+                //       const SizedBox(height: 16),
+                //     ],
+                //   ),
+                // ),
+                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        Assets.icPayShip,
+                        width: 40,
+                        height: 40,
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Thanh toán Khi nhận hàng',
+                              style: GoogleFonts.roboto(
                                 color: kMainDarkColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
                               ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 32),
-                          child: Divider(
-                            height: 1,
-                            color: kMainGreyColor,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(
-                        //       horizontal: 16),
-                        //   child: Row(
-                        //     children: [
-                        //       Text(
-                        //         'Vietcombank',
-                        //         style: GoogleFonts.roboto(
-                        //           color: kMainDarkColor,
-                        //           fontSize: 14,
-                        //           fontWeight: FontWeight.w600,
-                        //         ),
-                        //       ),
-                        //       const Spacer(),
-                        //       Text(
-                        //         '**** **** **** 1234',
-                        //         style: GoogleFonts.roboto(
-                        //           color: kMainDarkColor,
-                        //           fontSize: 14,
-                        //           fontWeight: FontWeight.w600,
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        Center(
-                          child: Text(
-                            'Chưa có thẻ nào được thêm',
-                            style: GoogleFonts.roboto(
-                              color: kMainDarkGreyColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        const Divider(
-                          height: 1,
-                          color: kMainGreyColor,
-                        ),
-                        const SizedBox(height: 16),
-                        Center(
-                          child: InkWell(
-                            onTap: () {},
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Thêm thẻ',
-                                  style: GoogleFonts.roboto(
-                                    color: kMainDarkColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(width: 4),
-                                const Icon(
-                                  Icons.add_circle_outline,
-                                  color: kMainDarkColor,
-                                  size: 16,
-                                ),
-                              ],
+                            const SizedBox(height: 4),
+                            Text(
+                              'Thanh toán sau khi nhận hàng',
+                              style: GoogleFonts.roboto(
+                                color: kMainGreyColor,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                        const SizedBox(height: 16),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(width: 16),
+                      const Icon(
+                        Icons.check_circle,
+                        color: kMainDarkColor,
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          Assets.icPayShip,
-                          width: 40,
-                          height: 40,
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Thanh toán Khi nhận hàng',
-                                style: GoogleFonts.roboto(
-                                  color: kMainDarkColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'Thanh toán sau khi nhận hàng',
-                                style: GoogleFonts.roboto(
-                                  color: kMainGreyColor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        const Icon(
-                          Icons.check_circle,
-                          color: kMainDarkColor,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  // thêm phương thức thanh toán khác
-                ],
-              ),
+                ),
+                const SizedBox(height: 16),
+                // thêm phương thức thanh toán khác
+              ],
             ),
           ],
         ),

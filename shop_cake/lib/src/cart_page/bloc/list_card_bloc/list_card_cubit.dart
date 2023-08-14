@@ -11,6 +11,7 @@ class ListCardCubit extends Cubit<ListCardState> {
   final List datas = [];
   final CartRepository _cartRepository;
    double totalPrice = 0;
+   double totalSale = 0;
 
   ListCardCubit(this._cartRepository) : super(ListCardInitial());
 
@@ -26,7 +27,7 @@ class ListCardCubit extends Cubit<ListCardState> {
         datas.clear();
         totalPrice = data['data']['result'].fold(0, (previousValue, element) => previousValue + element['priceCake'] * element['quantityShoppingCartTmt']);
         datas.addAll(data['data']['result'],);
-        print('ListCardSuccess $totalPrice');
+
         emit(ListCardSuccess(data['data']['result'], datas, totalPrice));
       }
     } on DioError {

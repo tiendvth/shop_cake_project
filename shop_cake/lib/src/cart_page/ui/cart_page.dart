@@ -2,7 +2,6 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_cake/common/config/format_price.dart';
-import 'package:shop_cake/common/badge_widget.dart';
 import 'package:shop_cake/common/config_read_file.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/color/colors.dart';
@@ -64,6 +63,7 @@ class _CartPageState extends State<CartPage> {
           child: BlocBuilder<ListCardCubit, ListCardState>(
             builder: (context, stateListCake) {
               if (stateListCake is ListCardSuccess) {
+                print('stateListCake ${stateListCake.total}');
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -128,15 +128,12 @@ class _CartPageState extends State<CartPage> {
                                       ),
                                     ),
                                   ],
-                                  Badge(
-                                    value: '3',
-                                    child: InkWell(
-                                      onTap: () {},
-                                      child: const CImage(
-                                        assetsPath: Assets.icNotification,
-                                        height: 24,
-                                        width: 24,
-                                      ),
+                                  InkWell(
+                                    onTap: () {},
+                                    child: const CImage(
+                                      assetsPath: Assets.icNotification,
+                                      height: 24,
+                                      width: 24,
                                     ),
                                   ),
                                 ],
