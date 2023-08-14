@@ -230,7 +230,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
                 return Column(children: [
                   Container(
                     margin:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
                     padding:
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                     height: 38,
