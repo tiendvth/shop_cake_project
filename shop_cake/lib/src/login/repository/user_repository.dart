@@ -4,23 +4,23 @@
 import 'package:network/network.dart';
 
 abstract class UserRepository {
-  Future login(String? username,String? password);
+  Future login(String? username, String? password);
 
-  Future register(String? username, String? email, String?  password);
+  Future register(String? username, String? email, String? password);
 
   Future verify_login(phone, otp);
 }
 
 class UserRepositoryImpl implements UserRepository {
   @override
-  Future login(String? username,String? password) async {
+  Future login(String? username, String? password) async {
     try {
-      final result = await Dio()
-          .post("http://103.187.5.254:8090/api/auth/signin", data: {
+      final result =
+          await Dio().post("http://103.187.5.254:8090/api/auth/signin", data: {
         "username": username,
         "password": password,
       });
-     if (result.statusCode == 200) {
+      if (result.statusCode == 200) {
         return result.data as Map<String, dynamic>;
       } else {
         throw Exception('Failed to load data!');
@@ -44,20 +44,27 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future register(String? username, String? email, String?  password) async {
+  Future register(String? username, String? email, String? password) async {
     try {
       final result = await Dio().post(
-          "http://103.187.5.254:8090/api/auth/signup",
-          data: {
-            "email": email,
-            "password": password,
-            "username": username,
-            "role": ["admin"]
-          });
+        "http://103.187.5.254:8090/api/auth/signup",
+        data: {
+          "email": email,
+          "password": password,
+          "username": username,
+          "role": ["admin"]
+        },
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) => true,
+        ),
+      );
       if (result.statusCode == 200) {
         return result;
+      } else if (result.statusCode == 400) {
+        return result;
       } else {
-        throw Exception('Failed to load data!');
+        throw Exception('Có lỗi xảy ra!');
       }
     } catch (e) {
       print('Exception: $e');
