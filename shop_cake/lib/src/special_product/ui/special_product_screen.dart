@@ -53,6 +53,7 @@ class _SpecialProductScreenState extends State<SpecialProductScreen> {
               fontWeight: FontWeight.w700,
             ),
           ),
+          centerTitle: true,
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);

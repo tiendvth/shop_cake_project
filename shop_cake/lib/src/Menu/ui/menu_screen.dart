@@ -140,7 +140,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           title: "Tài khoản",
                           image: Assets.icUser,
                           onTab: () {
-                            NavigatorManager.push(
+                            NavigatorManager.pushFullScreen(
                               context,
                                ProfileUserPage(
                                 onPopCallback: () {
@@ -164,7 +164,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           title: "Đơn hàng",
                           image: Assets.icOrderMenu,
                           onTab: () {
-                            NavigatorManager.push(
+                            NavigatorManager.pushFullScreen(
                               context,
                               const MyOrderPage(),
                             );
@@ -184,7 +184,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           title: "Yêu thích",
                           image: Assets.icLike,
                           onTab: () {
-                            NavigatorManager.push(
+                            NavigatorManager.pushFullScreen(
                               context,
                               const FavouriteScreen(),
                             );
@@ -204,7 +204,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           title: "Thanh toán",
                           image: Assets.icPaymentCard,
                           onTab: () {
-                            NavigatorManager.push(
+                            NavigatorManager.pushFullScreen(
                               context,
                               const PaymentMethodPage(),
                             );
@@ -224,7 +224,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           title: "Địa chỉ",
                           image: Assets.icLocation,
                           onTab: () {
-                            NavigatorManager.push(
+                            NavigatorManager.pushFullScreen(
                               context,
                               const AddressPage(),
                             );
@@ -244,7 +244,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           title: "Liên hệ",
                           image: Assets.icCall,
                           onTab: () {
-                            NavigatorManager.push(
+                            NavigatorManager.pushFullScreen(
                               context,
                               const ContactInfoPage(),
                             );

@@ -8,7 +8,6 @@ import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/cart_page/bloc/list_card_bloc/list_card_cubit.dart';
-import 'package:shop_cake/src/cart_page/componenst/appbar_cart_widget.dart';
 import 'package:shop_cake/src/cart_page/componenst/cart_item.dart';
 import 'package:shop_cake/src/cart_page/repository/cart_repository.dart';
 import 'package:shop_cake/src/detail_food/bloc/counter_bloc/count_dish_cubit.dart';
@@ -63,7 +62,6 @@ class _CartPageState extends State<CartPage> {
           child: BlocBuilder<ListCardCubit, ListCardState>(
             builder: (context, stateListCake) {
               if (stateListCake is ListCardSuccess) {
-                print('stateListCake ${stateListCake.total}');
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -416,9 +414,9 @@ class _CartPageState extends State<CartPage> {
                   ),
                 );
               } else if (stateListCake is ListCardFailure) {
-                return const AppbarCartWidget();
+                return const SizedBox();
               } else {
-                return const AppbarCartWidget();
+                return const SizedBox();
               }
             },
           ),

@@ -84,9 +84,11 @@ class _ListPromotionScreenState extends State<ListPromotionScreen> {
           title: Text(
             'Sản phẩm khuyến mãi',
             style: GoogleFonts.roboto(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
+              textStyle: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 18,
+                color: kMainDarkColor,
+              ),
             ),
           ),
           centerTitle: true,

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -299,12 +301,16 @@ class _DetailMyOrderState extends State<DetailMyOrder> {
                       // ),
                       if (state.status == 1)
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          padding: Platform.isIOS
+                              ? const EdgeInsets.only(
+                              left: 16, right: 16, bottom: 16)
+                              : const EdgeInsets.symmetric(
+                              horizontal: 16),
                           child: MaterialButton(
                             height: 40,
                             minWidth: MediaQuery.of(context).size.width,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                             elevation: 0,
                             animationDuration: const Duration(milliseconds: 200),
@@ -342,7 +348,11 @@ class _DetailMyOrderState extends State<DetailMyOrder> {
                         ),
                       if (state.status == 2)
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          padding: Platform.isIOS
+                              ? const EdgeInsets.only(
+                              left: 16, right: 16, bottom: 16)
+                              : const EdgeInsets.symmetric(
+                              horizontal: 16),
                           child: MaterialButton(
                             height: 40,
                             minWidth: MediaQuery.of(context).size.width,
@@ -385,12 +395,17 @@ class _DetailMyOrderState extends State<DetailMyOrder> {
                         ),
                       if (state.status == 3)
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          // check thiết bị android và ios
+                          padding: Platform.isIOS
+                              ? const EdgeInsets.only(
+                                  left: 16, right: 16, bottom: 16)
+                              : const EdgeInsets.symmetric(
+                                  horizontal: 16),
                           child: MaterialButton(
                             height: 40,
                             minWidth: MediaQuery.of(context).size.width,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                             animationDuration: const Duration(milliseconds: 200),
                             elevation: 0,
@@ -420,7 +435,11 @@ class _DetailMyOrderState extends State<DetailMyOrder> {
                         ),
                       if (state.status == 4)
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          padding: Platform.isIOS
+                              ? const EdgeInsets.only(
+                              left: 16, right: 16, bottom: 16)
+                              : const EdgeInsets.symmetric(
+                              horizontal: 16),
                           child: Row(
                             children: [
                               Expanded(
@@ -428,7 +447,7 @@ class _DetailMyOrderState extends State<DetailMyOrder> {
                                   height: 40,
                                   minWidth: MediaQuery.of(context).size.width,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                   animationDuration: const Duration(milliseconds: 200),
                                   elevation: 0,
@@ -465,7 +484,7 @@ class _DetailMyOrderState extends State<DetailMyOrder> {
                                   height: 40,
                                   minWidth: MediaQuery.of(context).size.width,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                   animationDuration: const Duration(milliseconds: 200),
                                   elevation: 0,
@@ -498,12 +517,16 @@ class _DetailMyOrderState extends State<DetailMyOrder> {
                         ),
                       if (state.status == 5)
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          padding: Platform.isIOS
+                              ? const EdgeInsets.only(
+                              left: 16, right: 16, bottom: 16)
+                              : const EdgeInsets.symmetric(
+                              horizontal: 16),
                           child: MaterialButton(
                             height: 40,
                             minWidth: MediaQuery.of(context).size.width,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                             animationDuration: const Duration(milliseconds: 200),
                             elevation: 0,
