@@ -113,7 +113,7 @@ class _MenuScreenState extends State<MenuScreen> {
                         }
                         if (stateUser is ProfileUserSuccess) {
                           return UserAvatar(
-                            name: stateUser.data['fullName'],
+                            name: stateUser.data['fullName'] ?? stateUser.data['username'],
                             address: stateUser.data['address'],
                             phone: stateUser.data['telephone'],
                           );

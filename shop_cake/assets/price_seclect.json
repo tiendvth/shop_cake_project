@@ -2,36 +2,36 @@
   "message": "Success",
   "data": [
     {
-      "price_from": 10,
-      "price_to": 100
+      "price_from": 10000,
+      "price_to": 20000
     },
     {
-      "price_from": 100,
-      "price_to": 500
+      "price_from": 20000,
+      "price_to": 50000
     },
     {
-      "price_from": 500,
-      "price_to": 1000
-    },
-    {
-      "price_from": 1000,
-      "price_to": 2000
-    },
-    {
-      "price_from": 2000,
-      "price_to": 5000
-    },
-    {
-      "price_from": 5000,
+      "price_from": 50000,
       "price_to": 100000
     },
     {
       "price_from": 100000,
-      "price_to": 5000000
+      "price_to": 200000
+    },
+    {
+      "price_from": 200000,
+      "price_to": 500000
     },
     {
       "price_from": 500000,
-      "price_to": 10000000
+      "price_to": 1000000
+    },
+    {
+      "price_from": 1000000,
+      "price_to": 2000000
+    },
+    {
+      "price_from": 2000000,
+      "price_to": 5000000
     }
   ]
 }

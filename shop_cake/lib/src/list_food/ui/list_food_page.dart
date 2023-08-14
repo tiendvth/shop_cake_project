@@ -464,6 +464,9 @@ class _ListFoodPageState extends State<ListFoodPage> {
                                                 .data['result'].length,
                                           ),
                                         ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -511,6 +514,7 @@ class _ListFoodPageState extends State<ListFoodPage> {
                         },
                       ),
                     ),
+
                     // ),
                   ],
                 ),

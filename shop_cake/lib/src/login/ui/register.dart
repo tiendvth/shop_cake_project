@@ -8,7 +8,6 @@ import 'package:shop_cake/constants/font_size/font_size.dart';
 import 'package:shop_cake/generated/l10n.dart';
 import 'package:shop_cake/src/login/bloc/authentication_cubit.dart';
 import 'package:shop_cake/src/login/repository/user_repository.dart';
-import 'package:shop_cake/src/login/ui/login.dart';
 import 'package:shop_cake/utils/utils.dart';
 import 'package:shop_cake/widgets/c_button.dart';
 import 'package:shop_cake/widgets/c_container.dart';
@@ -281,21 +280,21 @@ class _RegisterState extends State<Register> {
                                     passwordString,
                                   );
                                   closeLoading(context);
+                                  print('result: ${(result as Response).statusCode}');
                                   if ((result as Response).statusCode == 200) {
                                     // ignore: use_build_context_synchronously
-                                    showDialogMessage(
-                                        context, "Đăng ký thành công",
-                                        checkBack: false);
+                                    showToast('Đăng ký thành công');
+                                    Navigator.pop(context);
+                                  } else if ((result as Response).statusCode ==
+                                      400) {
                                     // ignore: use_build_context_synchronously
-                                    NavigatorManager.push(
-                                        context, const Login());
+                                    showToast('Tài khoản đã tồn tại');
                                   }
                                 } catch (error) {
-                                  print('error: $error');
                                   closeLoading(context);
-                                  showDialogMessage(context,
-                                      "Đã có sự cố xảy ra vui lòng thử lại",
-                                      checkBack: false);
+                                  print('error: $error');
+                                  // ignore: use_build_context_synchronously
+                                  showToast('Đăng ký thất bại');
                                 }
                               }
                             },
