@@ -94,7 +94,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
                     Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 15),
-                      height: 35,
+                      height: 38,
                       padding:
                           const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                       decoration: BoxDecoration(
@@ -233,9 +233,10 @@ class _MyOrderPageState extends State<MyOrderPage> {
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                     padding:
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                    height: 38,
                     decoration: BoxDecoration(
                       border: Border.all(width: 0.5, color: kMainRedColor),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton2(
