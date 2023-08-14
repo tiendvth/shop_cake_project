@@ -5,6 +5,7 @@ import 'package:shop_cake/common/config/string_service.dart';
 import 'package:shop_cake/common/config_read_file.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/src/detail_food/ui/detail_food_page.dart';
+import 'package:shop_cake/src/favourite/bloc/favourite_cubit.dart';
 import 'package:shop_cake/src/home_page/bloc/home_cubit.dart';
 import 'package:shop_cake/src/home_page/bloc/list_special_cubit.dart';
 import 'package:shop_cake/src/home_page/components/body.dart';
@@ -33,12 +34,14 @@ class _HomePageState extends State<HomePage> {
   final HomeCubit homeCubit = HomeCubit();
   final ListSpecialCubit listSpecialCubit = ListSpecialCubit();
   final ListPriceFilterCubit listPriceFilterCubit = ListPriceFilterCubit();
+  final FavouriteCubit favouriteCubit = FavouriteCubit();
 
   // final controller = GroupButtonController();
   final priceFilterCubit = ListPriceFilterCubit();
   int? priceFrom = 0;
   int? priceTo = 0;
   String? search = '';
+  bool? isFavorite = false;
 
   @override
   void initState() {
@@ -174,16 +177,28 @@ class _HomePageState extends State<HomePage> {
                                 scrollDirection: Axis.horizontal,
                                 itemCount: state.data['result'].length,
                                 itemBuilder: (context, index) {
-                                  return Categories(
-                                    title: state.data['result'][index]['name'],
-                                    onTap: () {
-                                      NavigatorManager.pushFullScreen(
-                                        context,
-                                        ListCakeCategoryDetailPage(
-                                          id: state.data['result'][index]['id'],
-                                        ),
-                                      );
-                                    },
+                                  return Row(
+                                    children: [
+                                      index == 0
+                                          ? const SizedBox(width: 10)
+                                          : const SizedBox(),
+                                      Categories(
+                                        title: state.data['result'][index]
+                                            ['name'],
+                                        onTap: () {
+                                          NavigatorManager.pushFullScreen(
+                                            context,
+                                            ListCakeCategoryDetailPage(
+                                              id: state.data['result'][index]
+                                                  ['id'],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      index == state.data['result'].length - 1
+                                          ? const SizedBox(width: 10)
+                                          : const SizedBox(),
+                                    ],
                                   );
                                 },
                               ),
@@ -252,9 +267,27 @@ class _HomePageState extends State<HomePage> {
                             state.data['result'].length > 0) {
                           // lọc ra toàn bộ sản phẩm có discount
                           List<dynamic> listDiscount = [];
-                          for (int i = 0; i < state.data['result'].length; i++) {
+                          for (int i = 0;
+                              i < state.data['result'].length;
+                              i++) {
                             if (state.data['result'][i]['discount'] != null) {
                               listDiscount.add(state.data['result'][i]);
+                            } else {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 64),
+                                child: Center(
+                                  child: Text(
+                                    "Không có sản phẩm nào.",
+                                    style: GoogleFonts.roboto(
+                                      textStyle: const TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 16,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
                             }
                           }
                           return GridView.custom(
@@ -262,23 +295,48 @@ class _HomePageState extends State<HomePage> {
                             physics: const NeverScrollableScrollPhysics(),
                             padding: EdgeInsets.zero,
                             gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               mainAxisSpacing: 12,
                               crossAxisSpacing: 12,
                               childAspectRatio: 0.7,
                             ),
                             childrenDelegate: SliverChildBuilderDelegate(
-                                  (context, index) {
+                              (context, index) {
                                 // lấy ra các sản phẩm có discount
                                 return ItemCard(
                                   title: listDiscount[index]['name'],
                                   imageUrl: ReadFile.readFile(
                                       listDiscount[index]['image']),
                                   isPromotion: true,
+                                  price: FormatPrice.formatVND(
+                                      listDiscount[index]['price']),
+                                  priceSale: FormatPrice.formatVND(
+                                    DiscountCake.discountCake(
+                                      listDiscount[index]['discount'],
+                                      listDiscount[index]['price'],
+                                    ),
+                                  ),
+                                  isCheckShowPriceSale:
+                                      listDiscount[index]['discount'] != null
+                                          ? true
+                                          : false,
                                   promotionSale:
-                                  'Sale ${StringService.formatDiscount(
-                                    listDiscount[index]['discount'],)}%',
+                                      'Sale ${StringService.formatDiscount(
+                                    listDiscount[index]['discount'],
+                                  )}%',
+                                  isFav: listDiscount[index]['isFav'],
+                                  onTapFav: () {
+                                    if (isFavorite!) {
+                                      favouriteCubit.removeFavourite(
+                                        id: listDiscount[index]['id'],
+                                      );
+                                    } else {
+                                      favouriteCubit.addFavourite(
+                                        id: listDiscount[index]['id'],
+                                      );
+                                    }
+                                  },
                                   onTap: () {
                                     NavigatorManager.push(
                                       context,
@@ -317,7 +375,7 @@ class _HomePageState extends State<HomePage> {
                                   : listDiscount.length,
                             ),
                           );
-                        }  else {
+                        } else {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 32),
                             child: Center(
@@ -380,7 +438,32 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 12),
                     BlocBuilder<ListSpecialCubit, ListSpecialState>(
                       builder: (context, stateSpecial) {
-                        if (stateSpecial is ListSpecialSuccess) {
+                        if (stateSpecial is ListSpecialLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: kMainColor,
+                            ),
+                          );
+                        } else if (stateSpecial is ListSpecialSuccess) {
+                          if (stateSpecial.data['data'] == null ||
+                              stateSpecial.data['data'].length == 0) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 64),
+                              child: Center(
+                                child: Text(
+                                  "Không có sản phẩm nào.",
+                                  style: GoogleFonts.roboto(
+                                    textStyle: const TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 16,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
                           return GridView.custom(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
@@ -398,11 +481,27 @@ class _HomePageState extends State<HomePage> {
                                 imageUrl: ReadFile.readFile(
                                     stateSpecial.data['data'][index]['image']),
                                 title: stateSpecial.data['data'][index]['name'],
-                                price: FormatPrice.formatVND(
+                                priceSale: FormatPrice.formatVND(
                                     DiscountCake.discountCake(
                                         0.0,
                                         stateSpecial.data['data'][index]
                                             ['price'])),
+                                isCheckShowPriceSale: false,
+                                isFav: stateSpecial.data['data'][index]
+                                    ['isFav'],
+                                onTapFav: () {
+                                  if (isFavorite!) {
+                                    favouriteCubit.removeFavourite(
+                                      id: stateSpecial.data['data'][index]
+                                          ['id'],
+                                    );
+                                  } else {
+                                    favouriteCubit.addFavourite(
+                                      id: stateSpecial.data['data'][index]
+                                          ['id'],
+                                    );
+                                  }
+                                },
                                 addToCart: () {
                                   listFoodCubit.addFoodToOrder(
                                     context,
@@ -430,10 +529,19 @@ class _HomePageState extends State<HomePage> {
                                   : stateSpecial.data['data'].length ?? 0,
                             ),
                           );
-                        } else {
+                        } else if (stateSpecial is ListSpecialFailure) {
                           return const Center(
-                            child: CircularProgressIndicator(
-                              color: kMainColor,
+                            child: Text("Lỗi"),
+                          );
+                        } else {
+                          return Center(
+                            child: Text(
+                              "Không có sản phẩm nào",
+                              style: GoogleFonts.roboto(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
                             ),
                           );
                         }

@@ -1,7 +1,6 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_cake/common/config/string_service.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/src/address/bloc/get_address_cubit.dart';
 import 'package:shop_cake/src/address/bloc/get_location_cubit.dart';
@@ -64,26 +63,44 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
     _addressSeparation();
   }
 
+  // void _addressSeparation() {
+  //   List<String> parts = StringService.splitStringAfterComma(widget.address!);
+  //   parts.forEach((element) {
+  //     if (element.contains('Tỉnh') || element.contains('Thành phố')) {
+  //       // element = province! ;
+  //       // print('province $element');
+  //       provinceValue = element;
+  //     } else if (element.contains('Huyện') || element.contains('Quận')) {
+  //       districtValue = element;
+  //     } else if (element.contains('Xã') || element.contains('Phường')) {
+  //       wardValue = element;
+  //     } else {
+  //       print('detailAddress $element');
+  //       _addressController = TextEditingController(text: element);
+  //     }
+  //   });
+  // }
   void _addressSeparation() {
-    List<String> parts = StringService.splitStringAfterComma(widget.address!);
+    List<String> parts = widget.address!.split(
+        ','); // Chia nhỏ dựa trên dấu ","
+    List<String> detailAddresses = [];
+
     parts.forEach((element) {
       if (element.contains('Tỉnh') || element.contains('Thành phố')) {
-        print('province $element');
-        // element = province! ;
-        // print('province $element');
-        provinceValue = element;
+        provinceValue = element.trim();
       } else if (element.contains('Huyện') || element.contains('Quận')) {
-        districtValue = element;
+        districtValue = element.trim();
       } else if (element.contains('Xã') || element.contains('Phường')) {
-        wardValue = element;
+        wardValue = element.trim();
       } else {
-        print('detailAddress $element');
-        _addressController = TextEditingController(text: element);
+        detailAddresses.add(element.trim());
       }
     });
+    _addressController = TextEditingController(text: detailAddresses.join(','));
   }
 
-  @override
+
+    @override
   void dispose() {
     _nameController.dispose();
     _phoneController.dispose();
@@ -536,7 +553,7 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
                           vertical: 10, horizontal: 16),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        gradient: kButtonGradient,
+                        color: kMainDarkColor.withOpacity(0.5),
                       ),
                       child: Center(
                         child: Text(

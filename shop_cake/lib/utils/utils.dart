@@ -103,7 +103,8 @@ showDialogMessage(BuildContext context, String? mess, {checkBack = true}) {
   );
 }
 
-showDialogNote(BuildContext context, {checkBack = true}) {
+showDialogNote(BuildContext context,
+    {checkBack = true, String? note, GestureTapCallback? onConfirm}) {
   showDialog(
     context: context,
     barrierDismissible: !checkBack,
@@ -138,6 +139,8 @@ showDialogNote(BuildContext context, {checkBack = true}) {
                 const SizedBox(height: 8),
                 TextFormField(
                   maxLines: 5,
+                  initialValue: note,
+                  controller: TextEditingController(text: note),
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -193,6 +196,7 @@ showDialogNote(BuildContext context, {checkBack = true}) {
                             Navigator.pop(context);
                             Navigator.pop(context);
                           } else {
+                            onConfirm?.call();
                             Navigator.pop(context);
                           }
                         },
@@ -255,12 +259,12 @@ showDialogConfirm(BuildContext context, String? mess, onClick) {
       return Dialog(
           alignment: Alignment.center,
           backgroundColor: FontColor.colorFFFFFF,
-          insetPadding: EdgeInsets.only(
+          insetPadding: const EdgeInsets.only(
             left: 36,
             right: 36,
           ),
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -271,24 +275,26 @@ showDialogConfirm(BuildContext context, String? mess, onClick) {
                         fontSize: FontSize.fontSize_20,
                         fontWeight: FontWeight.w500)),
                 Padding(
-                    padding: EdgeInsets.only(top: 8), child: Text(mess ?? '')),
+                    padding: const EdgeInsets.only(top: 8), child: Text(mess ?? '')),
                 Row(
                   children: [
-                    Expanded(child: SizedBox()),
+                    const Expanded(child: SizedBox()),
                     GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                          onClick();
-                        },
-                        child: Container(
-                            padding: EdgeInsets.all(8),
-                            child: Text(
-                              'Xác nhận',
-                              textAlign: TextAlign.end,
-                              style: TextStyle(
-                                  color: FontColor.colorEC222D,
-                                  fontSize: FontSize.fontSize_16),
-                            ))),
+                      onTap: () {
+                        Navigator.pop(context);
+                        onClick();
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        child: Text(
+                          'Xác nhận',
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                              color: FontColor.colorEC222D,
+                              fontSize: FontSize.fontSize_16),
+                        ),
+                      ),
+                    ),
                     GestureDetector(
                         onTap: () {
                           Navigator.pop(context);

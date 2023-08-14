@@ -200,19 +200,21 @@ class MyOrderItem extends StatelessWidget {
             ],
           ),
         ),
-        15.spaceHeight,
+        8.spaceHeight,
         MaterialButton(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+          height: 30,
           minWidth: MediaQuery.of(context).size.width - 20,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
           ),
-          color: kMainRedColor.withOpacity(0.6),
+          color: kMainRedColor.withOpacity(0.3),
+          elevation: 0,
           onPressed: onTap,
-          child: const Text(
+          child:  Text(
             'Xem chi tiết',
-            style: TextStyle(
-                fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
+            style: GoogleFonts.roboto(
+                fontSize: 14, fontWeight: FontWeight.w400, color: kMainWhiteColor),
           ),
         )
       ],

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shop_cake/constants/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactInfoPage extends StatefulWidget {
   const ContactInfoPage({Key? key}) : super(key: key);
@@ -20,7 +21,18 @@ class _ContactInfoPageState extends State<ContactInfoPage> {
     target: LatLng(21.0288687237567, 105.78181093986845),
     zoom: 16,
   );
+  void openGoogleMapsDirections() async {
+    String destination = '21.0288687237567, 105.78181093986845'; // Tọa độ đích, ví dụ: latitude,longitude
 
+    String googleMapsUrl = 'https://www.google.com/maps/dir/?api=1&destination=$destination';
+
+    if (await canLaunch(googleMapsUrl)) {
+      await launch(googleMapsUrl);
+    } else {
+      print('Không thể mở Google Maps');
+      throw 'Không thể mở Google Maps';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +44,15 @@ class _ContactInfoPageState extends State<ContactInfoPage> {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: kBgMenu,
+          ),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: kMainDarkColor,
           ),
         ),
         title: Text(
@@ -64,10 +85,12 @@ class _ContactInfoPageState extends State<ContactInfoPage> {
                       title: 'Cửa hàng bánh ngọt 2',
                       snippet: 'Số 1, Đại Cồ Việt, Hai Bà Trưng, Hà Nội',
                     ),
+                    onTap: () {
+                      openGoogleMapsDirections();
+                    },
                     consumeTapEvents: true,
                     icon: BitmapDescriptor.defaultMarkerWithHue(
-                      BitmapDescriptor.hueViolet,
-                    ),
+                        BitmapDescriptor.hueViolet),
                     visible: true,
                   ),
                 },
@@ -83,6 +106,43 @@ class _ContactInfoPageState extends State<ContactInfoPage> {
                 onMapCreated: (GoogleMapController controller) {
                   _controller.complete(controller);
                 },
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                'Cửa hàng bánh CAKE LOVE',
+                style: GoogleFonts.roboto(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: kMainDarkColor,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Container(
+              height: 150,
+              width: MediaQuery.of(context).size.width / 1.5,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: kMainLightColor,
+                    width: 1,
+                  ),
+                ),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                    'https://pandagift.vn/uploads/shops/ban_gai/mo-hinh-tiem-banh-cake-love-2.jpg',
+                    fit: BoxFit.fill,
+                ),
               ),
             ),
             const SizedBox(
@@ -158,7 +218,10 @@ class _ContactInfoPageState extends State<ContactInfoPage> {
                   ),
                 ],
               ),
-            )
+            ),
+            const SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),

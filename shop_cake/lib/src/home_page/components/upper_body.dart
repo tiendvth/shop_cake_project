@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_cake/common/badge_widget.dart';
 import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/widgets/c_image.dart';
@@ -56,15 +55,12 @@ class _UpperBodyState extends State<UpperBody> {
                     ),
                   ),
                 ),
-                Badge(
-                  value: '3',
-                  child: InkWell(
-                    onTap: () {},
-                    child: const CImage(
-                      assetsPath: Assets.icNotification,
-                      height: 24,
-                      width: 24,
-                    ),
+                InkWell(
+                  onTap: () {},
+                  child: const CImage(
+                    assetsPath: Assets.icNotification,
+                    height: 24,
+                    width: 24,
                   ),
                 ),
               ],
@@ -83,7 +79,7 @@ class _UpperBodyState extends State<UpperBody> {
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.all(
-                          Radius.circular(24),
+                          Radius.circular(16),
                         ),
                       ),
                       child: Padding(

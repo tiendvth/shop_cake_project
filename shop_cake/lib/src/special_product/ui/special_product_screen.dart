@@ -53,6 +53,15 @@ class _SpecialProductScreenState extends State<SpecialProductScreen> {
               fontWeight: FontWeight.w700,
             ),
           ),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: kMainDarkColor,
+            ),
+          ),
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
@@ -85,54 +94,94 @@ class _SpecialProductScreenState extends State<SpecialProductScreen> {
                   const SizedBox(height: 12),
                   BlocBuilder<ListSpecialCubit, ListSpecialState>(
                     builder: (context, stateSpecial) {
-                      if (stateSpecial is ListSpecialSuccess) {
-                        return GridView.custom(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.zero,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 12,
-                            crossAxisSpacing: 12,
-                            childAspectRatio: 0.7,
-                          ),
-                          childrenDelegate: SliverChildBuilderDelegate(
-                            (context, index) => ItemCard(
-                              // isPromotion: true,
-                              imageUrl: ReadFile.readFile(
-                                  stateSpecial.data['data'][index]['image']),
-                              title: stateSpecial.data['data'][index]['name'],
-                              price: FormatPrice.formatVND(
-                                  DiscountCake.discountCake(
-                                      0.0,
-                                      stateSpecial.data['data'][index]
-                                          ['price'])),
-                              addToCart: () {
-                                listFoodCubit.addFoodToOrder(
-                                  context,
-                                  cakeId: stateSpecial.data['data'][index]
-                                      ['id'],
-                                  quantity: stateSpecial.data['data'][index]
-                                          ['quantity'] ??
-                                      1,
-                                );
-                              },
-                              onTap: () {
-                                NavigatorManager.pushFullScreen(
-                                    context,
-                                    DetailFood(
-                                      id: stateSpecial.data['data'][index]
-                                              ['id'] ??
-                                          '',
-                                      detail: stateSpecial.data['data'][index],
-                                    ));
-                              },
+                      if (stateSpecial is ListSpecialLoading) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (stateSpecial is ListSpecialFailure) {
+                        return Center(
+                          child: Text(
+                            'lỗi',
+                            style: GoogleFonts.roboto(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Colors.black,
                             ),
-                            childCount: stateSpecial.data['data'].length,
                           ),
                         );
-                      } else {
+                      } else if (stateSpecial is ListSpecialSuccess) {
+                        if (
+                            stateSpecial.data['data'] != null) {
+                          return GridView.custom(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.zero,
+                            gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 12,
+                              crossAxisSpacing: 12,
+                              childAspectRatio: 0.7,
+                            ),
+                            childrenDelegate: SliverChildBuilderDelegate(
+                                  (context, index) =>
+                                  ItemCard(
+                                    // isPromotion: true,
+                                    imageUrl: ReadFile.readFile(
+                                        stateSpecial
+                                            .data['data'][index]['image']),
+                                    title: stateSpecial
+                                        .data['data'][index]['name'],
+                                    price: FormatPrice.formatVND(
+                                        DiscountCake.discountCake(
+                                            0.0,
+                                            stateSpecial.data['data'][index]
+                                            ['price'])),
+                                    addToCart: () {
+                                      listFoodCubit.addFoodToOrder(
+                                        context,
+                                        cakeId: stateSpecial.data['data'][index]
+                                        ['id'],
+                                        quantity: stateSpecial
+                                            .data['data'][index]
+                                        ['quantity'] ??
+                                            1,
+                                      );
+                                    },
+                                    onTap: () {
+                                      NavigatorManager.pushFullScreen(
+                                          context,
+                                          DetailFood(
+                                            id: stateSpecial.data['data'][index]
+                                            ['id'] ??
+                                                '',
+                                            detail: stateSpecial
+                                                .data['data'][index],
+                                          ));
+                                    },
+                                  ),
+                              childCount: stateSpecial.data['data'].length,
+                            ),
+                          );
+                        } else {
+                          return Padding(
+                            padding:
+                            const EdgeInsets.symmetric(vertical: 64),
+                            child: Center(
+                              child: Text(
+                                "Không có sản phẩm nào.",
+                                style: GoogleFonts.roboto(
+                                  textStyle: const TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 16,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      }else {
                         return const Center(
                           child: CircularProgressIndicator(
                             color: kMainColor,

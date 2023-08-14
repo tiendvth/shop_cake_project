@@ -34,7 +34,7 @@ class DetailMyOrderCubit extends Cubit<DetailMyOrderState> {
   callApiCanCel(BuildContext context) {
     _detailMyOrderRepositoryImpl.canCel(id, cenCelController.text,).then((value) {
       Navigator.pop(context);
-      showDialogMessage(context, "Hủy đơn thành công", checkBack: false);
+      showToast('Hủy đơn thành công');
     },
     ).catchError((onError) {
       showDialogMessage(context, (onError as DioError).message, checkBack: false);
@@ -44,7 +44,7 @@ class DetailMyOrderCubit extends Cubit<DetailMyOrderState> {
   callApiConfirm(BuildContext context) {
     _detailMyOrderRepositoryImpl.procedure(id).then((value) {
       Navigator.pop(context);
-      showDialogMessage(context, "Nhận hàng thành công", checkBack: false);
+      showToast('Xác nhận đơn thành công',);
     },
     ).catchError((onError) {
       showDialogMessage(context, (onError as DioError).message, checkBack: false);

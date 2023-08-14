@@ -14,7 +14,13 @@ class ListSpecialCubit extends Cubit<ListSpecialState> {
     try {
       emit(ListSpecialLoading());
       final data = await _homeRepository.getBySpecial();
-      emit(ListSpecialSuccess(data));
+      if (data != null || data.isNotEmpty) {
+        emit(ListSpecialSuccess(data));
+        return;
+      } else {
+        emit(ListSpecialFailure("Không có sản phẩm nào"));
+        return;
+      }
     } on DioError {
       emit(ListSpecialFailure("Couldn't fetch Bđs. Is the device online?"));
     }

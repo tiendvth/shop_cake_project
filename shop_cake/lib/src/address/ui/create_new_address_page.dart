@@ -51,12 +51,23 @@ class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
       create: (context) => getLocationCubit,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Thêm địa chỉ mới',
-              style: GoogleFonts.roboto(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: kMainRedColor,
-              )),
+          title: Text(
+            'Thêm địa chỉ mới',
+            style: GoogleFonts.roboto(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: kMainRedColor,
+            ),
+          ),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: kMainDarkColor,
+            ),
+          ),
           backgroundColor: Colors.white,
           elevation: 0,
           flexibleSpace: Container(
@@ -456,7 +467,7 @@ class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
                           vertical: 10, horizontal: 16),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        gradient: kButtonGradient,
+                          color: kMainDarkColor.withOpacity(0.5),
                       ),
                       child: Center(
                         child: Text(

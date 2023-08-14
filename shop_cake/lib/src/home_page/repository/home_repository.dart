@@ -60,6 +60,7 @@ class HomeRepositoryImpl implements HomeRepository {
     }
   }
 
+  @override
   Future<Map<String, dynamic>> getBySpecial() async {
     try{
       final respone = await _dio.get(
@@ -67,7 +68,7 @@ class HomeRepositoryImpl implements HomeRepository {
       );
       if (respone.statusCode == 200 && respone.data['data'] != null && respone.data['data'].isNotEmpty) {
         return respone.data as Map<String, dynamic>;
-      } else if (respone.statusCode == 200 && respone.data['code'] == 204 && respone.data['data'] == null) {
+      } else if (respone.statusCode == 200 && respone.data['data'] == null) {
         return respone.data as Map<String, dynamic>;
       } else {
         throw Exception('Failed to load data!');

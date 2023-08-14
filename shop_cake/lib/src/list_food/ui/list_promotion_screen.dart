@@ -90,7 +90,15 @@ class _ListPromotionScreenState extends State<ListPromotionScreen> {
             ),
           ),
           centerTitle: true,
-          actions: [],
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: kMainDarkColor,
+            ),
+          ),
         ),
         backgroundColor: const Color(0xfFFFFFFF),
         body: SingleChildScrollView(
@@ -130,6 +138,23 @@ class _ListPromotionScreenState extends State<ListPromotionScreen> {
                       for (int i = 0; i < state.data['result'].length; i++) {
                         if (state.data['result'][i]['discount'] != null) {
                           listDiscount.add(state.data['result'][i]);
+                        } else {
+                          return Padding(
+                            padding:
+                            const EdgeInsets.symmetric(vertical: 64),
+                            child: Center(
+                              child: Text(
+                                "Không có sản phẩm nào.",
+                                style: GoogleFonts.roboto(
+                                  textStyle: const TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 16,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
                         }
                       }
                       return GridView.custom(

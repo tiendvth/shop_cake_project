@@ -49,6 +49,7 @@ class _CButtonState extends State<CButton> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(widget.radius ?? 20),
             ),
+            elevation: 0,
             side: BorderSide(
                 color: widget.borderColor ?? FontColor.colorFFCB05, width: 1),
             backgroundColor: widget.bgColor ?? FontColor.colorFFCB05,

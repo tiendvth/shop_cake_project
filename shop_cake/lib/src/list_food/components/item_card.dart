@@ -10,11 +10,15 @@ class ItemCard extends StatelessWidget {
   final String? title;
   final String? description;
   final String? price;
+  final String? priceSale;
   final String? imageUrl;
   final GestureTapCallback? onTap;
   final GestureTapCallback? addToCart;
   final bool? isPromotion;
   final String? promotionSale;
+  final bool? isCheckShowPriceSale;
+  final bool? isFav;
+  final GestureTapCallback? onTapFav;
 
   const ItemCard({
     Key? key,
@@ -26,6 +30,10 @@ class ItemCard extends StatelessWidget {
     this.addToCart,
     this.promotionSale,
     this.isPromotion = false,
+    this.priceSale,
+    this.isCheckShowPriceSale,
+    this.isFav,
+    this.onTapFav,
   }) : super(key: key);
 
   @override
@@ -73,45 +81,47 @@ class ItemCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                isPromotion == true ?
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Container(
-                    width: 86,
-                    height: 25,
-                      decoration:  BoxDecoration(
-                        gradient: kGradientAppBar,
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            Assets.icSaleFire,
-                            width: 20,
-                            height: 20,
-                          ),
-                           Text(
-                             promotionSale ?? '',
-                            style:  GoogleFonts.roboto(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
+                isPromotion == true
+                    ? Align(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                            width: 86,
+                            height: 25,
+                            decoration: BoxDecoration(
+                              gradient: kGradientAppBar,
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(10),
+                              ),
                             ),
-                          ),
-                        ],
-                      )),
-                ) : const SizedBox(),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  Assets.icSaleFire,
+                                  width: 20,
+                                  height: 20,
+                                ),
+                                Text(
+                                  promotionSale ?? '',
+                                  style: GoogleFonts.roboto(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            )),
+                      )
+                    : const SizedBox(),
               ],
             ),
             const SizedBox(
               height: 6,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin / 2),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: kDefaultPaddin / 2),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -131,7 +141,10 @@ class ItemCard extends StatelessWidget {
                   const SizedBox(
                     width: 4,
                   ),
-                  const FavIcon(),
+                  FavIcon(
+                    onTapFavorite: onTapFav,
+                    isFav: isFav,
+                  ),
                 ],
               ),
             ),
@@ -154,61 +167,94 @@ class ItemCard extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 6,
+              height: 10,
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: kDefaultPaddin / 2),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  isCheckShowPriceSale == true
+                      ? RichText(
+                          text: TextSpan(
+                            text: 'Giá: ',
+                            style: GoogleFonts.roboto(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: price ?? "20.000đ",
+                                style: GoogleFonts.roboto(
+                                  fontWeight: FontWeight.w400,
+                                  decoration: TextDecoration.lineThrough,
+                                  color: kMainBlackColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Text(
+                          'Giá:',
+                          style: GoogleFonts.roboto(
+                            color: kMainBlackColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                  const SizedBox(
+                    width: 4,
+                  ),
                   Expanded(
                     child: Text(
-                      price ?? "20.000đ",
+                      priceSale ?? "20.000đ",
                       style: GoogleFonts.roboto(
-                        color: kF2F4B4E,
+                        color: kMainRedColor,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  Expanded(
-                    child: InkWell(
-                      onTap: addToCart,
-                      child: Container(
-                        height: 25,
-                        width: 25,
-                        decoration: BoxDecoration(
-                          color: kFFA6BD,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          children: [
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              "Thêm",
-                              style: GoogleFonts.roboto(
-                                color: kMainWhiteColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const Expanded(
-                              child: InkWell(
-                                child: Icon(
-                                  Icons.add,
-                                  color: kMainWhiteColor,
-                                  size: 15,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+
+                  // Expanded(
+                  //   child: InkWell(
+                  //     onTap: addToCart,
+                  //     child: Container(
+                  //       height: 25,
+                  //       width: 25,
+                  //       decoration: BoxDecoration(
+                  //         color: kFFA6BD,
+                  //         borderRadius: BorderRadius.circular(8),
+                  //       ),
+                  //       child: Row(
+                  //         children: [
+                  //           const SizedBox(
+                  //             width: 8,
+                  //           ),
+                  //           Text(
+                  //             "Thêm",
+                  //             style: GoogleFonts.roboto(
+                  //               color: kMainWhiteColor,
+                  //               fontSize: 14,
+                  //               fontWeight: FontWeight.bold,
+                  //             ),
+                  //           ),
+                  //           const Expanded(
+                  //             child: InkWell(
+                  //               child: Icon(
+                  //                 Icons.add,
+                  //                 color: kMainWhiteColor,
+                  //                 size: 15,
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
