@@ -280,7 +280,7 @@ class _DetailMyOrderState extends State<DetailMyOrder> {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 8,
                   ),
                   Column(
                     children: [
@@ -297,9 +297,6 @@ class _DetailMyOrderState extends State<DetailMyOrder> {
                       //     controller: detailMyOrderCubit.cenCelController,
                       //   ),
                       // ),
-                      const SizedBox(
-                        height: 20,
-                      ),
                       if (state.status == 1)
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
