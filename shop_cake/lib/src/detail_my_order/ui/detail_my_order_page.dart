@@ -71,7 +71,7 @@ class _DetailMyOrderState extends State<DetailMyOrder> {
                                   child: Text(
                                     'Đóng',
                                     style: GoogleFonts.roboto(
-                                        fontSize: 18,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w500,
                                         color: kMainDarkColor),
                                   ),
