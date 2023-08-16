@@ -8,6 +8,7 @@ import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/network/network_manager.dart';
 import 'package:shop_cake/src/profile_user/bloc/profile_user_cubit.dart';
 import 'package:shop_cake/src/profile_user/repository/repository.dart';
+import 'package:shop_cake/utils/utils.dart';
 import 'package:shop_cake/widgets/c_textformfield.dart';
 
 class UpdateProfilePage extends StatefulWidget {
@@ -405,18 +406,18 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                             ),
                             InkWell(
                               onTap: () async {
+                                 showLoading(context);
                                 await _profileUserCubit.updateUser(
                                   _addressController.text,
                                   _phoneController.text,
                                   _nameController.text,
                                   _birthdayController.text,
                                 );
-                                Future.delayed(
-                                  const Duration(milliseconds: 500),
-                                  () {
-                                    Navigator.pop(context);
-                                  },
-                                );
+                                 // ignore: use_build_context_synchronously
+                                 await closeLoading(context);
+                                 Future.delayed(const Duration(milliseconds: 200), () {
+                                   Navigator.pop(context);
+                                 });
                                 widget.onBack();
                               },
                               child: Container(

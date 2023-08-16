@@ -26,7 +26,7 @@ class _AppHomeState extends State<AppHome> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: MainBottomNavigationBar(
-        wantKeepAliveChildren: [true, true, true, false, true],
+        wantKeepAliveChildren: const [true, true, true, false, true],
         bottomNavigatorItemBuilder: (BuildContext contextNavigation, int currentIndex) {
           return BottomNavigationBar(
             type: BottomNavigationBarType.fixed,

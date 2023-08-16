@@ -879,7 +879,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                             .id!,
                                       );
                                       Future.delayed(
-                                          const Duration(milliseconds: 500),
+                                          const Duration(milliseconds: 300),
                                           () {
                                         Navigator.pop(context);
                                         widget.callback!();

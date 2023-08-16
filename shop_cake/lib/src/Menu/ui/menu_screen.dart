@@ -14,7 +14,6 @@ import 'package:shop_cake/src/payment/ui/payment_methods_page.dart';
 import 'package:shop_cake/src/profile_user/bloc/profile_user_cubit.dart';
 import 'package:shop_cake/src/profile_user/repository/repository.dart';
 import 'package:shop_cake/src/profile_user/ui/profile_user_page.dart';
-import 'package:shop_cake/widgets/c_image.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -55,8 +54,8 @@ class _MenuScreenState extends State<MenuScreen> {
                 height: 230,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
+                    bottomLeft: Radius.circular(12),
+                    bottomRight: Radius.circular(12),
                   ),
                   gradient: kBgMenu,
                 ),
@@ -89,14 +88,18 @@ class _MenuScreenState extends State<MenuScreen> {
                           ),
                           InkWell(
                             onTap: () {},
-                            child: const CImage(
-                              assetsPath: Assets.icNotification,
-                              height: 24,
-                              width: 24,
+                            child: IconButton(
+                              onPressed: () {
+                                // NavigatorManager.push(
+                                //   context,
+                                //   const NotificationPage(),
+                                // );
+                              },
+                              icon: const Icon(
+                                Icons.notifications_none_outlined,
+                                color: kMainDarkColor,
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 16,
                           ),
                         ],
                       ),
@@ -118,8 +121,10 @@ class _MenuScreenState extends State<MenuScreen> {
                             phone: stateUser.data['telephone'],
                           );
                         } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: kMainDarkColor.withOpacity(0.5),
+                            ),
                           );
                         }
                       },
@@ -140,7 +145,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           title: "Tài khoản",
                           image: Assets.icUser,
                           onTab: () {
-                            NavigatorManager.push(
+                            NavigatorManager.pushFullScreen(
                               context,
                                ProfileUserPage(
                                 onPopCallback: () {
@@ -164,7 +169,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           title: "Đơn hàng",
                           image: Assets.icOrderMenu,
                           onTab: () {
-                            NavigatorManager.push(
+                            NavigatorManager.pushFullScreen(
                               context,
                               const MyOrderPage(),
                             );
@@ -184,7 +189,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           title: "Yêu thích",
                           image: Assets.icLike,
                           onTab: () {
-                            NavigatorManager.push(
+                            NavigatorManager.pushFullScreen(
                               context,
                               const FavouriteScreen(),
                             );
@@ -204,7 +209,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           title: "Thanh toán",
                           image: Assets.icPaymentCard,
                           onTab: () {
-                            NavigatorManager.push(
+                            NavigatorManager.pushFullScreen(
                               context,
                               const PaymentMethodPage(),
                             );
@@ -224,7 +229,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           title: "Địa chỉ",
                           image: Assets.icLocation,
                           onTab: () {
-                            NavigatorManager.push(
+                            NavigatorManager.pushFullScreen(
                               context,
                               const AddressPage(),
                             );
@@ -244,7 +249,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           title: "Liên hệ",
                           image: Assets.icCall,
                           onTab: () {
-                            NavigatorManager.push(
+                            NavigatorManager.pushFullScreen(
                               context,
                               const ContactInfoPage(),
                             );

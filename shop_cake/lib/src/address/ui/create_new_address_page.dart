@@ -446,12 +446,15 @@ class _CreateNewAddressPageState extends State<CreateNewAddressPage> {
                         //   address: address,
                         //   phone: _phoneController.text,
                         // );
+                        showLoading(context);
                         await getAddressCubit.createAddress(
                           phone: _phoneController.text,
                           name: _nameController.text,
                           address: address,
                         );
-                        Future.delayed(const Duration(milliseconds: 500), () {
+                       // ignore: use_build_context_synchronously
+                       await closeLoading(context);
+                        Future.delayed(const Duration(milliseconds: 300), () {
                           showToast('Thêm địa chỉ thành công');
                           Navigator.pop(context);
                         });

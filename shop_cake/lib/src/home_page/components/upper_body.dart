@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/constants.dart';
-import 'package:shop_cake/widgets/c_image.dart';
 
 
 class UpperBody extends StatefulWidget {
@@ -55,14 +53,10 @@ class _UpperBodyState extends State<UpperBody> {
                     ),
                   ),
                 ),
-                InkWell(
-                  onTap: () {},
-                  child: const CImage(
-                    assetsPath: Assets.icNotification,
-                    height: 24,
-                    width: 24,
-                  ),
-                ),
+                const Icon(
+                  Icons.notifications_none_outlined,
+                  color: kMainDarkColor,
+                )
               ],
             ),
             const SizedBox(

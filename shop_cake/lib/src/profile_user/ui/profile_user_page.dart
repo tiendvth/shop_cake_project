@@ -39,8 +39,8 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
           decoration: const BoxDecoration(
             gradient: kBgMenu,
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10),
+              bottomLeft: Radius.circular(12),
+              bottomRight: Radius.circular(12),
             ),
           ),
         ),
@@ -270,9 +270,13 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
                       ),
                     );
                   } else {
-                    print('getUser : ${state.toString()}');
                     return const Center(
-                      child: CircularProgressIndicator(),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 64),
+                        child: CircularProgressIndicator(
+                          color: kMainColor,
+                        ),
+                      ),
                     );
                   }
                 },

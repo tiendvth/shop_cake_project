@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_cake/common/config/format_date.dart';
 import 'package:shop_cake/common/enum/status_ship_enum.dart';
-import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/network/network_manager.dart';
@@ -12,7 +11,6 @@ import 'package:shop_cake/src/detail_my_order/ui/detail_my_order_page.dart';
 import 'package:shop_cake/src/my_order/bloc/my_order_cubit.dart';
 import 'package:shop_cake/src/my_order/components/my_order_item.dart';
 import 'package:shop_cake/src/my_order/repository/repository.dart';
-import 'package:shop_cake/widgets/c_image.dart';
 
 class MyOrderPage extends StatefulWidget {
   const MyOrderPage({Key? key}) : super(key: key);
@@ -51,8 +49,8 @@ class _MyOrderPageState extends State<MyOrderPage> {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(16),
-              bottomRight: Radius.circular(16),
+              bottomLeft: Radius.circular(12),
+              bottomRight: Radius.circular(12),
             ),
             gradient: kBgMenu,
           ),
@@ -67,15 +65,17 @@ class _MyOrderPageState extends State<MyOrderPage> {
           ),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16, top: 16, bottom: 16),
-            child: InkWell(
-              onTap: () {},
-              child: const CImage(
-                assetsPath: Assets.icNotification,
-                width: 24,
-                height: 24,
-              ),
+          // icon thông báo
+          IconButton(
+            onPressed: () {
+              // NavigatorManager.push(
+              //   context,
+              //   const NotificationPage(),
+              // );
+            },
+            icon: const Icon(
+              Icons.notifications_none_outlined,
+              color: kMainDarkColor,
             ),
           ),
         ],
@@ -230,7 +230,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
                 return Column(children: [
                   Container(
                     margin:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
                     padding:
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                     height: 38,
