@@ -5,7 +5,6 @@ import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/constants/font_size/font_size.dart';
-import 'package:shop_cake/generated/l10n.dart';
 import 'package:shop_cake/src/login/bloc/authentication_cubit.dart';
 import 'package:shop_cake/src/login/bloc/login_google_cubit.dart';
 import 'package:shop_cake/src/login/repository/user_repository.dart';
@@ -232,30 +231,34 @@ class _LoginState extends State<Login> {
                     ),
                     20.spaceHeight,
                     Center(
-                      child: GestureDetector(
-                        onTap: () {
-                          NavigatorManager.push(
-                            context,
-                            const Register(),
-                          );
-                        },
-                        child: RichText(
-                          text: TextSpan(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Bạn chưa có tài khoản?",
                             style: TextStyle(
                               fontSize: FontSize.fontSize_16,
-                              fontWeight: FontWeight.w400,
                               color: FontColor.colorFFFFFF,
                             ),
-                            children: [
-                              TextSpan(
-                                  text:
-                                      Translate.of(context).dont_have_an_account),
-                              TextSpan(
-                                  text:
-                                      '  ${Translate.of(context).sign_up.toUpperCase()}'),
-                            ],
                           ),
-                        ),
+                          5.spaceWidth,
+                          InkWell(
+                            onTap: () {
+                              NavigatorManager.pushFullScreen(
+                                context,
+                                const Register(),
+                              );
+                            },
+                            child: Text(
+                              "Đăng ký",
+                              style: TextStyle(
+                                fontSize: FontSize.fontSize_16,
+                                color: FontColor.colorffEC222D,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     20.spaceHeight,
@@ -265,26 +268,23 @@ class _LoginState extends State<Login> {
                       children: [
                         InkWell(
                           onTap: () {},
-                          child: CImage(
+                          child: const CImage(
                             assetsPath: Assets.icGoogle,
                             height: 24,
                             width: 24,
-                            color: FontColor.bgcolorFFFFFF,
                           ),
                         ),
                         20.spaceWidth,
-                        CImage(
+                        const CImage(
                           assetsPath: Assets.icFb,
                           height: 24,
                           width: 24,
-                          color: FontColor.bgcolorFFFFFF,
                         ),
                         20.spaceWidth,
-                        CImage(
+                        const CImage(
                           assetsPath: Assets.icApple,
                           height: 24,
                           width: 24,
-                          color: FontColor.bgcolorFFFFFF,
                         ),
                       ],
                     ))

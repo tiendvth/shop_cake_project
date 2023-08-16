@@ -5,7 +5,6 @@ import 'package:shop_cake/constants/assets/assets.dart';
 import 'package:shop_cake/constants/color/colors.dart';
 import 'package:shop_cake/constants/constants.dart';
 import 'package:shop_cake/constants/font_size/font_size.dart';
-import 'package:shop_cake/generated/l10n.dart';
 import 'package:shop_cake/src/login/bloc/authentication_cubit.dart';
 import 'package:shop_cake/src/login/repository/user_repository.dart';
 import 'package:shop_cake/utils/utils.dart';
@@ -280,7 +279,8 @@ class _RegisterState extends State<Register> {
                                     passwordString,
                                   );
                                   closeLoading(context);
-                                  print('result: ${(result as Response).statusCode}');
+                                  print(
+                                      'result: ${(result as Response).statusCode}');
                                   if ((result as Response).statusCode == 200) {
                                     // ignore: use_build_context_synchronously
                                     showToast('Đăng ký thành công');
@@ -351,22 +351,27 @@ class _RegisterState extends State<Register> {
                         Navigator.pop(context);
                       },
                       child: Center(
-                        child: RichText(
-                          text: TextSpan(
-                            style: TextStyle(
-                              fontSize: FontSize.fontSize_16,
-                              fontWeight: FontWeight.w400,
-                              color: FontColor.colorFFFFFF,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Bạn đã có tài khoản?',
+                              style: TextStyle(
+                                fontSize: FontSize.fontSize_14,
+                                fontWeight: FontWeight.w400,
+                                color: FontColor.colorFFFFFF,
+                              ),
                             ),
-                            children: [
-                              TextSpan(
-                                  text: Translate.of(context)
-                                      .dont_have_an_account),
-                              TextSpan(
-                                  text:
-                                      '  ${Translate.of(context).sign_in.toUpperCase()}'),
-                            ],
-                          ),
+                            5.spaceWidth,
+                            Text(
+                              'Đăng nhập',
+                              style: TextStyle(
+                                fontSize: FontSize.fontSize_14,
+                                fontWeight: FontWeight.w800,
+                                color: FontColor.colorffEC222D,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -398,19 +403,22 @@ class _RegisterState extends State<Register> {
                         //     );
                         //   },
                         // ),
+                        const CImage(
+                          assetsPath: Assets.icGoogle,
+                          height: 24,
+                          width: 24,
+                        ),
                         20.spaceWidth,
-                        CImage(
+                        const CImage(
                           assetsPath: Assets.icFb,
                           height: 24,
                           width: 24,
-                          color: FontColor.bgcolorFFFFFF,
                         ),
                         20.spaceWidth,
-                        CImage(
+                        const CImage(
                           assetsPath: Assets.icApple,
                           height: 24,
                           width: 24,
-                          color: FontColor.bgcolorFFFFFF,
                         ),
                       ],
                     ))
