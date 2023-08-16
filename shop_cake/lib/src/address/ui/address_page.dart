@@ -6,6 +6,7 @@ import 'package:shop_cake/src/address/bloc/get_address_cubit.dart';
 import 'package:shop_cake/src/address/components/address_item.dart';
 import 'package:shop_cake/src/address/ui/create_new_address_page.dart';
 import 'package:shop_cake/src/address/ui/update_address_page.dart';
+import 'package:shop_cake/utils/utils.dart';
 import 'package:shop_cake/widgets/space_extention.dart';
 
 class AddressPage extends StatefulWidget {
@@ -40,9 +41,9 @@ class _AddressPageState extends State<AddressPage> {
           title: Text(
             'Địa chỉ của tôi',
             style: GoogleFonts.roboto(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.w700,
-              color: kMainRedColor,
+              color: kMainDarkColor,
             ),
           ),
           leading: IconButton(
@@ -62,6 +63,7 @@ class _AddressPageState extends State<AddressPage> {
                 ? TextButton(
                     onPressed: () async{
                      await addressCubit.changeDefaultAddress(id: idAddress);
+                     showToast('Đặt địa chỉ làm mặc định thành công',);
                      addressCubit.getAddress();
                     },
                     child: Text(
@@ -93,7 +95,12 @@ class _AddressPageState extends State<AddressPage> {
               builder: (context, state) {
                 if (state is GetAddressLoading) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 64),
+                      child: CircularProgressIndicator(
+                        color: kFFA6BD,
+                      ),
+                    ),
                   );
                 } else if (state is GetAddressSuccess) {
                   if (state.address != null && state.address!.isNotEmpty) {
@@ -163,6 +170,7 @@ class _AddressPageState extends State<AddressPage> {
                                     onTapDelete: () async {
                                       await addressCubit.deleteAddress(
                                           id: state.address?[index].id);
+                                      showToast('Xóa địa chỉ thành công');
                                       addressCubit.getAddress();
                                     },
                                   ),

@@ -13,8 +13,9 @@ import 'package:shop_cake/src/list_food/components/item_card.dart';
 
 class ListCakeCategoryDetailPage extends StatefulWidget {
   final int? id;
+  final String? titleName;
 
-  const ListCakeCategoryDetailPage({Key? key, this.id}) : super(key: key);
+  const ListCakeCategoryDetailPage({Key? key, this.id, this.titleName}) : super(key: key);
 
   @override
   State<ListCakeCategoryDetailPage> createState() =>
@@ -55,8 +56,9 @@ class _ListCakeCategoryDetailPageState
               color: kMainDarkColor,
             ),
           ),
+          centerTitle: true,
           title: Text(
-            "Sản phẩm",
+            widget.titleName ?? "",
             style: GoogleFonts.roboto(
               color: kMainDarkColor,
               fontSize: 18,
@@ -124,8 +126,6 @@ class _ListCakeCategoryDetailPageState
                                     imageUrl: ReadFile.readFile(
                                         state.data['data'][index]['image']),
                                     title: state.data['data'][index]['name'],
-                                    price: FormatPrice.formatVND(
-                                        state.data['data'][index]['price']),
                                     priceSale: FormatPrice.formatVND(
                                         state.data['data'][index]['price']),
                                     addToCart: () {
@@ -162,18 +162,20 @@ class _ListCakeCategoryDetailPageState
                                     },
                                   );
                                 } else {
+                                  print(state.data['data'][index]['price']);
                                   return ItemCard(
                                     isPromotion: true,
+                                    isCheckShowPriceSale: true,
                                     promotionSale:
                                         'Sale ${StringService.formatDiscount(state.data['data'][index]['discount'] ?? 0.0)} %',
                                     imageUrl: ReadFile.readFile(
                                         state.data['data'][index]['image']),
                                     title: state.data['data'][index]['name'],
                                     priceSale: FormatPrice.formatVND(
-                                        DiscountCake.discountCake(
-                                            state.data['data'][index]['price'],
-                                            state.data['data'][index]
-                                                ['discount'])),
+                                      DiscountCake.discountCake(
+                                          state.data['data'][index]['discount'],
+                                          state.data['data'][index]['price']),
+                                    ),
                                     price: FormatPrice.formatVND(
                                         state.data['data'][index]['price']),
                                     isFav: state.data['data'][index]['isFav'] ??

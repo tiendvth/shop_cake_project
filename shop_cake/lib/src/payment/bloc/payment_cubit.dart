@@ -53,26 +53,26 @@ class PaymentCubit extends Cubit<PaymentState> {
     emit(PaymentSuccess(datas, totalPrice));
   }
 
- Future<bool> callApiPayment(BuildContext context , String dateController, List orderDetails, String note, String reason, int deliveryAddressId) {
+ Future<bool> callApiPayment(BuildContext context , String dateController, List orderDetails, String note, String reason, int deliveryAddressId) async {
    if (dateController.isEmpty) {
      showDialogMessage(context, 'Vui lòng nhập ngày giao hàng', checkBack: false);
      return Future.value(false);
    }
-    showLoading(context);
    final orderDetails = datas.map((e) => {
      "cakeId": e['cakeId'],
      "quantity": e['quantityShoppingCartTmt'],
      "price": e['priceCake'],
     }).toList();
     try {
-      _paymentRepository.Payment(
+      showLoading(context);
+     await _paymentRepository.Payment(
         deliveryDate: dateController,
         orderDetails: orderDetails,
         note: note,
         reason: reason,
         deliveryAddressId: deliveryAddressId,
       );
-      closeLoading(context);
+     await closeLoading(context);
       showToast('Đặt hàng thành công');
       return Future.value(true);
     } on DioError catch (e) {

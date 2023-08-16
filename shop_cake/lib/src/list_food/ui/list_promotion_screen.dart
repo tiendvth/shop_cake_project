@@ -128,8 +128,11 @@ class _ListPromotionScreenState extends State<ListPromotionScreen> {
                   builder: (context, state) {
                     if (state is ListFoodLoading) {
                       return const Center(
-                        child: CircularProgressIndicator(
-                          color: kMainColor,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 64),
+                          child: CircularProgressIndicator(
+                            color: kMainColor,
+                          ),
                         ),
                       );
                     } else if (state is ListFoodSuccess &&
@@ -141,56 +144,42 @@ class _ListPromotionScreenState extends State<ListPromotionScreen> {
                         if (state.data['result'][i]['discount'] != null) {
                           listDiscount.add(state.data['result'][i]);
                         } else {
-                          return Padding(
-                            padding:
-                            const EdgeInsets.symmetric(vertical: 64),
-                            child: Center(
-                              child: Text(
-                                "Không có sản phẩm nào.",
-                                style: GoogleFonts.roboto(
-                                  textStyle: const TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
+                          continue;
                         }
                       }
-                      return GridView.custom(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.zero,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 12,
-                          crossAxisSpacing: 12,
-                          childAspectRatio: 0.7,
-                        ),
-                        childrenDelegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            // lấy ra các sản phẩm có discount
-                                return ItemCard(
-                                  title: listDiscount[index]['name'],
-                                  imageUrl: ReadFile.readFile(
-                                      listDiscount[index]['image']),
-                                  isPromotion: true,
-                                  promotionSale:
-                                      'Sale ${StringService.formatDiscount(
-                                        listDiscount[index]['discount'],)}%',
-                                  onTap: () {
-                                    NavigatorManager.push(
-                                      context,
-                                      DetailFood(
-                                        id: listDiscount[index]['id'],
-                                        detail: listDiscount[index],
-                                      ),
-                                    );
-                                  },
-                                );
+                      if (listFoodCubit != null || listDiscount.isNotEmpty) {
+                        return GridView.custom(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.zero,
+                          gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 12,
+                            crossAxisSpacing: 12,
+                            childAspectRatio: 0.7,
+                          ),
+                          childrenDelegate: SliverChildBuilderDelegate(
+                                (context, index) {
+                              // lấy ra các sản phẩm có discount
+                              return ItemCard(
+                                title: listDiscount[index]['name'],
+                                imageUrl: ReadFile.readFile(
+                                    listDiscount[index]['image']),
+                                isPromotion: true,
+                                promotionSale:
+                                'Sale ${StringService.formatDiscount(
+                                  listDiscount[index]['discount'],)}%',
+                                onTap: () {
+                                  NavigatorManager.push(
+                                    context,
+                                    DetailFood(
+                                      id: listDiscount[index]['id'],
+                                      detail: listDiscount[index],
+                                    ),
+                                  );
+                                },
+                              );
 
                               // return ItemCard(
                               //   // id: state.data['result'][i]['id'],
@@ -215,9 +204,26 @@ class _ListPromotionScreenState extends State<ListPromotionScreen> {
                               //   },
                               // );
                             },
-                          childCount: listDiscount.length,
-                        ),
-                      );
+                            childCount: listDiscount.length,
+                          ),
+                        );
+                      } else {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 32),
+                          child: Center(
+                            child: Text(
+                              "Không có sản phẩm nào",
+                              style: GoogleFonts.roboto(
+                                textStyle: const TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 16,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }
                     } else {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 32),

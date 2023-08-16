@@ -40,13 +40,14 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
           backgroundColor: kMainWhiteColor,
           elevation: 0,
           title: Text(
-            "Sản phẩm",
+            "Sản phẩm yêu thích",
             style: GoogleFonts.roboto(
               color: kMainDarkColor,
               fontSize: 18,
               fontWeight: FontWeight.w700,
             ),
           ),
+          centerTitle: true,
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
